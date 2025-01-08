@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блоки с описаниями</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #1c92d2, #f2fcfe);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+             min-height: 100vh;
+             align-items: center;
+        }
+
+         .header-container {
+            display: flex;
+            align-items: flex-start;
+             margin-bottom: 10px;
+             width: 100%;
+            margin-left: 20px;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 2em;
+           margin: 0;
+           padding: 0;
+        }
+
+         .center-header-container {
+             display: flex;
+             justify-content: center;
+            flex-direction: column;
+             align-items: center;
+             margin-bottom: 10px;
+            width: 100%;
+        }
+
+         .center-header {
+            color: white;
+            font-size: 3em;
+            margin: 0;
+             padding: 0;
+           text-align: center;
+        }
+         .sub-header {
+            color: white;
+            font-size: 1.5em;
+            text-align: center;
+             margin: 0;
+              padding: 0;
+              margin-bottom: 10px;
+        }
+         .it-path-header {
+            color: white;
+            font-size: 4em;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+             margin-bottom: 10px;
+        }
+        .it-path-sub-header {
+            color: white;
+            font-size: 1.2em;
+             margin: 0;
+              padding: 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .top-blocks {
+            display: flex;
+            justify-content: center;
+             gap: 20px;
+            width: 90%;
+              margin-bottom: 20px; /* Отступ снизу для блоков */
+        }
+        .bottom-blocks {
+            display: flex;
+            justify-content: center;
+             gap: 20px;
+            width: 90%;
+        }
+        .gradient-block {
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #6DD5FA;
+            background-color: #f0f8ff;
+             color: #111111;
+           transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+           width: calc(33.33% - 20px);
+            min-width: 250px;
+           text-align: center;
+           box-shadow: 2px 2px 5px #6DD5FA;
+        }
+        .gradient-block:hover {
+            background-color: #fff;
+            color: #6DD5FA;
+            border-color: #6DD5FA;
+            transform: translateY(-10px);
+            box-shadow: 4px 4px 8px #6DD5FA;
+        }
+        .gradient-block p {
+            margin-top: 10px;
+        }
+        .box1 {
+            padding: 15px;
+            margin: 20px;
+            border-radius: 20px;
+            width: 400px;
+            box-shadow: 2px 2px 5px #6DD5FA;
+            transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+            position: fixed;
+            top: 1px;
+            right: 30px;
+            width: 100px;
+            height: 10px;
+            background-color: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+             color: #111111;
+        }
+         .box2 {
+            padding: 15px;
+            margin: 20px;
+            border-radius: 20px;
+            width: 400px;
+            box-shadow: 2px 2px 5px #6DD5FA;
+            transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+            position: fixed;
+            top: 1px;
+            right: 160px;
+            width: 100px;
+            height: 10px;
+            background-color: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+             color: #111111;
+        }
+        .box3 {
+            padding: 15px;
+            margin: 20px;
+            border-radius: 20px;
+            width: 400px;
+            box-shadow: 2px 2px 5px #6DD5FA;
+            transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+            position: fixed;
+            top: 1px;
+            right: 290px;
+            width: 100px;
+            height: 10px;
+            background-color: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+             color: #111111;
+        }
+         .box4 {
+            padding: 15px;
+            margin: 20px;
+            border-radius: 20px;
+            width: 400px;
+            box-shadow: 2px 2px 5px #6DD5FA;
+           transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+            position: fixed;
+            top: 1px;
+            right: 420px;
+            width: 100px;
+            height: 10px;
+            background-color: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+             color: #111111;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1 class="header-title">HackAgency</h1>
+    </div>
+    <div class="center-header-container">
+        <h1 class="center-header">HackAgency</h1>
+        <h2 class="it-path-header">Путь в IT</h2>
+        <p class="it-path-sub-header">Что мы будем изучать?</p>
+    </div>
+    <div class=box1>
+        <h3 style="color:#111111; position: fixed; top: 4px; right: 58px">Поддержка</h3>
+    </div>
+    <div class=box2>
+        <h3 style="color:#111111; position: fixed; top: 4px; right: 207px">Оценки</h3>
+    </div>
+    <div class=box3>
+        <h3 style="color:#111111; position: fixed; top: 4px; right: 318px">Расписание</h3>
+    </div>
+    <div class=box4>
+        <h3 style="color:#111111; position: fixed; top: 4px; right: 477.5px">О нас</h3>
+    </div>
+    <div class="top-blocks">
+        <!-- Первые три блока -->
+        <div class="gradient-block">
+            <h2>Python/JavaScript</h2>
+            <p>Универсальные языки, идеально подходящие для веб-разработки, анализа данных, автоматизации.</p>
+        </div>
+        <div class="gradient-block">
+            <h2>C++/C#</h2>
+            <p>Мощные языки для высокопроизводительных приложений, игр, серверов и мобильных приложений.</p>
+        </div>
+        <div class="gradient-block">
+            <h2>Java/Kotlin</h2>
+            <p>Надежные языки для корпоративных приложений, Android-приложений и серверов.</p>
+        </div>
+    </div>
+    <div class="bottom-blocks">
+        <!-- Вторые два блока -->
+          <div class="gradient-block">
+            <h2>HTML/CSS</h2>
+             <p>Основы для создания веб-сайтов, позволяющие структурировать и стилизовать контент.</p>
+        </div>
+        <div class="gradient-block">
+            <h2>Этичный хакинг</h2>
+            <p>Легальное проникновение в системы для выявления уязвимостей и усиления безопасности.</p>
+        </div>
+    </div>
+     <script>
+         const boxes = document.querySelectorAll('.box1, .box2, .box3, .box4');
+          boxes.forEach(box => {
+             const originalBackground = 'white';
+             const originalColor =  '#111111';
+
+            box.addEventListener('mouseover', function() {
+                box.style.background = '#1c92d2';
+                 box.querySelector('h3').style.color = '#f2fcfe';
+            });
+
+           box.addEventListener('mouseout', function() {
+               box.style.background = originalBackground;
+               box.querySelector('h3').style.color = originalColor;
+            });
+        });
+    </script>
+</body>
+</html>
