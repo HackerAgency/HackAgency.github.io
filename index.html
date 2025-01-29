@@ -271,7 +271,7 @@
        <div id="main-content" class="page-section active" data-page="schedule">
             <div class="top-blocks">
             <!-- Первые три блока -->
-            <div class="gradient-block" >
+            <div class="gradient-block" data-page="main-content">
                 <h2>Python/JavaScript</h2>
                 <p>Универсальные языки, идеально подходящие для веб-разработки, анализа данных, автоматизации.</p>
             </div>
@@ -344,7 +344,7 @@
             </div>
     </div>
     <script>
-        const boxes = document.querySelectorAll('.box1, .box2, .box3, .box4, .box5 .gradient-block');
+        const boxes = document.querySelectorAll('.box1, .box2, .box3, .box4, .box5');
         const pageSections = document.querySelectorAll('.page-section');
          function handleBoxHover(box, isHovering) {
             const originalColor = 'white';
