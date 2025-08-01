@@ -1083,6 +1083,84 @@
             }
         }
     </style>
+
+<style>
+/* 3D кнопки */
+button, .submit-btn, .game-btn {
+    box-shadow: 0 4px 0 #333;
+    transition: all 0.15s ease;
+}
+button:active, .submit-btn:active, .game-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #333;
+}
+
+/* Настройки анимации панели */
+.settings-modal-content {
+    animation: slideUp 0.4s ease;
+}
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Анимированный фон (звезды) */
+#starsCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    background: transparent;
+    pointer-events: none;
+}
+</style>
+<canvas id="starsCanvas"></canvas>
+<script>
+// Простой фон звезды
+const canvas = document.getElementById('starsCanvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+for (let i = 0; i < 100; i++) {
+    stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.5,
+        d: Math.random() * 1
+    });
+}
+
+function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#ffffff";
+    ctx.shadowBlur = 5;
+    ctx.shadowColor = "#ffffff";
+    stars.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2, true);
+        ctx.fill();
+    });
+    moveStars();
+}
+function moveStars() {
+    stars.forEach(s => {
+        s.y += s.d;
+        if (s.y > canvas.height) {
+            s.y = 0;
+            s.x = Math.random() * canvas.width;
+        }
+    });
+}
+setInterval(drawStars, 30);
+</script>
+
 </head>
 <body>
     <!-- Снег -->
@@ -1363,7 +1441,49 @@
                     </div>
                 </div>
 
-                <button class="save-settings-btn" onclick="saveSettings()">Сохранить настройки</button>
+                
+<!-- Визуальные эффекты -->
+<div class="settings-section">
+    <h3>Визуальные Эффекты</h3>
+    <div class="setting-item">
+        <label class="setting-label">Тип анимации:</label>
+        <select id="effectType" class="setting-control">
+            <option value="snow">Снежинки ❄</option>
+            <option value="stars">Звёзды ✦</option>
+            <option value="custom">Символ / Слово</option>
+        </select>
+    </div>
+    <div class="setting-item">
+        <label class="setting-label">Символ / Слово (до 4 символов):</label>
+        <input type="text" id="customSymbol" class="setting-control" maxlength="4" placeholder="★ ♥ ∞">
+    </div>
+    <div class="setting-item">
+        <label class="setting-label"><input type="checkbox" id="rotateSymbols"> Вращать символы</label>
+    </div>
+    <div class="setting-item">
+        <label class="setting-label"><input type="checkbox" id="fallingEnabled" checked> Падение / Анимация</label>
+    </div>
+</div>
+
+<!-- Переключатель дизайна -->
+<div class="settings-section">
+    <h3>Дизайн</h3>
+    <div class="setting-item">
+        <label class="setting-label">Стиль:</label>
+        <select id="uiStyle" class="setting-control">
+            <option value="3d">3D + Эффекты</option>
+            <option value="flat">Минималистичный</option>
+        </select>
+    </div>
+</div>
+
+<!-- Кнопка таблицы лидеров -->
+<div class="settings-section">
+    <h3>Таблица Лидеров</h3>
+    <button class="save-settings-btn" onclick="showLeaderboard()">Показать Таблицу</button>
+    <button class="save-settings-btn" style="background:#999;margin-top:10px;" onclick="clearLeaderboard()">Очистить Таблицу</button>
+</div>
+<button class="save-settings-btn" onclick="saveSettings()">Сохранить настройки</button>
             </div>
         </div>
     </div>
@@ -3206,5 +3326,110 @@
     // Загрузка при старте
     window.addEventListener('DOMContentLoaded', loadComments);
 </script>
+
+<script>
+// Хранилище лидеров
+function updateLeaderboard(game, score, name) {
+    const key = 'okLeaderboard';
+    const data = JSON.parse(localStorage.getItem(key)) || [];
+
+    // если уже есть запись — обновляем
+    const existing = data.find(entry => entry.game === game && entry.name === name);
+    if (existing) {
+        if (score > existing.score) existing.score = score;
+    } else {
+        data.push({ game, name, score });
+    }
+
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+// Показать таблицу лидеров
+function showLeaderboard() {
+    const data = JSON.parse(localStorage.getItem('okLeaderboard')) || [];
+    let html = '<h2 style="color:#4ecdc4;">🏆 Таблица Лидеров</h2><ul style="list-style:none;padding:0">';
+    if (data.length === 0) {
+        html += '<li style="color:#ccc;">Нет записей</li>';
+    } else {
+        data.sort((a, b) => b.score - a.score);
+        data.forEach(entry => {
+            html += `<li style="margin:6px 0;">🎮 <b>${entry.game}</b>: <span style="color:#ff6b6b">${entry.name}</span> — <b>${entry.score}</b></li>`;
+        });
+    }
+    html += '</ul>';
+    alert(html);
+}
+
+// Пример использования:
+// updateLeaderboard('Крестики-Нолики', 1, 'Игрок'); // после победы
+// showLeaderboard(); // вызвать вручную или кнопкой
+</script>
+
+
+<script>
+// Настройки эффектов
+function applyEffectSettings() {
+    const type = document.getElementById('effectType').value;
+    const symbol = document.getElementById('customSymbol').value || '❄';
+    const rotate = document.getElementById('rotateSymbols').checked;
+    const fall = document.getElementById('fallingEnabled').checked;
+
+    // Очистка
+    document.getElementById('snow-container').innerHTML = "";
+
+    // Добавим новые символы
+    if (!fall) return;
+
+    const count = 30;
+    for (let i = 0; i < count; i++) {
+        const el = document.createElement('div');
+        el.textContent = (type === 'custom') ? symbol : (type === 'stars' ? '✦' : '❄');
+        el.className = 'snowflake';
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.animationDuration = (5 + Math.random() * 10) + 's';
+        el.style.opacity = (0.5 + Math.random() * 0.5);
+        el.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
+        if (rotate) el.style.transform = `rotate(${Math.random() * 360}deg)`;
+        document.getElementById('snow-container').appendChild(el);
+    }
+}
+
+// Обновление дизайна
+function applyUIStyle() {
+    const style = document.getElementById('uiStyle').value;
+    const root = document.documentElement;
+    if (style === 'flat') {
+        document.querySelectorAll('button, .submit-btn, .game-btn').forEach(btn => {
+            btn.style.boxShadow = 'none';
+        });
+    } else {
+        document.querySelectorAll('button, .submit-btn, .game-btn').forEach(btn => {
+            btn.style.boxShadow = '0 4px 0 #333';
+        });
+    }
+}
+
+// Очистка таблицы лидеров
+function clearLeaderboard() {
+    localStorage.removeItem('okLeaderboard');
+    alert('Таблица очищена!');
+}
+
+// Вызов при открытии настроек
+function loadVisualSettings() {
+    applyEffectSettings();
+    applyUIStyle();
+}
+
+// Добавляем применение при изменении
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("effectType").onchange = applyEffectSettings;
+    document.getElementById("customSymbol").oninput = applyEffectSettings;
+    document.getElementById("rotateSymbols").onchange = applyEffectSettings;
+    document.getElementById("fallingEnabled").onchange = applyEffectSettings;
+    document.getElementById("uiStyle").onchange = applyUIStyle;
+});
+</script>
+
 </body>
 </html>
