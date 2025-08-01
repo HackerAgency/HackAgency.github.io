@@ -237,113 +237,285 @@
             color: #a0a0c0;
         }
 
-        .theme-switcher {
+        /* Настройки в левом нижнем углу */
+        .settings-corner {
             position: fixed;
             bottom: 20px;
-            right: 20px;
-            z-index: 3;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 12px 18px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .settings-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .settings-button:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.5);
+        }
+
+        .settings-button i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Модальное окно настроек */
+        .settings-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .settings-modal-content {
+            background: rgba(26, 26, 46, 0.95);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            backdrop-filter: blur(15px);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .light-theme .settings-modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .light-theme .settings-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-title {
+            font-size: 1.8rem;
+            color: #4ecdc4;
+            margin: 0;
+        }
+
+        .close-settings {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-settings:hover {
+            color: #ff6b6b;
+        }
+
+        .light-theme .close-settings {
+            color: #999;
+        }
+
+        .light-theme .close-settings:hover {
+            color: #ff6b6b;
+        }
+
+        .settings-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .light-theme .settings-section {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-section h3 {
+            color: #4ecdc4;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .setting-item {
+            margin-bottom: 20px;
+        }
+
+        .setting-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #a0a0c0;
+            font-weight: 500;
+        }
+
+        .light-theme .setting-label {
+            color: #666;
+        }
+
+        .setting-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .light-theme .setting-control {
+            background: rgba(0, 0, 0, 0.05);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .range-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .light-theme .range-slider {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4ecdc4;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+
+        .range-value {
+            display: inline-block;
+            margin-left: 15px;
+            color: #4ecdc4;
+            font-weight: bold;
+            min-width: 30px;
+        }
+
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-left: 15px;
+            vertical-align: middle;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-preview {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .theme-option {
+            width: 80px;
+            height: 50px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.05);
+            border-color: #4ecdc4;
+        }
+
+        .theme-option.active {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+        }
+
+        .avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px auto;
+            font-weight: bold;
+            color: white;
+            font-size: 2rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .image-upload {
+            display: block;
+            margin: 15px auto;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: #fff;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .theme-switcher:hover {
-            background: rgba(0, 0, 0, 0.5);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
-        }
-
-        .theme-switcher i {
-            font-size: 1.5rem;
-            color: #fff;
-        }
-
-        .light-theme {
-            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 50%, #ffffff 100%) !important;
-        }
-
-        .light-theme .container,
-        .light-theme header,
-        .light-theme .tab-content,
-        .light-theme .member-card,
-        .light-theme .game-card {
-            background: rgba(255, 255, 255, 0.9) !important;
-            color: #333;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .light-theme .snowflake {
-            color: #666;
-            text-shadow: 0 0 5px rgba(102, 102, 102, 0.8);
-        }
-
-        .light-theme .quote {
-            border-left-color: #4ecdc4;
-            background: rgba(255, 255, 255, 0.7);
-            color: #333;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .light-theme .tab-btn {
+        .light-theme .image-upload {
             background: rgba(0, 0, 0, 0.1);
             color: #333;
             border: 1px solid rgba(0, 0, 0, 0.2);
         }
 
-        .light-theme .tab-btn:hover {
+        .image-upload:hover {
             background: rgba(78, 205, 196, 0.3);
         }
 
-        .light-theme .tab-btn.active {
+        .save-settings-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 25px;
             color: white;
-            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .light-theme .member-title {
-            color: #4ecdc4;
-        }
-
-        .light-theme .game-title {
-            color: #ff6b6b;
-        }
-
-        .light-theme .game-desc {
-            color: #666;
-        }
-
-        .light-theme .form-input,
-        .light-theme .form-textarea {
-            background: rgba(0, 0, 0, 0.05);
-            color: #333;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-        }
-
-        .light-theme .form-label {
-            color: #666;
-        }
-
-        .light-theme .comment {
-            background: rgba(0, 0, 0, 0.05);
-            color: #333;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .light-theme .comment-author {
-            color: #4ecdc4;
-        }
-
-        .light-theme .comment-date {
-            color: #666;
-        }
-
-        .light-theme .footer {
-            color: #666;
+        .save-settings-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.5);
         }
 
         /* Модальное окно игры */
@@ -810,101 +982,51 @@
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
         }
 
-        /* Профиль в левом нижнем углу */
-        .profile-corner {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 3;
-            cursor: pointer;
-        }
-
-        .profile-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: white;
-            font-size: 1.2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .profile-avatar:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.5);
-        }
-
-        /* Модальное окно профиля */
-        .profile-modal {
-            display: none;
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .profile-modal-content {
-            background: rgba(26, 26, 46, 0.95);
-            margin: 15% auto;
-            padding: 30px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            position: relative;
-            backdrop-filter: blur(15px);
-        }
-
-        .light-theme .profile-modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            color: #333;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-        }
-
-        .profile-modal-header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .light-theme .profile-modal-header {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .profile-modal-title {
-            font-size: 1.5rem;
-            color: #4ecdc4;
-            margin: 0;
-        }
-
-        .avatar-preview-large {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-weight: bold;
-            color: white;
-            font-size: 2.5rem;
-        }
-
         /* Новые игры */
         .new-game-icon {
             font-size: 2.5rem;
             margin-bottom: 15px;
+        }
+
+        /* Темы */
+        .theme-blue {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+        }
+
+        .theme-green {
+            background: linear-gradient(135deg, #0f4c3a 0%, #1a5d4a 50%, #2a7d6a 100%) !important;
+        }
+
+        .theme-purple {
+            background: linear-gradient(135deg, #4b0082 0%, #6a0dad 50%, #8a2be2 100%) !important;
+        }
+
+        .theme-orange {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffb74d 100%) !important;
+        }
+
+        .theme-pink {
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 50%, #ff69b4 100%) !important;
+        }
+
+        .theme-light-blue {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%) !important;
+        }
+
+        .theme-light-green {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%) !important;
+        }
+
+        .theme-light-purple {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 50%, #ce93d8 100%) !important;
+        }
+
+        .theme-light-orange {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 50%, #ffcc80 100%) !important;
+        }
+
+        .theme-light-pink {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%) !important;
         }
 
         @media (max-width: 768px) {
@@ -955,6 +1077,11 @@
                 width: 12px;
                 height: 12px;
             }
+            
+            .settings-modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
         }
     </style>
 </head>
@@ -962,9 +1089,11 @@
     <!-- Снег -->
     <div id="snow-container"></div>
 
-    <!-- Профиль в левом нижнем углу -->
-    <div class="profile-corner" onclick="openProfileModal()">
-        <div class="profile-avatar" id="cornerAvatar">U</div>
+    <!-- Настройки в левом нижнем углу -->
+    <div class="settings-corner">
+        <div class="settings-button" onclick="openSettingsModal()">
+            <i class="fas fa-cog"></i>
+        </div>
     </div>
 
     <div class="container">
@@ -1094,7 +1223,7 @@
                 </div>
                 
                 <div class="game-card" onclick="openGameModal('spaceInvaders')">
-                    <div class="game-icon">👾</div>
+                    <div class="new-game-icon">👾</div>
                     <h3 class="game-title">Космические захватчики</h3>
                     <p class="game-desc">Уничтожьте вражеские корабли</p>
                 </div>
@@ -1152,24 +1281,90 @@
         </footer>
     </div>
 
-    <!-- Модальное окно профиля -->
-    <div id="profileModal" class="profile-modal">
-        <div class="profile-modal-content">
-            <div class="profile-modal-header">
-                <h2 class="profile-modal-title">Настройки профиля</h2>
-                <span class="close" onclick="closeProfileModal()">&times;</span>
+    <!-- Модальное окно настроек -->
+    <div id="settingsModal" class="settings-modal">
+        <div class="settings-modal-content">
+            <div class="settings-header">
+                <h2 class="settings-title">Настройки</h2>
+                <span class="close-settings" onclick="closeSettingsModal()">&times;</span>
             </div>
             <div class="modal-body">
-                <div class="avatar-preview-large" id="largeAvatarPreview">U</div>
-                <div class="form-group">
-                    <label class="form-label">Ваш ник:</label>
-                    <input type="text" id="profileName" class="form-input" placeholder="Введите ваш ник">
+                <!-- Профиль -->
+                <div class="settings-section">
+                    <h3>Профиль</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">Ваш ник:</label>
+                        <input type="text" id="settingsProfileName" class="setting-control" placeholder="Введите ваш ник">
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Аватар (первая буква):</label>
+                        <input type="text" id="settingsProfileAvatar" class="setting-control" placeholder="Введите первую букву ника" maxlength="1">
+                    </div>
+                    <div class="avatar-preview" id="settingsAvatarPreview">U</div>
+                    <label class="image-upload">
+                        <input type="file" id="avatarUpload" accept="image/*" style="display: none;" onchange="previewAvatar(event)">
+                        Загрузить изображение
+                    </label>
+                    <div id="avatarImagePreview" style="text-align: center; margin-top: 15px;"></div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Аватар (первая буква):</label>
-                    <input type="text" id="profileAvatar" class="form-input" placeholder="Введите первую букву ника" maxlength="1">
+
+                <!-- Темы -->
+                <div class="settings-section">
+                    <h3>Темы</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">Основная тема:</label>
+                        <select id="mainTheme" class="setting-control">
+                            <option value="dark">Темная</option>
+                            <option value="light">Светлая</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Цветовая схема:</label>
+                        <div class="theme-preview">
+                            <div class="theme-option theme-blue active" data-theme="blue" onclick="selectTheme('blue')"></div>
+                            <div class="theme-option theme-green" data-theme="green" onclick="selectTheme('green')"></div>
+                            <div class="theme-option theme-purple" data-theme="purple" onclick="selectTheme('purple')"></div>
+                            <div class="theme-option theme-orange" data-theme="orange" onclick="selectTheme('orange')"></div>
+                            <div class="theme-option theme-pink" data-theme="pink" onclick="selectTheme('pink')"></div>
+                        </div>
+                    </div>
                 </div>
-                <button class="submit-btn" onclick="saveProfile()" style="width: 100%;">Сохранить</button>
+
+                <!-- Снег -->
+                <div class="settings-section">
+                    <h3>Снег</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">Количество снежинок: <span id="snowCountValue" class="range-value">5</span></label>
+                        <input type="range" id="snowCount" class="range-slider" min="0" max="50" value="5">
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Размер снежинок: <span id="snowSizeValue" class="range-value">1.2</span>rem</label>
+                        <input type="range" id="snowSize" class="range-slider" min="5" max="30" value="12">
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Скорость падения: <span id="snowSpeedValue" class="range-value">10</span>сек</label>
+                        <input type="range" id="snowSpeed" class="range-slider" min="1" max="30" value="10">
+                    </div>
+                </div>
+
+                <!-- Дизайн -->
+                <div class="settings-section">
+                    <h3>Дизайн</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">Радиус скругления: <span id="borderRadiusValue" class="range-value">15</span>px</label>
+                        <input type="range" id="borderRadius" class="range-slider" min="0" max="30" value="15">
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Интенсивность теней: <span id="shadowIntensityValue" class="range-value">0.3</span></label>
+                        <input type="range" id="shadowIntensity" class="range-slider" min="0" max="10" value="3">
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Прозрачность элементов: <span id="opacityValue" class="range-value">0.4</span></label>
+                        <input type="range" id="opacity" class="range-slider" min="1" max="10" value="4">
+                    </div>
+                </div>
+
+                <button class="save-settings-btn" onclick="saveSettings()">Сохранить настройки</button>
             </div>
         </div>
     </div>
@@ -1358,39 +1553,63 @@
         </div>
     </div>
 
-    <!-- Переключатель тем -->
-    <div class="theme-switcher" onclick="toggleTheme()">
-        <i class="fas fa-sun"></i>
-    </div>
-
     <script>
+        // Настройки по умолчанию
+        let userSettings = JSON.parse(localStorage.getItem('okUserSettings')) || {
+            profile: {
+                name: 'Гость',
+                avatar: 'Г',
+                avatarImage: null
+            },
+            theme: {
+                main: 'dark',
+                color: 'blue'
+            },
+            snow: {
+                count: 5,
+                size: 12,
+                speed: 10
+            },
+            design: {
+                borderRadius: 15,
+                shadowIntensity: 3,
+                opacity: 4
+            }
+        };
+
         // Создание снега
         function createSnow() {
             const snowContainer = document.getElementById('snow-container');
-            const snowflakesCount = 3; // Минимальное количество снежинок
+            snowContainer.innerHTML = '';
             
-            for (let i = 0; i < snowflakesCount; i++) {
+            const snowCount = userSettings.snow.count;
+            
+            for (let i = 0; i < snowCount; i++) {
                 const snowflake = document.createElement('div');
                 snowflake.innerHTML = '❄';
                 snowflake.classList.add('snowflake');
                 
                 // Случайные параметры
                 const startLeft = Math.random() * 100;
-                const animationDuration = 8 + Math.random() * 12;
+                const animationDuration = userSettings.snow.speed + Math.random() * userSettings.snow.speed;
                 const animationDelay = Math.random() * 5;
-                const opacity = 0.6 + Math.random() * 0.4;
+                const opacity = 0.3 + Math.random() * 0.7;
+                const fontSize = userSettings.snow.size / 10 + 'rem';
                 
                 snowflake.style.left = startLeft + 'vw';
                 snowflake.style.animationDuration = animationDuration + 's';
                 snowflake.style.animationDelay = animationDelay + 's';
                 snowflake.style.opacity = opacity;
+                snowflake.style.fontSize = fontSize;
                 
                 snowContainer.appendChild(snowflake);
                 
                 // Удаление снежинки после завершения анимации
                 setTimeout(() => {
-                    snowflake.remove();
-                    createSingleSnow(); // Создать новую снежинку
+                    if (snowflake.parentNode) {
+                        snowflake.remove();
+                        createSingleSnow();
+                    }
                 }, animationDuration * 1000);
             }
         }
@@ -1403,18 +1622,22 @@
             snowflake.classList.add('snowflake');
             
             const startLeft = Math.random() * 100;
-            const animationDuration = 8 + Math.random() * 12;
-            const opacity = 0.6 + Math.random() * 0.4;
+            const animationDuration = userSettings.snow.speed + Math.random() * userSettings.snow.speed;
+            const opacity = 0.3 + Math.random() * 0.7;
+            const fontSize = userSettings.snow.size / 10 + 'rem';
             
             snowflake.style.left = startLeft + 'vw';
             snowflake.style.animationDuration = animationDuration + 's';
             snowflake.style.opacity = opacity;
+            snowflake.style.fontSize = fontSize;
             
             snowContainer.appendChild(snowflake);
             
             setTimeout(() => {
-                snowflake.remove();
-                createSingleSnow();
+                if (snowflake.parentNode) {
+                    snowflake.remove();
+                    createSingleSnow();
+                }
             }, animationDuration * 1000);
         }
         
@@ -1481,9 +1704,194 @@
             document.getElementById(gameId + 'Modal').style.display = 'none';
         }
         
-        // Закрытие модального окна при клике вне его
+        // Открытие модального окна настроек
+        function openSettingsModal() {
+            document.getElementById('settingsModal').style.display = 'block';
+            loadSettingsToForm();
+        }
+        
+        // Закрытие модального окна настроек
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').style.display = 'none';
+        }
+        
+        // Загрузка настроек в форму
+        function loadSettingsToForm() {
+            // Профиль
+            document.getElementById('settingsProfileName').value = userSettings.profile.name;
+            document.getElementById('settingsProfileAvatar').value = userSettings.profile.avatar;
+            document.getElementById('settingsAvatarPreview').innerHTML = userSettings.profile.avatar;
+            
+            // Темы
+            document.getElementById('mainTheme').value = userSettings.theme.main;
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.theme-option.theme-${userSettings.theme.color}`).classList.add('active');
+            
+            // Снег
+            document.getElementById('snowCount').value = userSettings.snow.count;
+            document.getElementById('snowCountValue').textContent = userSettings.snow.count;
+            document.getElementById('snowSize').value = userSettings.snow.size;
+            document.getElementById('snowSizeValue').textContent = (userSettings.snow.size / 10).toFixed(1);
+            document.getElementById('snowSpeed').value = userSettings.snow.speed;
+            document.getElementById('snowSpeedValue').textContent = userSettings.snow.speed;
+            
+            // Дизайн
+            document.getElementById('borderRadius').value = userSettings.design.borderRadius;
+            document.getElementById('borderRadiusValue').textContent = userSettings.design.borderRadius;
+            document.getElementById('shadowIntensity').value = userSettings.design.shadowIntensity;
+            document.getElementById('shadowIntensityValue').textContent = (userSettings.design.shadowIntensity / 10).toFixed(1);
+            document.getElementById('opacity').value = userSettings.design.opacity;
+            document.getElementById('opacityValue').textContent = (userSettings.design.opacity / 10).toFixed(1);
+        }
+        
+        // Предварительный просмотр аватара
+        function previewAvatar(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.borderRadius = '50%';
+                    img.style.objectFit = 'cover';
+                    document.getElementById('avatarImagePreview').innerHTML = '';
+                    document.getElementById('avatarImagePreview').appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // Выбор темы
+        function selectTheme(theme) {
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Сохранение настроек
+        function saveSettings() {
+            // Профиль
+            userSettings.profile.name = document.getElementById('settingsProfileName').value || 'Гость';
+            userSettings.profile.avatar = document.getElementById('settingsProfileAvatar').value || 'Г';
+            
+            // Темы
+            userSettings.theme.main = document.getElementById('mainTheme').value;
+            const activeTheme = document.querySelector('.theme-option.active');
+            if (activeTheme) {
+                userSettings.theme.color = activeTheme.dataset.theme;
+            }
+            
+            // Снег
+            userSettings.snow.count = parseInt(document.getElementById('snowCount').value);
+            userSettings.snow.size = parseInt(document.getElementById('snowSize').value);
+            userSettings.snow.speed = parseInt(document.getElementById('snowSpeed').value);
+            
+            // Дизайн
+            userSettings.design.borderRadius = parseInt(document.getElementById('borderRadius').value);
+            userSettings.design.shadowIntensity = parseInt(document.getElementById('shadowIntensity').value);
+            userSettings.design.opacity = parseInt(document.getElementById('opacity').value);
+            
+            // Сохранение в localStorage
+            localStorage.setItem('okUserSettings', JSON.stringify(userSettings));
+            
+            // Применение настроек
+            applySettings();
+            
+            // Закрытие модального окна
+            closeSettingsModal();
+            
+            alert('Настройки сохранены!');
+        }
+        
+        // Применение настроек
+        function applySettings() {
+            // Тема
+            document.body.className = '';
+            if (userSettings.theme.main === 'light') {
+                document.body.classList.add('light-theme');
+            }
+            document.body.classList.add(`theme-${userSettings.theme.color}`);
+            
+            // Снег
+            createSnow();
+            
+            // Дизайн
+            updateDesignStyles();
+            
+            // Профиль
+            document.getElementById('commentName').value = userSettings.profile.name;
+        }
+        
+        // Обновление стилей дизайна
+        function updateDesignStyles() {
+            // Создание или обновление стилей
+            let style = document.getElementById('dynamic-styles');
+            if (!style) {
+                style = document.createElement('style');
+                style.id = 'dynamic-styles';
+                document.head.appendChild(style);
+            }
+            
+            const borderRadius = userSettings.design.borderRadius + 'px';
+            const shadowIntensity = userSettings.design.shadowIntensity / 10;
+            const opacity = userSettings.design.opacity / 10;
+            
+            style.textContent = `
+                .container, .tab-content, .member-card, .game-card, .comment, .comment-form, .comments-section,
+                .modal-content, .game-container, .game-cell, .snake-board, .memory-card, .breakout-canvas,
+                .settings-section, .settings-modal-content {
+                    border-radius: ${borderRadius} !important;
+                }
+                
+                .tab-btn, .game-btn, .submit-btn, .mode-btn, .save-settings-btn, .image-upload,
+                .settings-button {
+                    border-radius: ${Math.max(15, userSettings.design.borderRadius * 2)}px !important;
+                }
+                
+                .tab-content, .member-card, .game-card, .comment, .comment-form, .comments-section,
+                .game-container, .snake-board, .settings-section {
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, ${shadowIntensity}) !important;
+                }
+                
+                .modal-content, .settings-modal-content {
+                    box-shadow: 0 20px 50px rgba(0, 0, 0, ${Math.min(0.7, shadowIntensity * 2)}) !important;
+                }
+                
+                .tab-content, .member-card, .game-card, .comment, .comment-form, .comments-section,
+                .game-container, .settings-section {
+                    background: rgba(0, 0, 0, ${opacity}) !important;
+                }
+                
+                .light-theme .tab-content, .light-theme .member-card, .light-theme .game-card, 
+                .light-theme .comment, .light-theme .comment-form, .light-theme .comments-section,
+                .light-theme .game-container, .light-theme .settings-section {
+                    background: rgba(255, 255, 255, ${Math.min(0.9, opacity + 0.5)}) !important;
+                }
+            `;
+        }
+        
+        // Обновление значений слайдеров
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('range-slider')) {
+                const valueElement = document.getElementById(e.target.id + 'Value');
+                if (valueElement) {
+                    if (e.target.id === 'snowSize' || e.target.id === 'shadowIntensity' || e.target.id === 'opacity') {
+                        valueElement.textContent = (e.target.value / (e.target.id === 'snowSize' ? 10 : 10)).toFixed(1);
+                    } else {
+                        valueElement.textContent = e.target.value;
+                    }
+                }
+            }
+        });
+        
+        // Закрытие модальных окон при клике вне их
         window.onclick = function(event) {
-            const modals = document.querySelectorAll('.modal, .profile-modal');
+            const modals = document.querySelectorAll('.modal, .settings-modal');
             modals.forEach(modal => {
                 if (event.target === modal) {
                     modal.style.display = 'none';
@@ -1491,69 +1899,11 @@
             });
         }
         
-        // Переключение тем
-        function toggleTheme() {
-            document.body.classList.toggle('light-theme');
-        }
-        
-        // Профиль пользователя
-        let userProfile = JSON.parse(localStorage.getItem('okUserProfile') || '{"name":"Гость","avatar":"Г"}');
-        
-        function openProfileModal() {
-            document.getElementById('profileModal').style.display = 'block';
-            updateProfileModal();
-        }
-        
-        function closeProfileModal() {
-            document.getElementById('profileModal').style.display = 'none';
-        }
-        
-        function updateProfileModal() {
-            document.getElementById('largeAvatarPreview').innerHTML = userProfile.avatar;
-            document.getElementById('profileName').value = userProfile.name;
-            document.getElementById('profileAvatar').value = userProfile.avatar;
-        }
-        
-        function saveProfile() {
-            const name = document.getElementById('profileName').value.trim();
-            const avatar = document.getElementById('profileAvatar').value.trim() || 'Г';
-            
-            if (name) {
-                userProfile = { name: name, avatar: avatar };
-                localStorage.setItem('okUserProfile', JSON.stringify(userProfile));
-                document.getElementById('commentName').value = name;
-                document.getElementById('cornerAvatar').innerHTML = avatar;
-                closeProfileModal();
-                alert('Профиль сохранен!');
-            }
-        }
-        
-        // Режимы игр
-        let ticTacToeMode = 'ai'; // 'ai' или 'pvp'
-        let pongMode = 'ai'; // 'ai' или 'pvp'
-        
-        function setTicTacToeMode(mode) {
-            ticTacToeMode = mode;
-            document.querySelectorAll('#ticTacToeModal .mode-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            resetTicTacToe();
-        }
-        
-        function setPongMode(mode) {
-            pongMode = mode;
-            document.querySelectorAll('#pongModal .mode-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            resetPong();
-        }
-        
         // Игра Крестики-Нолики
         let currentPlayer = 'X';
         let gameBoard = ['', '', '', '', '', '', '', '', ''];
         let gameActive = true;
+        let ticTacToeMode = 'ai';
 
         function initTicTacToe() {
             const board = document.getElementById('ticTacToeBoard');
@@ -1679,6 +2029,15 @@
 
         function resetTicTacToe() {
             initTicTacToe();
+        }
+
+        function setTicTacToeMode(mode) {
+            ticTacToeMode = mode;
+            document.querySelectorAll('#ticTacToeModal .mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            resetTicTacToe();
         }
 
         // Игра Змейка
@@ -1873,7 +2232,7 @@
         let breakoutScore = 0;
         let breakoutLives = 3;
         let breakoutGameInterval;
-        let breakoutKeys = {}; // Для плавного движения
+        let breakoutKeys = {};
 
         function initBreakout() {
             breakoutCanvas = document.getElementById('breakoutCanvas');
@@ -2087,7 +2446,8 @@
         let pongLeftPaddle, pongRightPaddle, pongBall;
         let pongLeftScore = 0, pongRightScore = 0;
         let pongGameInterval;
-        let pongKeys = {}; // Для плавного движения
+        let pongKeys = {};
+        let pongMode = 'ai';
 
         function initPong() {
             pongCanvas = document.getElementById('pongCanvas');
@@ -2265,6 +2625,15 @@
             initPong();
             clearInterval(pongGameInterval);
             pongGameInterval = setInterval(updatePong, 16);
+        }
+
+        function setPongMode(mode) {
+            pongMode = mode;
+            document.querySelectorAll('#pongModal .mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            resetPong();
         }
 
         // Управление понгом (плавное движение) - поддержка разных раскладок
@@ -2690,10 +3059,8 @@
         });
 
         // Комментарии
-        // Хранилище комментариев (в реальной системе это будет база данных)
         let comments = JSON.parse(localStorage.getItem('okComments') || '[]');
 
-        // Отображение комментариев
         function displayComments() {
             const commentsList = document.getElementById('commentsList');
             const noComments = document.getElementById('noComments');
@@ -2706,7 +3073,6 @@
             
             noComments.style.display = 'none';
             
-            // Сортировка по дате (новые первыми)
             comments.sort((a, b) => new Date(b.date) - new Date(a.date));
             
             let commentsHTML = '';
@@ -2730,7 +3096,6 @@
             commentsList.innerHTML = commentsHTML;
         }
 
-        // Форматирование даты
         function formatDate(dateString) {
             const date = new Date(dateString);
             return date.toLocaleString('ru-RU', {
@@ -2742,7 +3107,6 @@
             });
         }
 
-        // Добавление комментария
         function addComment(name, text) {
             const comment = {
                 name: name,
@@ -2756,7 +3120,6 @@
             displayComments();
         }
 
-        // Обработка формы
         document.getElementById('commentForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -2766,23 +3129,27 @@
             if (name && text) {
                 addComment(name, text);
                 document.getElementById('commentForm').reset();
-                document.getElementById('commentName').value = name; // Сохраняем имя
+                document.getElementById('commentName').value = name;
             }
         });
 
         // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
-            createSnow();
-            
-            // Автоматическое создание новых снежинок
-            setInterval(createSingleSnow, 3000);
+            // Применение настроек
+            applySettings();
             
             // Отображение комментариев
             displayComments();
             
-            // Загрузка профиля
-            document.getElementById('cornerAvatar').innerHTML = userProfile.avatar;
-            document.getElementById('commentName').value = userProfile.name;
+            // Создание снега
+            createSnow();
+            
+            // Автоматическое создание новых снежинок
+            setInterval(() => {
+                if (userSettings.snow.count > 0) {
+                    createSingleSnow();
+                }
+            }, 3000);
         });
     </script>
 
