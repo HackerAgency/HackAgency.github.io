@@ -542,6 +542,125 @@
             max-width: 100%;
         }
 
+        /* Стили для комментариев */
+        .comments-section {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .comments-title {
+            font-size: 2rem;
+            color: #4ecdc4;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .comment-form {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #a0a0c0;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .form-textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        }
+
+        .comments-list {
+            margin-top: 30px;
+        }
+
+        .comment {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: #4ecdc4;
+            margin-right: 10px;
+        }
+
+        .comment-date {
+            color: #a0a0c0;
+            font-size: 0.9rem;
+        }
+
+        .comment-text {
+            line-height: 1.6;
+        }
+
+        .no-comments {
+            text-align: center;
+            color: #a0a0c0;
+            font-style: italic;
+            padding: 30px;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
@@ -608,6 +727,7 @@
             <button class="tab-btn" onclick="showTab('members')">Члены Клана</button>
             <button class="tab-btn" onclick="showTab('games')">Игры</button>
             <button class="tab-btn" onclick="showTab('memories')">Воспоминания</button>
+            <button class="tab-btn" onclick="showTab('comments')">Комментарии</button>
         </div>
 
         <div id="story" class="tab-content active">
@@ -725,6 +845,35 @@
                 "Мы будем помнить друг друга всегда... 
                 Я не хочу уходить, но путь продолжается. 
                 Клан ОкЪ жив!"
+            </div>
+        </div>
+
+        <!-- Секция комментариев -->
+        <div id="comments" class="tab-content">
+            <div class="comments-section">
+                <h2 class="comments-title">Комментарии Клана ОкЪ</h2>
+                
+                <!-- Форма комментариев -->
+                <div class="comment-form">
+                    <h3 style="margin-bottom: 20px; color: #ff6b6b;">Оставить комментарий</h3>
+                    <form id="commentForm">
+                        <div class="form-group">
+                            <label class="form-label">Ваш ник:</label>
+                            <input type="text" id="commentName" class="form-input" placeholder="Введите ваш ник" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Комментарий:</label>
+                            <textarea id="commentText" class="form-textarea" placeholder="Напишите ваш комментарий..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Отправить</button>
+                    </form>
+                </div>
+
+                <!-- Список комментариев -->
+                <div class="comments-list" id="commentsList">
+                    <div class="no-comments" id="noComments">Пока нет комментариев. Будьте первым!</div>
+                    <!-- Комментарии будут добавляться сюда -->
+                </div>
             </div>
         </div>
 
@@ -1589,12 +1738,94 @@
             }
         });
 
+        // Комментарии
+        // Хранилище комментариев (в реальной системе это будет база данных)
+        let comments = JSON.parse(localStorage.getItem('okComments') || '[]');
+
+        // Отображение комментариев
+        function displayComments() {
+            const commentsList = document.getElementById('commentsList');
+            const noComments = document.getElementById('noComments');
+            
+            if (comments.length === 0) {
+                noComments.style.display = 'block';
+                commentsList.innerHTML = '<div class="no-comments" id="noComments">Пока нет комментариев. Будьте первым!</div>';
+                return;
+            }
+            
+            noComments.style.display = 'none';
+            
+            // Сортировка по дате (новые первыми)
+            comments.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            let commentsHTML = '';
+            comments.forEach(comment => {
+                commentsHTML += `
+                    <div class="comment">
+                        <div class="comment-header">
+                            <div class="comment-avatar">${comment.name.charAt(0).toUpperCase()}</div>
+                            <div class="comment-info">
+                                <span class="comment-author">${comment.name}</span>
+                                <span class="comment-date">${formatDate(comment.date)}</span>
+                            </div>
+                        </div>
+                        <div class="comment-text">
+                            ${comment.text}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            commentsList.innerHTML = commentsHTML;
+        }
+
+        // Форматирование даты
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Добавление комментария
+        function addComment(name, text) {
+            const comment = {
+                name: name,
+                text: text,
+                date: new Date().toISOString()
+            };
+            
+            comments.push(comment);
+            localStorage.setItem('okComments', JSON.stringify(comments));
+            displayComments();
+        }
+
+        // Обработка формы
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('commentName').value.trim();
+            const text = document.getElementById('commentText').value.trim();
+            
+            if (name && text) {
+                addComment(name, text);
+                document.getElementById('commentForm').reset();
+            }
+        });
+
         // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
             createSnow();
             
             // Автоматическое создание новых снежинок
             setInterval(createSingleSnow, 2000);
+            
+            // Отображение комментариев
+            displayComments();
         });
     </script>
 
