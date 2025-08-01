@@ -1112,29 +1112,9 @@
         }
     }
 
-    // Обработка отправки комментария
-    document.getElementById('commentForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const name = document.getElementById('commentName').value.trim();
-        const text = document.getElementById('commentText').value.trim();
-        if (name === '' || text === '') return;
+    
 
-        const avatar = name.charAt(0).toUpperCase();
-        const now = new Date();
-        const date = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
 
-        const comment = { name, text, avatar, date };
-        const comments = JSON.parse(localStorage.getItem('okComments')) || [];
-        comments.unshift(comment);
-        localStorage.setItem('okComments', JSON.stringify(comments));
-
-        document.getElementById('commentForm').reset();
-        loadComments();
-    });
-
-    // Загрузка при старте
-    window.addEventListener('DOMContentLoaded', loadComments);
-</script>
 
 <body>
     <!-- Снег -->
@@ -1628,6 +1608,54 @@
             }
         };
 
+        function loadComments() {
+        const comments = JSON.parse(localStorage.getItem('okComments')) || [];
+        const commentsList = document.getElementById('commentsList');
+        const noComments = document.getElementById('noComments');
+
+        commentsList.innerHTML = '';
+        if (comments.length === 0) {
+            noComments.style.display = 'block';
+        } else {
+            noComments.style.display = 'none';
+            comments.forEach(comment => {
+                const commentEl = document.createElement('div');
+                commentEl.className = 'comment';
+                commentEl.innerHTML = `
+                    <div class="comment-header">
+                        <div class="comment-avatar">${comment.avatar}</div>
+                        <div class="comment-author">${comment.name}</div>
+                        <div class="comment-date">${comment.date}</div>
+                    </div>
+                    <div class="comment-text">${comment.text}</div>
+                `;
+                commentsList.appendChild(commentEl);
+            });
+        }
+    }
+
+    // Обработка отправки комментария
+    document.getElementById('commentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('commentName').value.trim();
+        const text = document.getElementById('commentText').value.trim();
+        if (name === '' || text === '') return;
+
+        const avatar = name.charAt(0).toUpperCase();
+        const now = new Date();
+        const date = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+
+        const comment = { name, text, avatar, date };
+        const comments = JSON.parse(localStorage.getItem('okComments')) || [];
+        comments.unshift(comment);
+        localStorage.setItem('okComments', JSON.stringify(comments));
+
+        document.getElementById('commentForm').reset();
+        loadComments();
+    });
+
+    // Загрузка при старте
+    window.addEventListener('DOMContentLoaded', loadComments);
         // Создание снега
         function createSnow() {
             const snowContainer = document.getElementById('snow-container');
