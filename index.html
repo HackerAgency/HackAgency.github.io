@@ -661,6 +661,31 @@
             padding: 30px;
         }
 
+        /* Стили для выбора режима игры */
+        .mode-selection {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            margin: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn:hover {
+            background: rgba(78, 205, 196, 0.3);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
@@ -892,6 +917,10 @@
             </div>
             <div class="modal-body">
                 <div class="game-container">
+                    <div class="mode-selection">
+                        <button class="mode-btn active" onclick="setTicTacToeMode('ai')">Против ИИ</button>
+                        <button class="mode-btn" onclick="setTicTacToeMode('pvp')">Два игрока</button>
+                    </div>
                     <div class="game-info" id="ticTacToeInfo">Ваш ход: X</div>
                     <div class="game-board" id="ticTacToeBoard"></div>
                     <div class="game-controls">
@@ -976,6 +1005,10 @@
             </div>
             <div class="modal-body">
                 <div class="game-container">
+                    <div class="mode-selection">
+                        <button class="mode-btn active" onclick="setPongMode('ai')">Против ИИ</button>
+                        <button class="mode-btn" onclick="setPongMode('pvp')">Два игрока</button>
+                    </div>
                     <div class="game-info" id="pongInfo">Игрок 1: 0 | Игрок 2: 0</div>
                     <canvas id="pongCanvas" width="600" height="400" class="breakout-canvas"></canvas>
                     <div class="game-controls">
@@ -1119,6 +1152,28 @@
             document.body.classList.toggle('light-theme');
         }
         
+        // Режимы игр
+        let ticTacToeMode = 'ai'; // 'ai' или 'pvp'
+        let pongMode = 'ai'; // 'ai' или 'pvp'
+        
+        function setTicTacToeMode(mode) {
+            ticTacToeMode = mode;
+            document.querySelectorAll('#ticTacToeModal .mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            resetTicTacToe();
+        }
+        
+        function setPongMode(mode) {
+            pongMode = mode;
+            document.querySelectorAll('#pongModal .mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            resetPong();
+        }
+        
         // Игра Крестики-Нолики
         let currentPlayer = 'X';
         let gameBoard = ['', '', '', '', '', '', '', '', ''];
@@ -1164,13 +1219,41 @@
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
             document.getElementById('ticTacToeInfo').textContent = 'Ваш ход: ' + currentPlayer;
             
-            // Ход ИИ
-            if (currentPlayer === 'O' && gameActive) {
+            // Ход ИИ или второго игрока
+            if (ticTacToeMode === 'ai' && currentPlayer === 'O' && gameActive) {
                 setTimeout(makeAIMove, 800);
             }
         }
 
         function makeAIMove() {
+            // Улучшенный ИИ - сначала проверяем выигрышные ходы
+            // Проверяем, может ли ИИ выиграть
+            for (let i = 0; i < 9; i++) {
+                if (gameBoard[i] === '') {
+                    gameBoard[i] = 'O';
+                    if (checkWinnerInternal()) {
+                        gameBoard[i] = '';
+                        makeMove(i);
+                        return;
+                    }
+                    gameBoard[i] = '';
+                }
+            }
+            
+            // Проверяем, может ли игрок выиграть и блокируем
+            for (let i = 0; i < 9; i++) {
+                if (gameBoard[i] === '') {
+                    gameBoard[i] = 'X';
+                    if (checkWinnerInternal()) {
+                        gameBoard[i] = '';
+                        makeMove(i);
+                        return;
+                    }
+                    gameBoard[i] = '';
+                }
+            }
+            
+            // Иначе делаем случайный ход
             let emptyCells = [];
             gameBoard.forEach((cell, index) => {
                 if (cell === '') emptyCells.push(index);
@@ -1196,6 +1279,22 @@
                     document.querySelector(`[data-index="${a}"]`).style.background = 'rgba(78, 205, 196, 0.5)';
                     document.querySelector(`[data-index="${b}"]`).style.background = 'rgba(78, 205, 196, 0.5)';
                     document.querySelector(`[data-index="${c}"]`).style.background = 'rgba(78, 205, 196, 0.5)';
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function checkWinnerInternal() {
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+            
+            for (let pattern of winPatterns) {
+                const [a, b, c] = pattern;
+                if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
                     return true;
                 }
             }
@@ -1261,12 +1360,11 @@
             
             const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
             
-            // Проверка столкновения со стенами
-            if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20) {
-                clearInterval(snakeInterval);
-                alert('Игра окончена! Счет: ' + score);
-                return;
-            }
+            // Проверка столкновения со стенами (циклическое движение)
+            if (head.x < 0) head.x = 19;
+            if (head.x >= 20) head.x = 0;
+            if (head.y < 0) head.y = 19;
+            if (head.y >= 20) head.y = 0;
             
             // Проверка столкновения с собой
             if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
@@ -1499,17 +1597,25 @@
             breakoutBall.x += breakoutBall.dx;
             breakoutBall.y += breakoutBall.dy;
             
-            // Отскок от стен
+            // Отскок от стен (левая и правая)
             if (breakoutBall.x + breakoutBall.dx > breakoutCanvas.width - breakoutBall.radius || breakoutBall.x + breakoutBall.dx < breakoutBall.radius) {
                 breakoutBall.dx = -breakoutBall.dx;
             }
             
+            // Отскок от верхней стены
             if (breakoutBall.y + breakoutBall.dy < breakoutBall.radius) {
                 breakoutBall.dy = -breakoutBall.dy;
-            } else if (breakoutBall.y + breakoutBall.dy > breakoutCanvas.height - breakoutBall.radius) {
+            } 
+            // Проверка падения мяча вниз
+            else if (breakoutBall.y + breakoutBall.dy > breakoutCanvas.height - breakoutBall.radius) {
                 if (breakoutBall.x > breakoutPaddle.x && breakoutBall.x < breakoutPaddle.x + breakoutPaddle.width) {
-                    breakoutBall.dy = -breakoutBall.dy;
+                    // Отскок от платформы
+                    breakoutBall.dy = -Math.abs(breakoutBall.dy); // Всегда отскакивает вверх
+                    // Изменяем угол в зависимости от места удара
+                    let hitPosition = (breakoutBall.x - (breakoutPaddle.x + breakoutPaddle.width/2)) / (breakoutPaddle.width/2);
+                    breakoutBall.dx = hitPosition * 6; // Максимальная скорость по x
                 } else {
+                    // Мяч упал
                     breakoutLives--;
                     updateBreakoutInfo();
                     if (breakoutLives <= 0) {
@@ -1517,19 +1623,13 @@
                         alert('Игра окончена! Счет: ' + breakoutScore);
                         return;
                     } else {
+                        // Сброс позиции мяча
                         breakoutBall.x = breakoutCanvas.width / 2;
                         breakoutBall.y = breakoutCanvas.height - 30;
-                        breakoutBall.dx = 4;
+                        breakoutBall.dx = (Math.random() - 0.5) * 8; // Случайное направление
                         breakoutBall.dy = -4;
                         breakoutPaddle.x = breakoutCanvas.width / 2 - 50;
                     }
-                }
-            }
-            
-            // Отскок от платформы
-            if (breakoutBall.y + breakoutBall.dy > breakoutCanvas.height - breakoutBall.radius - breakoutPaddle.height) {
-                if (breakoutBall.x > breakoutPaddle.x && breakoutBall.x < breakoutPaddle.x + breakoutPaddle.width) {
-                    breakoutBall.dy = -breakoutBall.dy;
                 }
             }
             
@@ -1562,6 +1662,7 @@
                                 clearInterval(breakoutGameInterval);
                                 alert('Поздравляем! Вы выиграли! Счет: ' + breakoutScore);
                             }
+                            return; // Выходим после первого столкновения
                         }
                     }
                 }
@@ -1577,6 +1678,21 @@
             clearInterval(breakoutGameInterval);
             breakoutGameInterval = setInterval(updateBreakout, 16);
         }
+
+        // Управление арканоидом
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                breakoutPaddle.x += breakoutPaddle.dx;
+                if (breakoutPaddle.x + breakoutPaddle.width > breakoutCanvas.width) {
+                    breakoutPaddle.x = breakoutCanvas.width - breakoutPaddle.width;
+                }
+            } else if (e.key === 'ArrowLeft') {
+                breakoutPaddle.x -= breakoutPaddle.dx;
+                if (breakoutPaddle.x < 0) {
+                    breakoutPaddle.x = 0;
+                }
+            }
+        });
 
         // Игра Понг
         let pongCanvas, pongCtx;
@@ -1672,15 +1788,23 @@
             }
             
             // Отскок от платформ
+            // Левая платформа
             if (pongBall.x - pongBall.radius < pongLeftPaddle.x + pongLeftPaddle.width) {
                 if (pongBall.y > pongLeftPaddle.y && pongBall.y < pongLeftPaddle.y + pongLeftPaddle.height) {
-                    pongBall.dx = -pongBall.dx;
+                    pongBall.dx = Math.abs(pongBall.dx);
+                    // Изменяем угол в зависимости от места удара
+                    let hitPosition = (pongBall.y - (pongLeftPaddle.y + pongLeftPaddle.height/2)) / (pongLeftPaddle.height/2);
+                    pongBall.dy = hitPosition * 5;
                 }
             }
             
+            // Правая платформа
             if (pongBall.x + pongBall.radius > pongRightPaddle.x) {
                 if (pongBall.y > pongRightPaddle.y && pongBall.y < pongRightPaddle.y + pongRightPaddle.height) {
-                    pongBall.dx = -pongBall.dx;
+                    pongBall.dx = -Math.abs(pongBall.dx);
+                    // Изменяем угол в зависимости от места удара
+                    let hitPosition = (pongBall.y - (pongRightPaddle.y + pongRightPaddle.height/2)) / (pongRightPaddle.height/2);
+                    pongBall.dy = hitPosition * 5;
                 }
             }
             
@@ -1694,13 +1818,29 @@
                 resetPongBall();
                 updatePongInfo();
             }
+            
+            // Управление ИИ для правой платформы
+            if (pongMode === 'ai') {
+                // Простой ИИ - следуем за мячом
+                if (pongRightPaddle.y + pongRightPaddle.height/2 < pongBall.y - 35) {
+                    pongRightPaddle.y += pongRightPaddle.dy * 0.7; // Слегка замедленный ИИ
+                } else if (pongRightPaddle.y + pongRightPaddle.height/2 > pongBall.y + 35) {
+                    pongRightPaddle.y -= pongRightPaddle.dy * 0.7;
+                }
+                
+                // Ограничиваем движение ИИ
+                if (pongRightPaddle.y < 0) pongRightPaddle.y = 0;
+                if (pongRightPaddle.y + pongRightPaddle.height > pongCanvas.height) {
+                    pongRightPaddle.y = pongCanvas.height - pongRightPaddle.height;
+                }
+            }
         }
 
         function resetPongBall() {
             pongBall.x = pongCanvas.width / 2;
             pongBall.y = pongCanvas.height / 2;
-            pongBall.dx = -pongBall.dx;
-            pongBall.dy = Math.random() * 10 - 5;
+            pongBall.dx = (Math.random() > 0.5 ? 1 : -1) * 5;
+            pongBall.dy = (Math.random() - 0.5) * 10;
         }
 
         function updatePongInfo() {
@@ -1726,14 +1866,16 @@
                 }
             }
             
-            // Игрок 2 (стрелки)
-            if (e.key === 'ArrowUp') {
-                pongRightPaddle.y -= pongRightPaddle.dy;
-                if (pongRightPaddle.y < 0) pongRightPaddle.y = 0;
-            } else if (e.key === 'ArrowDown') {
-                pongRightPaddle.y += pongRightPaddle.dy;
-                if (pongRightPaddle.y + pongRightPaddle.height > pongCanvas.height) {
-                    pongRightPaddle.y = pongCanvas.height - pongRightPaddle.height;
+            // Игрок 2 (стрелки) - только в режиме два игрока
+            if (pongMode === 'pvp') {
+                if (e.key === 'ArrowUp') {
+                    pongRightPaddle.y -= pongRightPaddle.dy;
+                    if (pongRightPaddle.y < 0) pongRightPaddle.y = 0;
+                } else if (e.key === 'ArrowDown') {
+                    pongRightPaddle.y += pongRightPaddle.dy;
+                    if (pongRightPaddle.y + pongRightPaddle.height > pongCanvas.height) {
+                        pongRightPaddle.y = pongCanvas.height - pongRightPaddle.height;
+                    }
                 }
             }
         });
