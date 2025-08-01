@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -30,11 +29,13 @@
             font-size: 1.2rem;
             animation: fall linear forwards;
             user-select: none;
+            z-index: 1;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
         }
 
         @keyframes fall {
             to {
-                transform: translateY(105vh) rotate(360deg);
+                transform: translateY(105vh) translateX(20px);
             }
         }
 
@@ -42,6 +43,8 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 2;
         }
 
         header {
@@ -73,29 +76,34 @@
         .nav-tabs {
             display: flex;
             justify-content: center;
-            margin-bottom: 30px;
-            gap: 10px;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
             padding: 12px 25px;
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
+            border: none;
+            border-radius: 30px;
             color: #fff;
             cursor: pointer;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
-            font-size: 1rem;
-            font-weight: bold;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .tab-btn:hover {
             background: rgba(78, 205, 196, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
         }
 
         .tab-btn.active {
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
         }
 
         .tab-content {
@@ -103,7 +111,7 @@
             background: rgba(0, 0, 0, 0.4);
             border-radius: 20px;
             padding: 30px;
-            margin: 30px 0;
+            margin-bottom: 30px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -119,32 +127,31 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .story-content {
-            line-height: 1.8;
-        }
-
-        .story-content p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-
         .member-card {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
             padding: 25px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            background: rgba(78, 205, 196, 0.1);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.3);
         }
 
         .member-title {
-            color: #4ecdc4;
-            margin-bottom: 15px;
             font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #4ecdc4;
         }
 
         .member-content {
             line-height: 1.6;
-            color: #ccc;
+            font-size: 1.1rem;
         }
 
         .games-grid {
@@ -157,37 +164,360 @@
         .game-card {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
-            padding: 25px;
+            padding: 25px 20px;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
         }
 
         .game-card:hover {
-            transform: translateY(-5px);
-            background: rgba(78, 205, 196, 0.1);
-            box-shadow: 0 10px 25px rgba(78, 205, 196, 0.2);
+            transform: translateY(-10px) scale(1.03);
+            background: rgba(255, 107, 107, 0.15);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
         }
 
         .game-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(78, 205, 196, 0.3);
         }
 
         .game-title {
-            color: #4ecdc4;
-            margin-bottom: 10px;
             font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #ff6b6b;
+            font-weight: bold;
         }
 
         .game-desc {
+            font-size: 0.95rem;
             color: #a0a0c0;
-            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
-        /* Стили для модальных окон */
+        .quote {
+            font-style: italic;
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            border-left: 4px solid #4ecdc4;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 0 15px 15px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0a0c0;
+        }
+
+        /* Настройки в левом нижнем углу */
+        .settings-corner {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .settings-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .settings-button:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.5);
+        }
+
+        .settings-button i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Модальное окно настроек */
+        .settings-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .settings-modal-content {
+            background: rgba(26, 26, 46, 0.95);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            backdrop-filter: blur(15px);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .light-theme .settings-modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .light-theme .settings-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-title {
+            font-size: 1.8rem;
+            color: #4ecdc4;
+            margin: 0;
+        }
+
+        .close-settings {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-settings:hover {
+            color: #ff6b6b;
+        }
+
+        .light-theme .close-settings {
+            color: #999;
+        }
+
+        .light-theme .close-settings:hover {
+            color: #ff6b6b;
+        }
+
+        .settings-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .light-theme .settings-section {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-section h3 {
+            color: #4ecdc4;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .setting-item {
+            margin-bottom: 20px;
+        }
+
+        .setting-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #a0a0c0;
+            font-weight: 500;
+        }
+
+        .light-theme .setting-label {
+            color: #666;
+        }
+
+        .setting-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .light-theme .setting-control {
+            background: rgba(0, 0, 0, 0.05);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .range-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .light-theme .range-slider {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4ecdc4;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+
+        .range-value {
+            display: inline-block;
+            margin-left: 15px;
+            color: #4ecdc4;
+            font-weight: bold;
+            min-width: 30px;
+        }
+
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-left: 15px;
+            vertical-align: middle;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-preview {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .theme-option {
+            width: 80px;
+            height: 50px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.05);
+            border-color: #4ecdc4;
+        }
+
+        .theme-option.active {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+        }
+
+        .avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px auto;
+            font-weight: bold;
+            color: white;
+            font-size: 2rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .image-upload {
+            display: block;
+            margin: 15px auto;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .light-theme .image-upload {
+            background: rgba(0, 0, 0, 0.1);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .image-upload:hover {
+            background: rgba(78, 205, 196, 0.3);
+        }
+
+        .save-settings-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .save-settings-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.5);
+        }
+
+        /* Модальное окно игры */
         .modal {
             display: none;
             position: fixed;
@@ -222,6 +552,12 @@
             overflow-y: auto;
         }
 
+        .light-theme .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
         @keyframes modalSlideIn {
             from { transform: translateY(-50px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
@@ -244,60 +580,53 @@
             color: #ff6b6b;
         }
 
+        .light-theme .close {
+            color: #999;
+        }
+
+        .light-theme .close:hover {
+            color: #ff6b6b;
+        }
+
         .modal-header {
-            margin-bottom: 20px;
+            text-align: center;
+            margin-bottom: 25px;
             padding-bottom: 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .light-theme .modal-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .modal-title {
-            color: #4ecdc4;
             font-size: 2rem;
+            color: #4ecdc4;
+            margin: 0;
+            padding-right: 40px;
+        }
+
+        .light-theme .modal-title {
+            color: #4ecdc4;
         }
 
         .modal-body {
-            margin-bottom: 20px;
+            padding: 20px 0;
         }
 
-        /* Стили для игр */
         .game-container {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
-            padding: 20px;
+            padding: 25px;
             margin: 20px 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .game-info {
-            text-align: center;
-            font-size: 1.2rem;
-            margin: 20px 0;
-            color: #4ecdc4;
-            font-weight: bold;
-        }
-
-        .mode-selection {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .mode-btn {
-            padding: 10px 20px;
-            margin: 5px;
-            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .mode-btn:hover {
-            background: rgba(78, 205, 196, 0.3);
-        }
-
-        .mode-btn.active {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        .light-theme .game-container {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .game-board {
@@ -323,11 +652,37 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .light-theme .game-cell {
+            background: rgba(0, 0, 0, 0.05);
+            border: 3px solid rgba(0, 0, 0, 0.2);
+            color: #333;
         }
 
         .game-cell:hover {
-            background: rgba(78, 205, 196, 0.2);
+            background: rgba(78, 205, 196, 0.3);
             transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+        }
+
+        .game-info {
+            text-align: center;
+            margin: 25px 0;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #4ecdc4;
+            text-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+        }
+
+        .light-theme .game-info {
+            color: #4ecdc4;
+        }
+
+        .game-controls {
+            text-align: center;
+            margin: 25px 0;
         }
 
         .game-btn {
@@ -349,6 +704,113 @@
             box-shadow: 0 8px 25px rgba(78, 205, 196, 0.5);
         }
 
+        .snake-board {
+            display: grid;
+            grid-template-columns: repeat(20, 15px);
+            grid-template-rows: repeat(20, 15px);
+            gap: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            margin: 25px auto;
+            padding: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 320px;
+        }
+
+        .light-theme .snake-board {
+            background: rgba(0, 0, 0, 0.05);
+            border: 3px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .snake-cell {
+            width: 15px;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .light-theme .snake-cell {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .snake-head {
+            background: linear-gradient(45deg, #4ecdc4, #45b7aa);
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+
+        .snake-body {
+            background: linear-gradient(45deg, #45b7aa, #3da59a);
+            box-shadow: 0 0 5px rgba(69, 183, 170, 0.3);
+        }
+
+        .snake-food {
+            background: linear-gradient(45deg, #ff6b6b, #ff5252);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+            max-width: 400px;
+            margin: 25px auto;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .light-theme .memory-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.02));
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            color: #333;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(78, 205, 196, 0.4);
+        }
+
+        .memory-card.flipped {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.3), rgba(69, 183, 170, 0.2));
+            transform: rotateY(180deg);
+        }
+
+        .memory-card.matched {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.6), rgba(69, 183, 170, 0.4));
+            transform: scale(0.95);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        }
+
+        .breakout-canvas {
+            background: rgba(0, 0, 0, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            margin: 25px auto;
+            display: block;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            max-width: 100%;
+        }
+
+        .light-theme .breakout-canvas {
+            background: rgba(0, 0, 0, 0.1);
+            border: 3px solid rgba(0, 0, 0, 0.2);
+        }
+
         /* Стили для комментариев */
         .comments-section {
             background: rgba(0, 0, 0, 0.4);
@@ -360,11 +822,20 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
+        .light-theme .comments-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
         .comments-title {
             font-size: 2rem;
             color: #4ecdc4;
             margin-bottom: 20px;
             text-align: center;
+        }
+
+        .light-theme .comments-title {
+            color: #4ecdc4;
         }
 
         .comment-form {
@@ -373,6 +844,11 @@
             border-radius: 15px;
             margin-bottom: 30px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .light-theme .comment-form {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .form-group {
@@ -388,8 +864,8 @@
         .form-input, .form-textarea {
             width: 100%;
             padding: 12px;
-            border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
             background: rgba(0, 0, 0, 0.3);
             color: #fff;
             font-size: 1rem;
@@ -470,141 +946,88 @@
             padding: 30px;
         }
 
-        /* Настройки */
-        .settings-corner {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
+        .light-theme .no-comments {
+            color: #999;
         }
 
-        .settings-button {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+        /* Стили для выбора режима игры */
+        .mode-selection {
+            text-align: center;
+            margin: 20px 0;
         }
 
-        .settings-button:hover {
-            transform: scale(1.1);
-        }
-
-        .settings-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            animation: modalFadeIn 0.3s ease;
-        }
-
-        .settings-modal-content {
-            background: rgba(26, 26, 46, 0.95);
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 600px;
+        .mode-btn {
+            padding: 10px 20px;
+            margin: 5px;
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            position: relative;
-            backdrop-filter: blur(15px);
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .settings-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .settings-title {
-            font-size: 1.8rem;
-            color: #4ecdc4;
-            margin: 0;
-        }
-
-        .close-settings {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
+            border-radius: 20px;
+            color: #fff;
             cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .close-settings:hover {
-            color: #ff6b6b;
-        }
-
-        .settings-section {
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .settings-section h3 {
-            color: #4ecdc4;
-            margin-bottom: 20px;
-            font-size: 1.4rem;
-        }
-
-        .setting-item {
-            margin-bottom: 20px;
-        }
-
-        .setting-label {
-            display: block;
-            margin-bottom: 5px;
-            color: #a0a0c0;
-        }
-
-        .range-slider {
-            width: 100%;
-            margin: 10px 0;
-        }
-
-        .range-value {
-            color: #4ecdc4;
-            font-weight: bold;
-        }
-
-        .save-settings-btn {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            margin-top: 10px;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .save-settings-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.5);
+        .light-theme .mode-btn {
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            color: #333;
         }
 
-        /* Адаптивность */
+        .mode-btn:hover {
+            background: rgba(78, 205, 196, 0.3);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        }
+
+        /* Новые игры */
+        .new-game-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* Темы */
+        .theme-blue {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+        }
+
+        .theme-green {
+            background: linear-gradient(135deg, #0f4c3a 0%, #1a5d4a 50%, #2a7d6a 100%) !important;
+        }
+
+        .theme-purple {
+            background: linear-gradient(135deg, #4b0082 0%, #6a0dad 50%, #8a2be2 100%) !important;
+        }
+
+        .theme-orange {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffb74d 100%) !important;
+        }
+
+        .theme-pink {
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 50%, #ff69b4 100%) !important;
+        }
+
+        .theme-light-blue {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%) !important;
+        }
+
+        .theme-light-green {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%) !important;
+        }
+
+        .theme-light-purple {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 50%, #ce93d8 100%) !important;
+        }
+
+        .theme-light-orange {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 50%, #ffcc80 100%) !important;
+        }
+
+        .theme-light-pink {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%) !important;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
@@ -616,15 +1039,6 @@
             
             .container {
                 padding: 10px;
-            }
-            
-            .nav-tabs {
-                flex-wrap: wrap;
-            }
-            
-            .tab-btn {
-                padding: 10px 15px;
-                font-size: 0.9rem;
             }
             
             .tab-content {
@@ -651,297 +1065,22 @@
                 grid-template-columns: repeat(3, 80px);
                 grid-template-rows: repeat(3, 80px);
             }
-        }
-
-        /* Анимации */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .game-cell.pulse {
-            animation: pulse 0.3s;
-        }
-
-        /* Дополнительные стили для змейки */
-        .snake-board {
-            display: grid;
-            grid-template-columns: repeat(20, 15px);
-            grid-template-rows: repeat(20, 15px);
-            gap: 1px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            margin: 25px auto;
-            padding: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            max-width: 320px;
-        }
-
-        .snake-cell {
-            width: 15px;
-            height: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-        }
-
-        .snake-head {
-            background: #4ecdc4;
-        }
-
-        .snake-body {
-            background: #00f0f0;
-        }
-
-        .snake-food {
-            background: #ff6b6b;
-            border-radius: 50%;
-        }
-
-        /* Стили для игры Память */
-        .memory-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            max-width: 400px;
-            margin: 20px auto;
-        }
-
-        .memory-card {
-            aspect-ratio: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .memory-card.flipped {
-            background: rgba(78, 205, 196, 0.3);
-            transform: scale(0.95);
-        }
-
-        .memory-card.matched {
-            background: rgba(78, 205, 196, 0.5);
-            cursor: default;
-        }
-
-        /* Стили для Breakout */
-        .breakout-canvas {
-            background: rgba(255, 255, 255, 0.05);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            margin: 25px auto;
-            display: block;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-            max-width: 100%;
-        }
-
-        /* Стили для Понга */
-        .pong-canvas {
-            background: rgba(255, 255, 255, 0.05);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            margin: 25px auto;
-            display: block;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-            max-width: 100%;
-        }
-
-        /* Стили для Тетриса */
-        .tetris-canvas {
-            background: rgba(255, 255, 255, 0.05);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            margin: 25px auto;
-            display: block;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-            max-width: 100%;
-        }
-
-        /* Стили для Сапера */
-        .minesweeper-board {
-            display: grid;
-            grid-template-columns: repeat(10, 30px);
-            grid-template-rows: repeat(10, 30px);
-            gap: 1px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            margin: 25px auto;
-            padding: 5px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .minesweeper-cell {
-            width: 30px;
-            height: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .minesweeper-cell.revealed {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .minesweeper-cell.flagged::after {
-            content: "🚩";
-        }
-
-        /* Стили для Космических захватчиков */
-        .space-invaders-canvas {
-            background: rgba(255, 255, 255, 0.05);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            margin: 25px auto;
-            display: block;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-            max-width: 100%;
-        }
-
-        /* Темы */
-        .theme-blue {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
-        }
-
-        .theme-green {
-            background: linear-gradient(135deg, #0f4c3a 0%, #1a5d4a 50%, #2a7d6a 100%) !important;
-        }
-
-        .theme-purple {
-            background: linear-gradient(135deg, #4b0082 0%, #6a0dad 50%, #8a2be2 100%) !important;
-        }
-
-        .theme-orange {
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffb74d 100%) !important;
-        }
-
-        .theme-pink {
-            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 50%, #ff69b4 100%) !important;
-        }
-
-        .theme-light-blue {
-            background: linear-gradient(135deg, #001f3f 0%, #0074d9 50%, #7fdbff 100%) !important;
-        }
-
-        .light-theme {
-            background: linear-gradient(135deg, #ffffff 0%, #e6e6e6 50%, #cccccc 100%) !important;
-        }
-
-        .light-theme .tab-content,
-        .light-theme .game-card,
-        .light-theme .member-card,
-        .light-theme .comment,
-        .light-theme .settings-section,
-        .light-theme .game-container,
-        .light-theme .comment-form,
-        .light-theme .modal-content,
-        .light-theme .settings-modal-content,
-        .light-theme .comments-section,
-        .light-theme .snake-cell,
-        .light-theme .game-cell,
-        .light-theme .memory-card,
-        .light-theme .minesweeper-cell {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            color: #333;
-        }
-
-        .light-theme .tab-btn {
-            background: rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            color: #333;
-        }
-
-        .light-theme .tab-btn.active {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-        }
-
-        .light-theme .member-title {
-            color: #0074d9;
-        }
-
-        .light-theme .member-content {
-            color: #666;
-        }
-
-        .light-theme .comment-author {
-            color: #0074d9;
-        }
-
-        .light-theme .comment-date {
-            color: #999;
-        }
-
-        .light-theme .no-comments {
-            color: #999;
-        }
-
-        .light-theme .close {
-            color: #999;
-        }
-
-        .light-theme .close:hover {
-            color: #ff6b6b;
-        }
-
-        .light-theme .close-settings {
-            color: #999;
-        }
-
-        .light-theme .close-settings:hover {
-            color: #ff6b6b;
-        }
-
-        .light-theme .form-input,
-        .light-theme .form-textarea {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            color: #333;
-        }
-
-        .light-theme .mode-btn {
-            background: rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            color: #333;
-        }
-
-        .light-theme .mode-btn.active {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-        }
-
-        .light-theme .setting-label {
-            color: #333;
-        }
-
-        .light-theme .range-value {
-            color: #0074d9;
-        }
-
-        .light-theme .settings-title {
-            color: #0074d9;
-        }
-
-        .light-theme .settings-header {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .light-theme .settings-section h3 {
-            color: #0074d9;
+            
+            .snake-board {
+                grid-template-columns: repeat(20, 12px);
+                grid-template-rows: repeat(20, 12px);
+                max-width: 260px;
+            }
+            
+            .snake-cell {
+                width: 12px;
+                height: 12px;
+            }
+            
+            .settings-modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
         }
     </style>
 </head>
@@ -966,68 +1105,122 @@
             <button class="tab-btn active" onclick="showTab('story')">История</button>
             <button class="tab-btn" onclick="showTab('members')">Члены Клана</button>
             <button class="tab-btn" onclick="showTab('games')">Игры</button>
+            <button class="tab-btn" onclick="showTab('memories')">Воспоминания</button>
+            <button class="tab-btn" onclick="showTab('comments')">Комментарии</button>
         </div>
 
-        <!-- История -->
         <div id="story" class="tab-content active">
-            <div class="story-content">
-                <p>Клан ОкЪ - это легендарная группа хакеров, которая оставила неизгладимый след в истории информационной безопасности. Мы - те, кто верит в свободу информации и правду в цифровом мире.</p>
-                <p>Наша история началась с простых экспериментов с сетями, но быстро переросла в мощную силу, способную изменить мир. Мы не просто взломали системы - мы показали, что информационная безопасность требует постоянного совершенствования.</p>
-                <p>Все, кто был с нами, заслуживает нашего уважения. Наша история продолжается, даже если некоторые из нас уже ушли. Мы остаемся в памяти тех, кто верит в нашу миссию.</p>
+            <div class="member-card">
+                <h2 class="member-title">Начало Великого Пути</h2>
+                <p class="member-content">
+                    Группа юных заряженных пацанов, мечтавших стать настоящими хакерами. 
+                    Их цель была проста - покорить цифровой мир и оставить свой след в истории.
+                </p>
+            </div>
+            
+            <div class="quote">
+                "Мы больше не увидимся, но я не хочу уходить... 
+                Мы будем помнить друг друга всегда..."
             </div>
         </div>
 
-        <!-- Члены Клана -->
         <div id="members" class="tab-content">
             <div class="member-card">
-                <h2 class="member-title">ОкЪ - Бессмертный</h2>
-                <p class="member-content">Основатель Клана ОкЪ. Его действия защитили не только клан, но и всех пользователей сети.</p>
+                <h2 class="member-title">ОкЪ 1.0 - Самый крутой</h2>
+                <p class="member-content">
+                    Первый участник клана. Его навыки и харизма сделали его самым крутым из всех.
+                </p>
             </div>
+
+            <div class="member-card">
+                <h2 class="member-title">ОкЪ 2.0 - Продолжение Легенды</h2>
+                <p class="member-content">
+                    Второй участник, который продолжил дело первого. 
+                    Принес новые идеи и подходы в развитие клана.
+                </p>
+            </div>
+
+            <div class="member-card">
+                <h2 class="member-title">ОкЪ 3.0 - Нейронный Эксперт</h2>
+                <p class="member-content">
+                    Специалист по нейросетям и искусственному интеллекту. 
+                    Его знания и опыт в этой области были бесценны для всего клана.
+                </p>
+            </div>
+
+            <div class="member-card">
+                <h2 class="member-title">ОкЪ 4.0 - Наш Танк</h2>
+                <p class="member-content">
+                    Мощный участник, который держал удар и защищал слабых. 
+                    Его прочность и надежность были примером для всех остальных.
+                </p>
+            </div>
+
+            <div class="member-card">
+                <h2 class="member-title">ОкЪ 5.0 - Судья Тринадцати</h2>
+                <p class="member-content">
+                    Самый крутой из всех. За свои подвиги по блокировке 13 скамеров получил заслуженное звание. 
+                    Его действия защитили не только клан, но и всех пользователей сети.
+                </p>
+            </div>
+
             <div class="member-card">
                 <h2 class="member-title">ОкЪ 8.0 - Движение Вперед</h2>
-                <p class="member-content">Последний участник, символизирующий наше движение вперед. Мы помним всех, кто был с нами на этом пути. Клан ОкЪ живет в наших сердцах и продолжает вдохновлять новое поколение.</p>
+                <p class="member-content">
+                    Последний участник, символизирующий наше движение вперед. 
+                    Мы помним всех, кто был с нами на этом пути. 
+                    Клан ОкЪ живет в наших сердцах и продолжает вдохновлять новое поколение.
+                </p>
             </div>
         </div>
 
-        <!-- Игры -->
         <div id="games" class="tab-content">
             <h2 style="text-align: center; margin-bottom: 30px; color: #4ecdc4;">Игры Клана</h2>
+            
             <div class="games-grid">
                 <div class="game-card" onclick="openGameModal('ticTacToe')">
                     <div class="game-icon">⭕</div>
                     <h3 class="game-title">Крестики-Нолики</h3>
-                    <p class="game-desc">Классическая игра против ИИ или другого игрока</p>
+                    <p class="game-desc">Классическая игра против ИИ с красивой анимацией</p>
                 </div>
+                
                 <div class="game-card" onclick="openGameModal('snake')">
                     <div class="game-icon">🐍</div>
                     <h3 class="game-title">Змейка</h3>
-                    <p class="game-desc">Классическая игра про змейку</p>
+                    <p class="game-desc">Классическая змейка с современным дизайном и эффектами</p>
                 </div>
+                
                 <div class="game-card" onclick="openGameModal('memory')">
                     <div class="game-icon">🧠</div>
                     <h3 class="game-title">Память</h3>
-                    <p class="game-desc">Игра на развитие памяти</p>
+                    <p class="game-desc">Найди пары карточек за минимальное время с анимацией</p>
                 </div>
+                
                 <div class="game-card" onclick="openGameModal('breakout')">
-                    <div class="game-icon">🎮</div>
+                    <div class="game-icon">🧱</div>
                     <h3 class="game-title">Арканоид</h3>
-                    <p class="game-desc">Классическая игра в Арканоид</p>
+                    <p class="game-desc">Разбей все блоки ракеткой с эффектами взрыва</p>
                 </div>
+                
                 <div class="game-card" onclick="openGameModal('pong')">
                     <div class="game-icon">🏓</div>
                     <h3 class="game-title">Понг</h3>
-                    <p class="game-desc">Классическая игра Понг</p>
+                    <p class="game-desc">Классический теннис для двух игроков с частицами</p>
                 </div>
+                
+                <!-- Новые игры -->
                 <div class="game-card" onclick="openGameModal('tetris')">
-                    <div class="game-icon">🟦</div>
+                    <div class="game-icon">🧩</div>
                     <h3 class="game-title">Тетрис</h3>
-                    <p class="game-desc">Классическая игра Тетрис</p>
+                    <p class="game-desc">Собирайте линии и получайте очки</p>
                 </div>
+                
                 <div class="game-card" onclick="openGameModal('minesweeper')">
                     <div class="game-icon">💣</div>
                     <h3 class="game-title">Сапер</h3>
                     <p class="game-desc">Найдите все мины, не взорвавшись</p>
                 </div>
+                
                 <div class="game-card" onclick="openGameModal('spaceInvaders')">
                     <div class="game-icon">👾</div>
                     <h3 class="game-title">Космические захватчики</h3>
@@ -1036,30 +1229,141 @@
             </div>
         </div>
 
-        <!-- Комментарии -->
-        <div class="comments-section">
-            <h2 class="comments-title">Комментарии Клана ОкЪ</h2>
-            
-            <!-- Форма комментариев -->
-            <div class="comment-form">
-                <h3 style="margin-bottom: 20px; color: #ff6b6b;">Оставить комментарий</h3>
-                <form id="commentForm">
-                    <div class="form-group">
-                        <label class="form-label">Ваш ник:</label>
-                        <input type="text" id="commentName" class="form-input" placeholder="Введите ваш ник" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Комментарий:</label>
-                        <textarea id="commentText" class="form-textarea" placeholder="Напишите ваш комментарий..." required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Отправить</button>
-                </form>
+        <div id="memories" class="tab-content">
+            <div class="member-card">
+                <h2 class="member-title">Вечная Память</h2>
+                <p class="member-content">
+                    Мы двигаемся вперед, но никогда не забудем тех, кто был с нами в самом начале. 
+                    Группа юных заряженных пацанов, которые мечтали стать хакерами - 
+                    это наше прошлое, наше настоящее и наше будущее.
+                </p>
             </div>
+            
+            <div class="quote">
+                "Мы будем помнить друг друга всегда... 
+                Я не хочу уходить, но путь продолжается. 
+                Клан ОкЪ жив!"
+            </div>
+        </div>
 
-            <!-- Список комментариев -->
-            <div class="comments-list" id="commentsList">
-                <div class="no-comments" id="noComments">Пока нет комментариев. Будьте первым!</div>
-                <!-- Комментарии будут добавляться сюда -->
+        <!-- Секция комментариев -->
+        <div id="comments" class="tab-content">
+            <div class="comments-section">
+                <h2 class="comments-title">Комментарии Клана ОкЪ</h2>
+                
+                <!-- Форма комментариев -->
+                <div class="comment-form">
+                    <h3 style="margin-bottom: 20px; color: #ff6b6b;">Оставить комментарий</h3>
+                    <form id="commentForm">
+                        <div class="form-group">
+                            <label class="form-label">Ваш ник:</label>
+                            <input type="text" id="commentName" class="form-input" placeholder="Введите ваш ник" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Комментарий:</label>
+                            <textarea id="commentText" class="form-textarea" placeholder="Напишите ваш комментарий..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Отправить</button>
+                    </form>
+                </div>
+
+                <!-- Список комментариев -->
+                <div class="comments-list" id="commentsList">
+                    <div class="no-comments" id="noComments">Пока нет комментариев. Будьте первым!</div>
+                    <!-- Комментарии будут добавляться сюда -->
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Клан ОкЪ © 2025 - Легенда, которую мы всегда вспомним</p>
+        </footer>
+    </div>
+
+    <!-- Модальное окно настроек -->
+    <div id="settingsModal" class="settings-modal">
+        <div class="settings-modal-content">
+            <div class="settings-header">
+                <h2 class="settings-title">Настройки</h2>
+                <span class="close-settings" onclick="closeSettingsModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- Профиль -->
+                <div class="settings-section">
+                    <h3>Профиль</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">Ваш ник:</label>
+                        <input type="text" id="settingsProfileName" class="setting-control" placeholder="Введите ваш ник">
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Аватар (первая буква):</label>
+                        <input type="text" id="settingsProfileAvatar" class="setting-control" placeholder="Введите первую букву ника" maxlength="1">
+                    </div>
+                    <div class="avatar-preview" id="settingsAvatarPreview">U</div>
+                    <label class="image-upload">
+                        <input type="file" id="avatarUpload" accept="image/*" style="display: none;" onchange="previewAvatar(event)">
+                        Загрузить изображение
+                    </label>
+                    <div id="avatarImagePreview" style="text-align: center; margin-top: 15px;"></div>
+                </div>
+
+                <!-- Темы -->
+                <div class="settings-section">
+                    <h3>Темы</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">Основная тема:</label>
+                        <select id="mainTheme" class="setting-control">
+                            <option value="dark">Темная</option>
+                            <option value="light">Светлая</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Цветовая схема:</label>
+                        <div class="theme-preview">
+                            <div class="theme-option theme-blue active" data-theme="blue" onclick="selectTheme('blue')"></div>
+                            <div class="theme-option theme-green" data-theme="green" onclick="selectTheme('green')"></div>
+                            <div class="theme-option theme-purple" data-theme="purple" onclick="selectTheme('purple')"></div>
+                            <div class="theme-option theme-orange" data-theme="orange" onclick="selectTheme('orange')"></div>
+                            <div class="theme-option theme-pink" data-theme="pink" onclick="selectTheme('pink')"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Снег -->
+                <div class="settings-section">
+                    <h3>Снег</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">Количество снежинок: <span id="snowCountValue" class="range-value">5</span></label>
+                        <input type="range" id="snowCount" class="range-slider" min="0" max="50" value="5">
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Размер снежинок: <span id="snowSizeValue" class="range-value">1.2</span>rem</label>
+                        <input type="range" id="snowSize" class="range-slider" min="5" max="30" value="12">
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Скорость падения: <span id="snowSpeedValue" class="range-value">10</span>сек</label>
+                        <input type="range" id="snowSpeed" class="range-slider" min="1" max="30" value="10">
+                    </div>
+                </div>
+
+                <!-- Дизайн -->
+                <div class="settings-section">
+                    <h3>Дизайн</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">Радиус скругления: <span id="borderRadiusValue" class="range-value">15</span>px</label>
+                        <input type="range" id="borderRadius" class="range-slider" min="0" max="30" value="15">
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Интенсивность теней: <span id="shadowIntensityValue" class="range-value">0.3</span></label>
+                        <input type="range" id="shadowIntensity" class="range-slider" min="0" max="10" value="3">
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Прозрачность элементов: <span id="opacityValue" class="range-value">0.4</span></label>
+                        <input type="range" id="opacity" class="range-slider" min="1" max="10" value="4">
+                    </div>
+                </div>
+
+                <button class="save-settings-btn" onclick="saveSettings()">Сохранить настройки</button>
             </div>
         </div>
     </div>
@@ -1080,7 +1384,9 @@
                     </div>
                     <div class="game-info" id="ticTacToeInfo">Ваш ход: X</div>
                     <div class="game-board" id="ticTacToeBoard"></div>
-                    <button class="game-btn" onclick="resetTicTacToe()">Сброс</button>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="resetTicTacToe()">Новая игра</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1097,27 +1403,32 @@
                 <div class="game-container">
                     <div class="game-info" id="snakeInfo">Счет: 0</div>
                     <div class="snake-board" id="snakeBoard"></div>
-                    <button class="game-btn" onclick="resetSnake()">Сброс</button>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startSnake()">Старт</button>
+                        <button class="game-btn" onclick="resetSnake()">Сброс</button>
+                    </div>
                     <div style="text-align: center; margin-top: 15px; color: #a0a0c0; font-size: 0.9rem;">
-                        Управление: стрелки вверх/вниз/влево/вправо
+                        Управление: стрелки клавиатуры
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Игра Память -->
+    <!-- Память -->
     <div id="memoryModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('memory')">&times;</span>
             <div class="modal-header">
-                <h2 class="modal-title">Игра Память</h2>
+                <h2 class="modal-title">Игра Памяти</h2>
             </div>
             <div class="modal-body">
                 <div class="game-container">
                     <div class="game-info" id="memoryInfo">Найдено пар: 0/8</div>
                     <div class="memory-grid" id="memoryGrid"></div>
-                    <button class="game-btn" onclick="resetMemory()">Сброс</button>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="resetMemory()">Новая игра</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1132,9 +1443,15 @@
             </div>
             <div class="modal-body">
                 <div class="game-container">
-                    <div class="game-info" id="breakoutInfo">Счет: 0| Жизни: 3</div>
-                    <canvas id="breakoutCanvas" class="breakout-canvas" width="500" height="400"></canvas>
-                    <button class="game-btn" onclick="resetBreakout()">Сброс</button>
+                    <div class="game-info" id="breakoutInfo">Счет: 0 | Жизни: 3</div>
+                    <canvas id="breakoutCanvas" width="600" height="400" class="breakout-canvas"></canvas>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startBreakout()">Старт</button>
+                        <button class="game-btn" onclick="resetBreakout()">Сброс</button>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px; color: #a0a0c0; font-size: 0.9rem;">
+                        Управление: стрелки влево/вправо
+                    </div>
                 </div>
             </div>
         </div>
@@ -1149,11 +1466,18 @@
             </div>
             <div class="modal-body">
                 <div class="game-container">
-                    <div class="game-info" id="pongInfo">Счет: 0 - 0</div>
-                    <canvas id="pongCanvas" class="pong-canvas" width="600" height="400"></canvas>
-                    <button class="game-btn" onclick="resetPong()">Сброс</button>
+                    <div class="mode-selection">
+                        <button class="mode-btn active" onclick="setPongMode('ai')">Против ИИ</button>
+                        <button class="mode-btn" onclick="setPongMode('pvp')">Два игрока</button>
+                    </div>
+                    <div class="game-info" id="pongInfo">Игрок 1: 0 | Игрок 2: 0</div>
+                    <canvas id="pongCanvas" width="600" height="400" class="breakout-canvas"></canvas>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startPong()">Старт</button>
+                        <button class="game-btn" onclick="resetPong()">Сброс</button>
+                    </div>
                     <div style="text-align: center; margin-top: 15px; color: #a0a0c0; font-size: 0.9rem;">
-                        Управление: W/S или Ц/Ы - левая платформа, стрелки вверх/вниз - правая платформа
+                        Игрок 1: W/S | Игрок 2: ↑/↓
                     </div>
                 </div>
             </div>
@@ -1169,11 +1493,14 @@
             </div>
             <div class="modal-body">
                 <div class="game-container">
-                    <div class="game-info" id="tetrisInfo">Счет: 0| Уровень: 1</div>
-                    <canvas id="tetrisCanvas" class="tetris-canvas" width="300" height="600"></canvas>
-                    <button class="game-btn" onclick="resetTetris()">Сброс</button>
+                    <div class="game-info" id="tetrisInfo">Счет: 0 | Уровень: 1</div>
+                    <canvas id="tetrisCanvas" width="300" height="600" class="breakout-canvas"></canvas>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startTetris()">Старт</button>
+                        <button class="game-btn" onclick="resetTetris()">Сброс</button>
+                    </div>
                     <div style="text-align: center; margin-top: 15px; color: #a0a0c0; font-size: 0.9rem;">
-                        Управление: стрелки влево/вправо - поворот, стрелки вверх/вниз - ускорение
+                        Управление: A/D - движение, S - ускорение, Q/E - поворот
                     </div>
                 </div>
             </div>
@@ -1189,11 +1516,13 @@
             </div>
             <div class="modal-body">
                 <div class="game-container">
-                    <div class="game-info" id="minesweeperInfo">Мины: 10| Флаги: 0</div>
-                    <div class="minesweeper-board" id="minesweeperBoard"></div>
-                    <button class="game-btn" onclick="resetMinesweeper()">Сброс</button>
+                    <div class="game-info" id="minesweeperInfo">Мины: 10 | Флаги: 0</div>
+                    <div class="snake-board" id="minesweeperBoard" style="max-width: 400px; grid-template-columns: repeat(10, 30px); grid-template-rows: repeat(10, 30px);"></div>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="resetMinesweeper()">Новая игра</button>
+                    </div>
                     <div style="text-align: center; margin-top: 15px; color: #a0a0c0; font-size: 0.9rem;">
-                        ЛКМ - открыть ячейку, ПКМ - поставить флаг
+                        ЛКМ - открыть, ПКМ - флаг
                     </div>
                 </div>
             </div>
@@ -1209,91 +1538,17 @@
             </div>
             <div class="modal-body">
                 <div class="game-container">
-                    <div class="game-info" id="spaceInvadersInfo">Счет: 0| Жизни: 3</div>
-                    <canvas id="spaceInvadersCanvas" class="space-invaders-canvas" width="600" height="400"></canvas>
-                    <button class="game-btn" onclick="resetSpaceInvaders()">Сброс</button>
+                    <div class="game-info" id="spaceInvadersInfo">Счет: 0 | Жизни: 3</div>
+                    <canvas id="spaceInvadersCanvas" width="600" height="400" class="breakout-canvas"></canvas>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startSpaceInvaders()">Старт</button>
+                        <button class="game-btn" onclick="resetSpaceInvaders()">Сброс</button>
+                    </div>
                     <div style="text-align: center; margin-top: 15px; color: #a0a0c0; font-size: 0.9rem;">
                         Управление: стрелки влево/вправо, пробел - выстрел
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Модальное окно настроек -->
-    <div id="settingsModal" class="settings-modal">
-        <div class="settings-modal-content">
-            <div class="settings-header">
-                <h2 class="settings-title">Настройки</h2>
-                <span class="close-settings" onclick="closeSettingsModal()">&times;</span>
-            </div>
-            <div class="settings-section">
-                <h3>Профиль</h3>
-                <div class="setting-item">
-                    <label class="setting-label">Имя пользователя:</label>
-                    <input type="text" id="settingsProfileName" class="form-input" placeholder="Введите имя">
-                </div>
-                <div class="setting-item">
-                    <label class="setting-label">Аватар:</label>
-                    <input type="text" id="settingsProfileAvatar" class="form-input" placeholder="Введите символ аватара">
-                </div>
-            </div>
-
-            <div class="settings-section">
-                <h3>Темы</h3>
-                <div class="setting-item">
-                    <label class="setting-label">Основная тема:</label>
-                    <select id="mainTheme" class="form-input">
-                        <option value="dark">Темная</option>
-                        <option value="light">Светлая</option>
-                    </select>
-                </div>
-                <div class="setting-item">
-                    <label class="setting-label">Цветовая тема:</label>
-                    <div class="theme-options">
-                        <div class="theme-option active" data-theme="blue" onclick="selectTheme('blue')" style="width: 30px; height: 30px; background: linear-gradient(45deg, #1a1a2e, #0f3460); border-radius: 50%; display: inline-block; margin: 5px; cursor: pointer;"></div>
-                        <div class="theme-option" data-theme="green" onclick="selectTheme('green')" style="width: 30px; height: 30px; background: linear-gradient(45deg, #0f4c3a, #2a7d6a); border-radius: 50%; display: inline-block; margin: 5px; cursor: pointer;"></div>
-                        <div class="theme-option" data-theme="purple" onclick="selectTheme('purple')" style="width: 30px; height: 30px; background: linear-gradient(45deg, #4b0082, #8a2be2); border-radius: 50%; display: inline-block; margin: 5px; cursor: pointer;"></div>
-                        <div class="theme-option" data-theme="orange" onclick="selectTheme('orange')" style="width: 30px; height: 30px; background: linear-gradient(45deg, #ff6b35, #ffb74d); border-radius: 50%; display: inline-block; margin: 5px; cursor: pointer;"></div>
-                        <div class="theme-option" data-theme="pink" onclick="selectTheme('pink')" style="width: 30px; height: 30px; background: linear-gradient(45deg, #ff69b4, #ff1493); border-radius: 50%; display: inline-block; margin: 5px; cursor: pointer;"></div>
-                        <div class="theme-option" data-theme="light-blue" onclick="selectTheme('light-blue')" style="width: 30px; height: 30px; background: linear-gradient(45deg, #001f3f, #7fdbff); border-radius: 50%; display: inline-block; margin: 5px; cursor: pointer;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="settings-section">
-                <h3>Снег</h3>
-                <div class="setting-item">
-                    <label class="setting-label">Количество снежинок: <span id="snowCountValue" class="range-value">5</span></label>
-                    <input type="range" id="snowCount" class="range-slider" min="0" max="50" value="5">
-                </div>
-                <div class="setting-item">
-                    <label class="setting-label">Размер снежинок: <span id="snowSizeValue" class="range-value">1.2</span>rem</label>
-                    <input type="range" id="snowSize" class="range-slider" min="5" max="30" value="12">
-                </div>
-                <div class="setting-item">
-                    <label class="setting-label">Скорость падения: <span id="snowSpeedValue" class="range-value">10</span></label>
-                    <input type="range" id="snowSpeed" class="range-slider" min="1" max="30" value="10">
-                </div>
-            </div>
-
-            <div class="settings-section">
-                <h3>Дизайн</h3>
-                <div class="setting-item">
-                    <label class="setting-label">Радиус скругления: <span id="borderRadiusValue" class="range-value">15</span>px</label>
-                    <input type="range" id="borderRadius" class="range-slider" min="5" max="30" value="15">
-                </div>
-                <div class="setting-item">
-                    <label class="setting-label">Интенсивность тени: <span id="shadowIntensityValue" class="range-value">3.0</span></label>
-                    <input type="range" id="shadowIntensity" class="range-slider" min="1" max="10" value="3">
-                </div>
-                <div class="setting-item">
-                    <label class="setting-label">Прозрачность: <span id="opacityValue" class="range-value">4.0</span></label>
-                    <input type="range" id="opacity" class="range-slider" min="1" max="10" value="4">
-                </div>
-            </div>
-
-            <button class="save-settings-btn" onclick="saveSettings()">Сохранить настройки</button>
         </div>
     </div>
 
@@ -1321,14 +1576,13 @@
             }
         };
 
-        // Инициализация комментариев
-        let comments = JSON.parse(localStorage.getItem('okComments')) || [];
-
         // Создание снега
         function createSnow() {
             const snowContainer = document.getElementById('snow-container');
             snowContainer.innerHTML = '';
+            
             const snowCount = userSettings.snow.count;
+            
             for (let i = 0; i < snowCount; i++) {
                 const snowflake = document.createElement('div');
                 snowflake.innerHTML = '❄';
@@ -1358,7 +1612,7 @@
                 }, animationDuration * 1000);
             }
         }
-
+        
         // Создание одной снежинки
         function createSingleSnow() {
             const snowContainer = document.getElementById('snow-container');
@@ -1366,29 +1620,26 @@
             snowflake.innerHTML = '❄';
             snowflake.classList.add('snowflake');
             
-            // Случайные параметры
             const startLeft = Math.random() * 100;
             const animationDuration = userSettings.snow.speed + Math.random() * userSettings.snow.speed;
-            const animationDelay = Math.random() * 5;
             const opacity = 0.3 + Math.random() * 0.7;
             const fontSize = userSettings.snow.size / 10 + 'rem';
             
             snowflake.style.left = startLeft + 'vw';
             snowflake.style.animationDuration = animationDuration + 's';
-            snowflake.style.animationDelay = animationDelay + 's';
             snowflake.style.opacity = opacity;
             snowflake.style.fontSize = fontSize;
             
             snowContainer.appendChild(snowflake);
             
-            // Удаление снежинки после завершения анимации
             setTimeout(() => {
                 if (snowflake.parentNode) {
                     snowflake.remove();
+                    createSingleSnow();
                 }
             }, animationDuration * 1000);
         }
-
+        
         // Переключение вкладок
         function showTab(tabId) {
             // Скрыть все вкладки
@@ -1405,7 +1656,7 @@
             // Добавить активный класс кнопке
             event.target.classList.add('active');
         }
-
+        
         // Открытие модального окна игры
         function openGameModal(gameId) {
             // Скрыть все вкладки
@@ -1446,31 +1697,36 @@
                     break;
             }
         }
-
-        // Закрытие модального окна игры
+        
+        // Закрытие модального окна
         function closeModal(gameId) {
             document.getElementById(gameId + 'Modal').style.display = 'none';
         }
-
+        
         // Открытие модального окна настроек
         function openSettingsModal() {
             document.getElementById('settingsModal').style.display = 'block';
-            loadSettings();
+            loadSettingsToForm();
         }
-
+        
         // Закрытие модального окна настроек
         function closeSettingsModal() {
             document.getElementById('settingsModal').style.display = 'none';
         }
-
-        // Загрузка настроек
-        function loadSettings() {
+        
+        // Загрузка настроек в форму
+        function loadSettingsToForm() {
             // Профиль
             document.getElementById('settingsProfileName').value = userSettings.profile.name;
             document.getElementById('settingsProfileAvatar').value = userSettings.profile.avatar;
+            document.getElementById('settingsAvatarPreview').innerHTML = userSettings.profile.avatar;
             
             // Темы
             document.getElementById('mainTheme').value = userSettings.theme.main;
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.theme-option.theme-${userSettings.theme.color}`).classList.add('active');
             
             // Снег
             document.getElementById('snowCount').value = userSettings.snow.count;
@@ -1488,7 +1744,26 @@
             document.getElementById('opacity').value = userSettings.design.opacity;
             document.getElementById('opacityValue').textContent = (userSettings.design.opacity / 10).toFixed(1);
         }
-
+        
+        // Предварительный просмотр аватара
+        function previewAvatar(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.borderRadius = '50%';
+                    img.style.objectFit = 'cover';
+                    document.getElementById('avatarImagePreview').innerHTML = '';
+                    document.getElementById('avatarImagePreview').appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
         // Выбор темы
         function selectTheme(theme) {
             document.querySelectorAll('.theme-option').forEach(option => {
@@ -1496,7 +1771,7 @@
             });
             event.target.classList.add('active');
         }
-
+        
         // Сохранение настроек
         function saveSettings() {
             // Профиль
@@ -1531,7 +1806,7 @@
             
             alert('Настройки сохранены!');
         }
-
+        
         // Применение настроек
         function applySettings() {
             // Тема
@@ -1550,7 +1825,7 @@
             // Профиль
             document.getElementById('commentName').value = userSettings.profile.name;
         }
-
+        
         // Обновление стилей дизайна
         function updateDesignStyles() {
             // Создание или обновление стилей
@@ -1561,17 +1836,44 @@
                 document.head.appendChild(style);
             }
             
+            const borderRadius = userSettings.design.borderRadius + 'px';
+            const shadowIntensity = userSettings.design.shadowIntensity / 10;
+            const opacity = userSettings.design.opacity / 10;
+            
             style.textContent = `
-                .tab-content, .game-card, .member-card, .comment, .settings-section, .game-container, .comment-form, .modal-content, .settings-modal-content, .comments-section, .snake-cell, .game-cell, .memory-card, .minesweeper-cell {
-                    border-radius: ${userSettings.design.borderRadius}px;
+                .container, .tab-content, .member-card, .game-card, .comment, .comment-form, .comments-section,
+                .modal-content, .game-container, .game-cell, .snake-board, .memory-card, .breakout-canvas,
+                .settings-section, .settings-modal-content {
+                    border-radius: ${borderRadius} !important;
                 }
                 
-                .tab-content, .game-card, .member-card, .comment, .settings-section, .game-container, .comment-form, .modal-content, .settings-modal-content, .comments-section {
-                    box-shadow: 0 ${userSettings.design.shadowIntensity}px ${userSettings.design.shadowIntensity * 2}px rgba(0, 0, 0, ${userSettings.design.opacity / 10});
+                .tab-btn, .game-btn, .submit-btn, .mode-btn, .save-settings-btn, .image-upload,
+                .settings-button {
+                    border-radius: ${Math.max(15, userSettings.design.borderRadius * 2)}px !important;
+                }
+                
+                .tab-content, .member-card, .game-card, .comment, .comment-form, .comments-section,
+                .game-container, .snake-board, .settings-section {
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, ${shadowIntensity}) !important;
+                }
+                
+                .modal-content, .settings-modal-content {
+                    box-shadow: 0 20px 50px rgba(0, 0, 0, ${Math.min(0.7, shadowIntensity * 2)}) !important;
+                }
+                
+                .tab-content, .member-card, .game-card, .comment, .comment-form, .comments-section,
+                .game-container, .settings-section {
+                    background: rgba(0, 0, 0, ${opacity}) !important;
+                }
+                
+                .light-theme .tab-content, .light-theme .member-card, .light-theme .game-card, 
+                .light-theme .comment, .light-theme .comment-form, .light-theme .comments-section,
+                .light-theme .game-container, .light-theme .settings-section {
+                    background: rgba(255, 255, 255, ${Math.min(0.9, opacity + 0.5)}) !important;
                 }
             `;
         }
-
+        
         // Обновление значений слайдеров
         document.addEventListener('input', function(e) {
             if (e.target.classList.contains('range-slider')) {
@@ -1585,7 +1887,7 @@
                 }
             }
         });
-
+        
         // Закрытие модальных окон при клике вне их
         window.onclick = function(event) {
             const modals = document.querySelectorAll('.modal, .settings-modal');
@@ -1595,106 +1897,20 @@
                 }
             });
         }
-
-        // Инициализация комментариев
-        function displayComments() {
-            const commentsList = document.getElementById('commentsList');
-            const noComments = document.getElementById('noComments');
-            
-            if (comments.length === 0) {
-                noComments.style.display = 'block';
-                commentsList.innerHTML = '';
-                commentsList.appendChild(noComments);
-                return;
-            }
-            
-            noComments.style.display = 'none';
-            commentsList.innerHTML = '';
-            
-            // Отображаем комментарии в обратном порядке (новые сверху)
-            comments.slice().reverse().forEach(comment => {
-                const commentElement = document.createElement('div');
-                commentElement.className = 'comment';
-                commentElement.innerHTML = `
-                    <div class="comment-header">
-                        <div class="comment-avatar">${comment.name.charAt(0)}</div>
-                        <div class="comment-author">${comment.name}</div>
-                        <div class="comment-date">${formatDate(comment.date)}</div>
-                    </div>
-                    <div class="comment-text">${comment.text}</div>
-                `;
-                commentsList.appendChild(commentElement);
-            });
-        }
-
-        // Форматирование даты
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('ru-RU', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-
-        // Обработка отправки формы комментариев
-        document.getElementById('commentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const nameInput = document.getElementById('commentName');
-            const textInput = document.getElementById('commentText');
-            
-            if (nameInput.value.trim() && textInput.value.trim()) {
-                const newComment = {
-                    name: nameInput.value.trim(),
-                    text: textInput.value.trim(),
-                    date: new Date().toISOString()
-                };
-                
-                comments.push(newComment);
-                localStorage.setItem('okComments', JSON.stringify(comments));
-                
-                displayComments();
-                
-                // Очистка формы
-                nameInput.value = '';
-                textInput.value = '';
-                
-                // Показ сообщения об успешной отправке
-                alert('Комментарий успешно добавлен!');
-            }
-        });
-
-        // Инициализация при загрузке страницы
-        window.onload = function() {
-            createSnow();
-            applySettings();
-            displayComments();
-            
-            // Инициализация игр
-            initTicTacToe();
-            initSnake();
-            initMemory();
-            initBreakout();
-            initPong();
-            initTetris();
-            initMinesweeper();
-            initSpaceInvaders();
-        };
-
-        // Крестики-Нолики
-        let ticTacToeBoard = ['', '', '', '', '', '', '', '', ''];
-        let ticTacToeActive = true;
-        let ticTacToeMode = 'ai'; // 'ai' или 'pvp'
+        
+        // Игра Крестики-Нолики
+        let currentPlayer = 'X';
+        let gameBoard = ['', '', '', '', '', '', '', '', ''];
+        let gameActive = true;
+        let ticTacToeMode = 'ai';
 
         function initTicTacToe() {
             const board = document.getElementById('ticTacToeBoard');
             board.innerHTML = '';
-            ticTacToeBoard = ['', '', '', '', '', '', '', '', ''];
-            ticTacToeActive = true;
-            document.getElementById('ticTacToeInfo').textContent = 'Ваш ход: X';
+            gameBoard = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            gameActive = true;
+            document.getElementById('ticTacToeInfo').textContent = 'Ваш ход: ' + currentPlayer;
             
             for (let i = 0; i < 9; i++) {
                 const cell = document.createElement('div');
@@ -1705,73 +1921,66 @@
             }
         }
 
-        function setTicTacToeMode(mode) {
-            ticTacToeMode = mode;
-            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            initTicTacToe();
-        }
-
         function makeMove(index) {
-            if (ticTacToeBoard[index] !== '' || !ticTacToeActive) return;
+            if (gameBoard[index] !== '' || !gameActive) return;
             
-            ticTacToeBoard[index] = 'X';
+            gameBoard[index] = currentPlayer;
             const cell = document.querySelector(`[data-index="${index}"]`);
-            cell.textContent = 'X';
+            cell.textContent = currentPlayer;
             cell.style.animation = 'pulse 0.3s';
             
             if (checkWinner()) {
-                document.getElementById('ticTacToeInfo').textContent = 'Победитель: X!';
-                ticTacToeActive = false;
+                document.getElementById('ticTacToeInfo').textContent = `Победитель: ${currentPlayer}!`;
+                gameActive = false;
                 return;
             }
             
-            if (ticTacToeBoard.every(cell => cell !== '')) {
+            if (gameBoard.every(cell => cell !== '')) {
                 document.getElementById('ticTacToeInfo').textContent = 'Ничья!';
-                ticTacToeActive = false;
+                gameActive = false;
                 return;
             }
             
-            if (ticTacToeMode === 'ai') {
-                setTimeout(aiMove, 500);
-            } else {
-                // Для PvP меняем игрока
-                document.getElementById('ticTacToeInfo').textContent = 'Ход: O';
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            document.getElementById('ticTacToeInfo').textContent = 'Ваш ход: ' + currentPlayer;
+            
+            // Ход ИИ или второго игрока
+            if (ticTacToeMode === 'ai' && currentPlayer === 'O' && gameActive) {
+                setTimeout(makeAIMove, 800);
             }
         }
 
-        function aiMove() {
-            if (!ticTacToeActive) return;
-            
-            // Простой ИИ: проверяет, может ли выиграть, блокирует, или делает случайный ход
+        function makeAIMove() {
+            // Улучшенный ИИ - сначала проверяем выигрышные ходы
+            // Проверяем, может ли ИИ выиграть
             for (let i = 0; i < 9; i++) {
-                if (ticTacToeBoard[i] === '') {
-                    ticTacToeBoard[i] = 'O';
+                if (gameBoard[i] === '') {
+                    gameBoard[i] = 'O';
                     if (checkWinnerInternal()) {
-                        ticTacToeBoard[i] = '';
+                        gameBoard[i] = '';
                         makeMove(i);
                         return;
                     }
-                    ticTacToeBoard[i] = '';
+                    gameBoard[i] = '';
                 }
             }
             
-            // Блокировка победы игрока
+            // Проверяем, может ли игрок выиграть и блокируем
             for (let i = 0; i < 9; i++) {
-                if (ticTacToeBoard[i] === '') {
-                    ticTacToeBoard[i] = 'X';
+                if (gameBoard[i] === '') {
+                    gameBoard[i] = 'X';
                     if (checkWinnerInternal()) {
-                        ticTacToeBoard[i] = '';
+                        gameBoard[i] = '';
                         makeMove(i);
                         return;
                     }
-                    ticTacToeBoard[i] = '';
+                    gameBoard[i] = '';
                 }
             }
             
-            // Случайный ход
+            // Иначе делаем случайный ход
             let emptyCells = [];
-            ticTacToeBoard.forEach((cell, index) => {
+            gameBoard.forEach((cell, index) => {
                 if (cell === '') emptyCells.push(index);
             });
             
@@ -1790,10 +1999,7 @@
             
             for (let pattern of winPatterns) {
                 const [a, b, c] = pattern;
-                if (ticTacToeBoard[a] && 
-                    ticTacToeBoard[a] === ticTacToeBoard[b] && 
-                    ticTacToeBoard[a] === ticTacToeBoard[c]) {
-                    
+                if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
                     // Подсветка выигрышной комбинации
                     document.querySelector(`[data-index="${a}"]`).style.background = 'rgba(78, 205, 196, 0.5)';
                     document.querySelector(`[data-index="${b}"]`).style.background = 'rgba(78, 205, 196, 0.5)';
@@ -1813,9 +2019,7 @@
             
             for (let pattern of winPatterns) {
                 const [a, b, c] = pattern;
-                if (ticTacToeBoard[a] && 
-                    ticTacToeBoard[a] === ticTacToeBoard[b] && 
-                    ticTacToeBoard[a] === ticTacToeBoard[c]) {
+                if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
                     return true;
                 }
             }
@@ -1826,9 +2030,18 @@
             initTicTacToe();
         }
 
-        // Змейка
+        function setTicTacToeMode(mode) {
+            ticTacToeMode = mode;
+            document.querySelectorAll('#ticTacToeModal .mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            resetTicTacToe();
+        }
+
+        // Игра Змейка
         let snake = [{x: 10, y: 10}];
-        let food = {x: 15, y: 15};
+        let food = {x: 5, y: 5};
         let direction = {x: 0, y: 0};
         let score = 0;
         let snakeInterval;
@@ -1848,18 +2061,20 @@
         }
 
         function generateFood() {
-            return {x: Math.floor(Math.random() * 20), y: Math.floor(Math.random() * 20)};
+            return {
+                x: Math.floor(Math.random() * 20),
+                y: Math.floor(Math.random() * 20)
+            };
         }
 
         function drawSnake() {
             const board = document.getElementById('snakeBoard');
             board.innerHTML = '';
+            
             for (let y = 0; y < 20; y++) {
                 for (let x = 0; x < 20; x++) {
                     const cell = document.createElement('div');
                     cell.className = 'snake-cell';
-                    cell.setAttribute('data-x', x);
-                    cell.setAttribute('data-y', y);
                     
                     if (snake[0].x === x && snake[0].y === y) {
                         cell.classList.add('snake-head');
@@ -1943,8 +2158,8 @@
             flippedCards = [];
             matchedPairs = 0;
             canFlip = true;
-            
             document.getElementById('memoryInfo').textContent = 'Найдено пар: 0/8';
+            
             const grid = document.getElementById('memoryGrid');
             grid.innerHTML = '';
             
@@ -1966,8 +2181,7 @@
         }
 
         function flipCard(index) {
-            if (!canFlip || flippedCards.includes(index) || 
-                document.querySelector(`[data-index="${index}"]`).classList.contains('matched')) {
+            if (!canFlip || flippedCards.includes(index) || document.querySelector(`[data-index="${index}"]`).classList.contains('matched')) {
                 return;
             }
             
@@ -1988,17 +2202,17 @@
             const secondCard = document.querySelector(`[data-index="${secondIndex}"]`);
             
             if (memoryCards[firstIndex] === memoryCards[secondIndex]) {
-                // Совпадение
                 firstCard.classList.add('matched');
                 secondCard.classList.add('matched');
                 matchedPairs++;
                 document.getElementById('memoryInfo').textContent = `Найдено пар: ${matchedPairs}/8`;
                 
                 if (matchedPairs === 8) {
-                    alert('Поздравляем! Вы нашли все пары!');
+                    setTimeout(() => alert('Поздравляем! Вы нашли все пары!'), 500);
                 }
             } else {
-                // Не совпадение
+                firstCard.innerHTML = '?';
+                secondCard.innerHTML = '?';
                 firstCard.classList.remove('flipped');
                 secondCard.classList.remove('flipped');
             }
@@ -2011,11 +2225,9 @@
             initMemory();
         }
 
-        // Арканоид
+        // Игра Арканоид
         let breakoutCanvas, breakoutCtx;
-        let breakoutBall = {x: 0, y: 0, dx: 0, dy: 0, radius: 10};
-        let breakoutPaddle = {x: 0, y: 0, width: 100, height: 15};
-        let breakoutBricks = [];
+        let breakoutPaddle, breakoutBall, breakoutBricks;
         let breakoutScore = 0;
         let breakoutLives = 3;
         let breakoutGameInterval;
@@ -2025,40 +2237,63 @@
             breakoutCanvas = document.getElementById('breakoutCanvas');
             breakoutCtx = breakoutCanvas.getContext('2d');
             
-            // Инициализация мяча
-            breakoutBall.x = breakoutCanvas.width / 2;
-            breakoutBall.y = breakoutCanvas.height - 30;
-            breakoutBall.dx = 4;
-            breakoutBall.dy = -4;
+            breakoutPaddle = {
+                x: breakoutCanvas.width / 2 - 50,
+                y: breakoutCanvas.height - 20,
+                width: 100,
+                height: 10,
+                speed: 8
+            };
             
-            // Инициализация платформы
-            breakoutPaddle.x = breakoutCanvas.width / 2 - 50;
-            breakoutPaddle.y = breakoutCanvas.height - 20;
+            breakoutBall = {
+                x: breakoutCanvas.width / 2,
+                y: breakoutCanvas.height - 30,
+                radius: 10,
+                dx: 4,
+                dy: -4
+            };
             
-            // Инициализация кирпичей
             breakoutBricks = [];
-            const brickRows = 5;
-            const brickColumns = 10;
-            const brickWidth = 55;
-            const brickHeight = 20;
-            const brickPadding = 5;
-            const brickOffsetTop = 30;
-            const brickOffsetLeft = 30;
+            const brickRowCount = 5;
+            const brickColumnCount = 10;
             
-            for (let c = 0; c < brickColumns; c++) {
+            for (let c = 0; c < brickColumnCount; c++) {
                 breakoutBricks[c] = [];
-                for (let r = 0; r < brickRows; r++) {
-                    breakoutBricks[c][r] = {x: 0, y: 0, status: 1};
+                for (let r = 0; r < brickRowCount; r++) {
+                    breakoutBricks[c][r] = { x: 0, y: 0, status: 1 };
                 }
             }
             
             breakoutScore = 0;
             breakoutLives = 3;
+            breakoutKeys = {};
             updateBreakoutInfo();
         }
 
-        function updateBreakout() {
+        function resetBreakout() {
+            clearInterval(breakoutGameInterval);
+            initBreakout();
+        }
+
+        function drawBreakout() {
             breakoutCtx.clearRect(0, 0, breakoutCanvas.width, breakoutCanvas.height);
+            
+            // Рисуем платформу
+            const paddleGradient = breakoutCtx.createLinearGradient(breakoutPaddle.x, breakoutPaddle.y, breakoutPaddle.x + breakoutPaddle.width, breakoutPaddle.y + breakoutPaddle.height);
+            paddleGradient.addColorStop(0, '#4ecdc4');
+            paddleGradient.addColorStop(1, '#45b7aa');
+            breakoutCtx.fillStyle = paddleGradient;
+            breakoutCtx.fillRect(breakoutPaddle.x, breakoutPaddle.y, breakoutPaddle.width, breakoutPaddle.height);
+            
+            // Рисуем мяч
+            const ballGradient = breakoutCtx.createRadialGradient(breakoutBall.x, breakoutBall.y, 0, breakoutBall.x, breakoutBall.y, breakoutBall.radius);
+            ballGradient.addColorStop(0, '#ff9999');
+            ballGradient.addColorStop(1, '#ff6b6b');
+            breakoutCtx.beginPath();
+            breakoutCtx.arc(breakoutBall.x, breakoutBall.y, breakoutBall.radius, 0, Math.PI * 2);
+            breakoutCtx.fillStyle = ballGradient;
+            breakoutCtx.fill();
+            breakoutCtx.closePath();
             
             // Рисуем кирпичи
             const brickWidth = 55;
@@ -2076,72 +2311,74 @@
                         brick.x = brickX;
                         brick.y = brickY;
                         
-                        breakoutCtx.beginPath();
-                        breakoutCtx.rect(brick.x, brick.y, brickWidth, brickHeight);
-                        breakoutCtx.fillStyle = '#4ecdc4';
-                        breakoutCtx.fill();
-                        breakoutCtx.closePath();
+                        const brickGradient = breakoutCtx.createLinearGradient(brickX, brickY, brickX, brickY + brickHeight);
+                        brickGradient.addColorStop(0, '#45b7aa');
+                        brickGradient.addColorStop(1, '#3da59a');
+                        breakoutCtx.fillStyle = brickGradient;
+                        breakoutCtx.fillRect(brickX, brickY, brickWidth, brickHeight);
+                        
+                        // Добавляем рамку
+                        breakoutCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                        breakoutCtx.lineWidth = 1;
+                        breakoutCtx.strokeRect(brickX, brickY, brickWidth, brickHeight);
                     }
                 }
             }
+        }
+
+        function updateBreakout() {
+            drawBreakout();
             
-            // Рисуем мяч
-            breakoutCtx.beginPath();
-            breakoutCtx.arc(breakoutBall.x, breakoutBall.y, breakoutBall.radius, 0, Math.PI * 2);
-            const ballGradient = breakoutCtx.createRadialGradient(
-                breakoutBall.x, breakoutBall.y, 0,
-                breakoutBall.x, breakoutBall.y, breakoutBall.radius
-            );
-            ballGradient.addColorStop(0, '#ffffff');
-            ballGradient.addColorStop(1, '#4ecdc4');
-            breakoutCtx.fillStyle = ballGradient;
-            breakoutCtx.fill();
-            breakoutCtx.closePath();
-            
-            // Рисуем платформу
-            breakoutCtx.beginPath();
-            breakoutCtx.rect(breakoutPaddle.x, breakoutPaddle.y, breakoutPaddle.width, breakoutPaddle.height);
-            breakoutCtx.fillStyle = '#ff6b6b';
-            breakoutCtx.fill();
-            breakoutCtx.closePath();
+            // Плавное движение платформы
+            if (breakoutKeys['ArrowLeft']) {
+                breakoutPaddle.x -= breakoutPaddle.speed;
+                if (breakoutPaddle.x < 0) breakoutPaddle.x = 0;
+            }
+            if (breakoutKeys['ArrowRight']) {
+                breakoutPaddle.x += breakoutPaddle.speed;
+                if (breakoutPaddle.x + breakoutPaddle.width > breakoutCanvas.width) {
+                    breakoutPaddle.x = breakoutCanvas.width - breakoutPaddle.width;
+                }
+            }
             
             // Движение мяча
             breakoutBall.x += breakoutBall.dx;
             breakoutBall.y += breakoutBall.dy;
             
-            // Отскок от стен
-            if (breakoutBall.x + breakoutBall.dx > breakoutCanvas.width - breakoutBall.radius || 
-                breakoutBall.x + breakoutBall.dx < breakoutBall.radius) {
+            // Отскок от стен (левая и правая)
+            if (breakoutBall.x + breakoutBall.dx > breakoutCanvas.width - breakoutBall.radius || breakoutBall.x + breakoutBall.dx < breakoutBall.radius) {
                 breakoutBall.dx = -breakoutBall.dx;
             }
             
+            // Отскок от верхней стены
             if (breakoutBall.y + breakoutBall.dy < breakoutBall.radius) {
                 breakoutBall.dy = -breakoutBall.dy;
-            } else if (breakoutBall.y + breakoutBall.dy > breakoutCanvas.height - breakoutBall.radius) {
-                // Мяч упал
-                breakoutLives--;
-                updateBreakoutInfo();
-                if (breakoutLives <= 0) {
-                    clearInterval(breakoutGameInterval);
-                    alert('Игра окончена! Счет: ' + breakoutScore);
-                    return;
+            } 
+            // Проверка падения мяча вниз
+            else if (breakoutBall.y + breakoutBall.dy > breakoutCanvas.height - breakoutBall.radius) {
+                if (breakoutBall.x > breakoutPaddle.x && breakoutBall.x < breakoutPaddle.x + breakoutPaddle.width) {
+                    // Отскок от платформы
+                    breakoutBall.dy = -Math.abs(breakoutBall.dy); // Всегда отскакивает вверх
+                    // Изменяем угол в зависимости от места удара
+                    let hitPosition = (breakoutBall.x - (breakoutPaddle.x + breakoutPaddle.width/2)) / (breakoutPaddle.width/2);
+                    breakoutBall.dx = hitPosition * 6; // Максимальная скорость по x
                 } else {
-                    // Сброс позиции мяча
-                    breakoutBall.x = breakoutCanvas.width / 2;
-                    breakoutBall.y = breakoutCanvas.height - 30;
-                    breakoutBall.dx = (Math.random() - 0.5) * 8;
-                    breakoutBall.dy = -4;
-                    breakoutPaddle.x = breakoutCanvas.width / 2 - 50;
+                    // Мяч упал
+                    breakoutLives--;
+                    updateBreakoutInfo();
+                    if (breakoutLives <= 0) {
+                        clearInterval(breakoutGameInterval);
+                        alert('Игра окончена! Счет: ' + breakoutScore);
+                        return;
+                    } else {
+                        // Сброс позиции мяча
+                        breakoutBall.x = breakoutCanvas.width / 2;
+                        breakoutBall.y = breakoutCanvas.height - 30;
+                        breakoutBall.dx = (Math.random() - 0.5) * 8; // Случайное направление
+                        breakoutBall.dy = -4;
+                        breakoutPaddle.x = breakoutCanvas.width / 2 - 50;
+                    }
                 }
-            }
-            
-            // Отскок от платформы
-            if (breakoutBall.y + breakoutBall.dy > breakoutPaddle.y - breakoutBall.radius &&
-                breakoutBall.x > breakoutPaddle.x &&
-                breakoutBall.x < breakoutPaddle.x + breakoutPaddle.width) {
-                // Изменение направления мяча в зависимости от места контакта
-                const hitPosition = (breakoutBall.x - breakoutPaddle.x) / breakoutPaddle.width;
-                breakoutBall.dx = hitPosition * 6;
             }
             
             // Проверка столкновения с кирпичами
@@ -2155,7 +2392,7 @@
                 for (let r = 0; r < 5; r++) {
                     const brick = breakoutBricks[c][r];
                     if (brick.status === 1) {
-                        if (breakoutBall.x > brick.x && breakoutBall.x < brick.x + brickWidth &&
+                        if (breakoutBall.x > brick.x && breakoutBall.x < brick.x + brickWidth && 
                             breakoutBall.y > brick.y && breakoutBall.y < brick.y + brickHeight) {
                             breakoutBall.dy = -breakoutBall.dy;
                             brick.status = 0;
@@ -2173,7 +2410,7 @@
                                 clearInterval(breakoutGameInterval);
                                 alert('Поздравляем! Вы выиграли! Счет: ' + breakoutScore);
                             }
-                            return;
+                            return; // Выходим после первого столкновения
                         }
                     }
                 }
@@ -2181,7 +2418,7 @@
         }
 
         function updateBreakoutInfo() {
-            document.getElementById('breakoutInfo').textContent = `Счет: ${breakoutScore}| Жизни: ${breakoutLives}`;
+            document.getElementById('breakoutInfo').textContent = `Счет: ${breakoutScore} | Жизни: ${breakoutLives}`;
         }
 
         function startBreakout() {
@@ -2190,13 +2427,7 @@
             breakoutGameInterval = setInterval(updateBreakout, 16);
         }
 
-        function resetBreakout() {
-            clearInterval(breakoutGameInterval);
-            initBreakout();
-            startBreakout();
-        }
-
-        // Управление арканоидом
+        // Управление арканоидом (плавное движение)
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
                 breakoutKeys[e.key] = true;
@@ -2209,153 +2440,184 @@
             }
         });
 
-        // Понг
+        // Игра Понг
         let pongCanvas, pongCtx;
-        let pongBall = {x: 0, y: 0, radius: 10, dx: 5, dy: 5};
-        let pongLeftPaddle = {x: 0, y: 0, width: 15, height: 100};
-        let pongRightPaddle = {x: 0, y: 0, width: 15, height: 100};
-        let pongLeftScore = 0;
-        let pongRightScore = 0;
+        let pongLeftPaddle, pongRightPaddle, pongBall;
+        let pongLeftScore = 0, pongRightScore = 0;
         let pongGameInterval;
         let pongKeys = {};
+        let pongMode = 'ai';
 
         function initPong() {
             pongCanvas = document.getElementById('pongCanvas');
             pongCtx = pongCanvas.getContext('2d');
             
-            pongBall.x = pongCanvas.width / 2;
-            pongBall.y = pongCanvas.height / 2;
-            pongBall.dx = 5;
-            pongBall.dy = 5;
+            pongLeftPaddle = {
+                x: 10,
+                y: pongCanvas.height / 2 - 40,
+                width: 10,
+                height: 80,
+                speed: 8
+            };
             
-            pongLeftPaddle.x = 20;
-            pongLeftPaddle.y = pongCanvas.height / 2 - 50;
-            pongRightPaddle.x = pongCanvas.width - 35;
-            pongRightPaddle.y = pongCanvas.height / 2 - 50;
+            pongRightPaddle = {
+                x: pongCanvas.width - 20,
+                y: pongCanvas.height / 2 - 40,
+                width: 10,
+                height: 80,
+                speed: 8
+            };
+            
+            pongBall = {
+                x: pongCanvas.width / 2,
+                y: pongCanvas.height / 2,
+                radius: 10,
+                dx: 5,
+                dy: 5
+            };
             
             pongLeftScore = 0;
             pongRightScore = 0;
+            pongKeys = {};
             updatePongInfo();
         }
 
-        function updatePong() {
-            // Очистка холста
+        function resetPong() {
+            clearInterval(pongGameInterval);
+            initPong();
+        }
+
+        function drawPong() {
             pongCtx.clearRect(0, 0, pongCanvas.width, pongCanvas.height);
             
+            // Рисуем платформы
+            const leftPaddleGradient = pongCtx.createLinearGradient(pongLeftPaddle.x, pongLeftPaddle.y, pongLeftPaddle.x + pongLeftPaddle.width, pongLeftPaddle.y + pongLeftPaddle.height);
+            leftPaddleGradient.addColorStop(0, '#4ecdc4');
+            leftPaddleGradient.addColorStop(1, '#45b7aa');
+            pongCtx.fillStyle = leftPaddleGradient;
+            pongCtx.fillRect(pongLeftPaddle.x, pongLeftPaddle.y, pongLeftPaddle.width, pongLeftPaddle.height);
+            
+            const rightPaddleGradient = pongCtx.createLinearGradient(pongRightPaddle.x, pongRightPaddle.y, pongRightPaddle.x + pongRightPaddle.width, pongRightPaddle.y + pongRightPaddle.height);
+            rightPaddleGradient.addColorStop(0, '#4ecdc4');
+            rightPaddleGradient.addColorStop(1, '#45b7aa');
+            pongCtx.fillStyle = rightPaddleGradient;
+            pongCtx.fillRect(pongRightPaddle.x, pongRightPaddle.y, pongRightPaddle.width, pongRightPaddle.height);
+            
             // Рисуем мяч
+            const ballGradient = pongCtx.createRadialGradient(pongBall.x, pongBall.y, 0, pongBall.x, pongBall.y, pongBall.radius);
+            ballGradient.addColorStop(0, '#ff9999');
+            ballGradient.addColorStop(1, '#ff6b6b');
             pongCtx.beginPath();
             pongCtx.arc(pongBall.x, pongBall.y, pongBall.radius, 0, Math.PI * 2);
-            const ballGradient = pongCtx.createRadialGradient(
-                pongBall.x, pongBall.y, 0,
-                pongBall.x, pongBall.y, pongBall.radius
-            );
-            ballGradient.addColorStop(0, '#ffffff');
-            ballGradient.addColorStop(1, '#4ecdc4');
             pongCtx.fillStyle = ballGradient;
             pongCtx.fill();
             pongCtx.closePath();
             
-            // Рисуем левые и правые платформы
-            const leftPaddleGradient = pongCtx.createLinearGradient(
-                pongLeftPaddle.x, pongLeftPaddle.y, 
-                pongLeftPaddle.x + pongLeftPaddle.width, 
-                pongLeftPaddle.y + pongLeftPaddle.height
-            );
-            leftPaddleGradient.addColorStop(0, '#ff6b6b');
-            leftPaddleGradient.addColorStop(1, '#ff1493');
-            
-            const rightPaddleGradient = pongCtx.createLinearGradient(
-                pongRightPaddle.x, pongRightPaddle.y, 
-                pongRightPaddle.x + pongRightPaddle.width, 
-                pongRightPaddle.y + pongRightPaddle.height
-            );
-            rightPaddleGradient.addColorStop(0, '#ff6b6b');
-            rightPaddleGradient.addColorStop(1, '#ff1493');
-            
-            // Левая платформа
+            // Рисуем центральную линию
+            pongCtx.setLineDash([5, 15]);
             pongCtx.beginPath();
-            pongCtx.rect(pongLeftPaddle.x, pongLeftPaddle.y, pongLeftPaddle.width, pongLeftPaddle.height);
-            pongCtx.fillStyle = leftPaddleGradient;
-            pongCtx.fill();
-            pongCtx.closePath();
+            pongCtx.moveTo(pongCanvas.width / 2, 0);
+            pongCtx.lineTo(pongCanvas.width / 2, pongCanvas.height);
+            pongCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            pongCtx.lineWidth = 2;
+            pongCtx.stroke();
+            pongCtx.setLineDash([]);
+        }
+
+        function updatePong() {
+            drawPong();
             
-            // Правая платформа
-            pongCtx.beginPath();
-            pongCtx.rect(pongRightPaddle.x, pongRightPaddle.y, pongRightPaddle.width, pongRightPaddle.height);
-            pongCtx.fillStyle = rightPaddleGradient;
-            pongCtx.fill();
-            pongCtx.closePath();
+            // Плавное движение платформ
+            // Левая платформа (игрок 1) - поддержка разных раскладок
+            if (pongKeys['w'] || pongKeys['W'] || pongKeys['ц'] || pongKeys['Ц']) {
+                pongLeftPaddle.y -= pongLeftPaddle.speed;
+                if (pongLeftPaddle.y < 0) pongLeftPaddle.y = 0;
+            }
+            if (pongKeys['s'] || pongKeys['S'] || pongKeys['ы'] || pongKeys['Ы']) {
+                pongLeftPaddle.y += pongLeftPaddle.speed;
+                if (pongLeftPaddle.y + pongLeftPaddle.height > pongCanvas.height) {
+                    pongLeftPaddle.y = pongCanvas.height - pongLeftPaddle.height;
+                }
+            }
+            
+            // Правая платформа (игрок 2 или ИИ)
+            if (pongMode === 'pvp') {
+                if (pongKeys['ArrowUp']) {
+                    pongRightPaddle.y -= pongRightPaddle.speed;
+                    if (pongRightPaddle.y < 0) pongRightPaddle.y = 0;
+                }
+                if (pongKeys['ArrowDown']) {
+                    pongRightPaddle.y += pongRightPaddle.speed;
+                    if (pongRightPaddle.y + pongRightPaddle.height > pongCanvas.height) {
+                        pongRightPaddle.y = pongCanvas.height - pongRightPaddle.height;
+                    }
+                }
+            } else {
+                // ИИ для правой платформы
+                if (pongRightPaddle.y + pongRightPaddle.height/2 < pongBall.y - 35) {
+                    pongRightPaddle.y += pongRightPaddle.speed * 0.7; // Слегка замедленный ИИ
+                } else if (pongRightPaddle.y + pongRightPaddle.height/2 > pongBall.y + 35) {
+                    pongRightPaddle.y -= pongRightPaddle.speed * 0.7;
+                }
+                
+                // Ограничиваем движение ИИ
+                if (pongRightPaddle.y < 0) pongRightPaddle.y = 0;
+                if (pongRightPaddle.y + pongRightPaddle.height > pongCanvas.height) {
+                    pongRightPaddle.y = pongCanvas.height - pongRightPaddle.height;
+                }
+            }
             
             // Движение мяча
             pongBall.x += pongBall.dx;
             pongBall.y += pongBall.dy;
             
             // Отскок от верхней и нижней стен
-            if (pongBall.y + pongBall.dy > pongCanvas.height - pongBall.radius || 
-                pongBall.y + pongBall.dy < pongBall.radius) {
+            if (pongBall.y + pongBall.dy < pongBall.radius || pongBall.y + pongBall.dy > pongCanvas.height - pongBall.radius) {
                 pongBall.dy = -pongBall.dy;
             }
             
-            // Проверка очков
+            // Отскок от платформ
+            // Левая платформа
+            if (pongBall.x - pongBall.radius < pongLeftPaddle.x + pongLeftPaddle.width) {
+                if (pongBall.y > pongLeftPaddle.y && pongBall.y < pongLeftPaddle.y + pongLeftPaddle.height) {
+                    pongBall.dx = Math.abs(pongBall.dx);
+                    // Изменяем угол в зависимости от места удара
+                    let hitPosition = (pongBall.y - (pongLeftPaddle.y + pongLeftPaddle.height/2)) / (pongLeftPaddle.height/2);
+                    pongBall.dy = hitPosition * 5;
+                }
+            }
+            
+            // Правая платформа
+            if (pongBall.x + pongBall.radius > pongRightPaddle.x) {
+                if (pongBall.y > pongRightPaddle.y && pongBall.y < pongRightPaddle.y + pongRightPaddle.height) {
+                    pongBall.dx = -Math.abs(pongBall.dx);
+                    // Изменяем угол в зависимости от места удара
+                    let hitPosition = (pongBall.y - (pongRightPaddle.y + pongRightPaddle.height/2)) / (pongRightPaddle.height/2);
+                    pongBall.dy = hitPosition * 5;
+                }
+            }
+            
+            // Проверка забитых голов
             if (pongBall.x < 0) {
                 pongRightScore++;
                 resetPongBall();
+                updatePongInfo();
             } else if (pongBall.x > pongCanvas.width) {
                 pongLeftScore++;
                 resetPongBall();
+                updatePongInfo();
             }
-            
-            // Отскок от платформ
-            if (pongBall.x - pongBall.radius < pongLeftPaddle.x + pongLeftPaddle.width &&
-                pongBall.y > pongLeftPaddle.y &&
-                pongBall.y < pongLeftPaddle.y + pongLeftPaddle.height &&
-                pongBall.dx < 0) {
-                const hitPosition = (pongBall.y - (pongLeftPaddle.y + pongLeftPaddle.height / 2)) / (pongLeftPaddle.height / 2);
-                pongBall.dx = -pongBall.dx * 1.05;
-                pongBall.dy = hitPosition * 5;
-            }
-            
-            if (pongBall.x + pongBall.radius > pongRightPaddle.x &&
-                pongBall.y > pongRightPaddle.y &&
-                pongBall.y < pongRightPaddle.y + pongRightPaddle.height &&
-                pongBall.dx > 0) {
-                const hitPosition = (pongBall.y - (pongRightPaddle.y + pongRightPaddle.height / 2)) / (pongRightPaddle.height / 2);
-                pongBall.dx = -pongBall.dx * 1.05;
-                pongBall.dy = hitPosition * 5;
-            }
-            
-            // Движение платформ
-            if (pongKeys['ArrowUp'] && pongRightPaddle.y > 0) {
-                pongRightPaddle.y -= 8;
-            }
-            if (pongKeys['ArrowDown'] && pongRightPaddle.y < pongCanvas.height - pongRightPaddle.height) {
-                pongRightPaddle.y += 8;
-            }
-            if (pongKeys['w'] && pongLeftPaddle.y > 0) {
-                pongLeftPaddle.y -= 8;
-            }
-            if (pongKeys['s'] && pongLeftPaddle.y < pongCanvas.height - pongLeftPaddle.height) {
-                pongLeftPaddle.y += 8;
-            }
-            if (pongKeys['ц'] && pongLeftPaddle.y > 0) {
-                pongLeftPaddle.y -= 8;
-            }
-            if (pongKeys['ы'] && pongLeftPaddle.y < pongCanvas.height - pongLeftPaddle.height) {
-                pongLeftPaddle.y += 8;
-            }
-            
-            updatePongInfo();
         }
 
         function resetPongBall() {
             pongBall.x = pongCanvas.width / 2;
             pongBall.y = pongCanvas.height / 2;
             pongBall.dx = (Math.random() > 0.5 ? 1 : -1) * 5;
-            pongBall.dy = (Math.random() * 4) - 2;
+            pongBall.dy = (Math.random() - 0.5) * 10;
         }
 
         function updatePongInfo() {
-            document.getElementById('pongInfo').textContent = `Счет: ${pongLeftScore} - ${pongRightScore}`;
+            document.getElementById('pongInfo').textContent = `Игрок 1: ${pongLeftScore} | Игрок 2: ${pongRightScore}`;
         }
 
         function startPong() {
@@ -2364,16 +2626,20 @@
             pongGameInterval = setInterval(updatePong, 16);
         }
 
-        function resetPong() {
-            clearInterval(pongGameInterval);
-            initPong();
+        function setPongMode(mode) {
+            pongMode = mode;
+            document.querySelectorAll('#pongModal .mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            resetPong();
         }
 
-        // Управление понгом
+        // Управление понгом (плавное движение) - поддержка разных раскладок
         document.addEventListener('keydown', (e) => {
             // Игрок 1 (W/S и Ц/Ы)
-            if (e.key === 'w' || e.key === 'W' || e.key === 's' || e.key === 'S' ||
-                e.key === 'ц' || e.key === 'Ц' || e.key === 'ы' || e.key === 'Ы' ||
+            if (e.key === 'w' || e.key === 'W' || e.key === 's' || e.key === 'S' || 
+                e.key === 'ц' || e.key === 'Ц' || e.key === 'ы' || e.key === 'Ы' || 
                 e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 pongKeys[e.key] = true;
             }
@@ -2381,14 +2647,14 @@
 
         document.addEventListener('keyup', (e) => {
             // Игрок 1 (W/S и Ц/Ы)
-            if (e.key === 'w' || e.key === 'W' || e.key === 's' || e.key === 'S' ||
-                e.key === 'ц' || e.key === 'Ц' || e.key === 'ы' || e.key === 'Ы' ||
+            if (e.key === 'w' || e.key === 'W' || e.key === 's' || e.key === 'S' || 
+                e.key === 'ц' || e.key === 'Ц' || e.key === 'ы' || e.key === 'Ы' || 
                 e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 pongKeys[e.key] = false;
             }
         });
 
-        // Тетрис
+        // Новая игра - Тетрис
         let tetrisCanvas, tetrisCtx;
         let tetrisBoard = [];
         let tetrisCurrentPiece, tetrisNextPiece;
@@ -2397,41 +2663,45 @@
         let tetrisLines = 0;
         let tetrisGameInterval;
         let tetrisKeys = {};
+
         const TETRIS_COLS = 10;
         const TETRIS_ROWS = 20;
         const TETRIS_BLOCK_SIZE = 30;
 
         const TETRIS_PIECES = [
-            { shape: [[1,1,1,1]], color: '#00f0f0' }, // I
+            { shape: [[1]][[1]][[1]][[1]], color: '#00f0f0' }, // I
             { shape: [[1,1,1],[0,1,0]], color: '#0000f0' }, // T
             { shape: [[1,1,1],[1,0,0]], color: '#f0a000' }, // L
             { shape: [[1,1,1],[0,0,1]], color: '#00f000' }, // J
             { shape: [[1,1],[1,1]], color: '#f00000' }, // O
             { shape: [[0,1,1],[1,1,0]], color: '#f000f0' }, // S
-            { shape: [[1,1,0],[0,1,1]], color: '#ffff00' }  // Z
+            { shape: [[1,1,0],[0,1,1]], color: '#00f000' }  // Z
         ];
 
         function initTetris() {
             tetrisCanvas = document.getElementById('tetrisCanvas');
             tetrisCtx = tetrisCanvas.getContext('2d');
             
+            // Инициализация игрового поля
             tetrisBoard = Array(TETRIS_ROWS).fill().map(() => Array(TETRIS_COLS).fill(0));
-            tetrisCurrentPiece = getRandomPiece();
-            tetrisNextPiece = getRandomPiece();
+            
             tetrisScore = 0;
             tetrisLevel = 1;
             tetrisLines = 0;
+            tetrisKeys = {};
+            
+            // Создание первой фигуры
+            tetrisCurrentPiece = createRandomPiece();
+            tetrisNextPiece = createRandomPiece();
+            
             updateTetrisInfo();
         }
 
-        function getRandomPiece() {
-            const piece = TETRIS_PIECES[Math.floor(Math.random() * TETRIS_PIECES.length)];
-            return {
-                shape: piece.shape,
-                color: piece.color,
-                x: Math.floor(TETRIS_COLS / 2) - Math.floor(piece.shape[0].length / 2),
-                y: 0
-            };
+        function createRandomPiece() {
+            const piece = JSON.parse(JSON.stringify(TETRIS_PIECES[Math.floor(Math.random() * TETRIS_PIECES.length)]));
+            piece.x = Math.floor(TETRIS_COLS / 2) - Math.floor(piece.shape[0].length / 2);
+            piece.y = 0;
+            return piece;
         }
 
         function drawTetris() {
@@ -2442,8 +2712,7 @@
                 for (let x = 0; x < TETRIS_COLS; x++) {
                     if (tetrisBoard[y][x]) {
                         tetrisCtx.fillStyle = tetrisBoard[y][x];
-                        tetrisCtx.fillRect(x * TETRIS_BLOCK_SIZE, y * TETRIS_BLOCK_SIZE, 
-                                          TETRIS_BLOCK_SIZE - 1, TETRIS_BLOCK_SIZE - 1);
+                        tetrisCtx.fillRect(x * TETRIS_BLOCK_SIZE, y * TETRIS_BLOCK_SIZE, TETRIS_BLOCK_SIZE - 1, TETRIS_BLOCK_SIZE - 1);
                     }
                 }
             }
@@ -2471,7 +2740,13 @@
         }
 
         function updateTetrisInfo() {
-            document.getElementById('tetrisInfo').textContent = `Счет: ${tetrisScore}| Уровень: ${tetrisLevel}`;
+            document.getElementById('tetrisInfo').textContent = `Счет: ${tetrisScore} | Уровень: ${tetrisLevel}`;
+        }
+
+        function startTetris() {
+            initTetris();
+            clearInterval(tetrisGameInterval);
+            tetrisGameInterval = setInterval(updateTetris, 500);
         }
 
         function resetTetris() {
@@ -2479,7 +2754,7 @@
             initTetris();
         }
 
-        // Сапер
+        // Новая игра - Сапер
         let minesweeperBoard = [];
         let minesweeperMines = 10;
         let minesweeperFlags = 0;
@@ -2491,8 +2766,8 @@
             minesweeperBoard = [];
             minesweeperFlags = 0;
             minesweeperGameActive = true;
-            updateMinesweeperInfo();
             
+            // Создание игрового поля 10x10
             for (let y = 0; y < 10; y++) {
                 minesweeperBoard[y] = [];
                 for (let x = 0; x < 10; x++) {
@@ -2504,7 +2779,7 @@
                     };
                     
                     const cell = document.createElement('div');
-                    cell.className = 'minesweeper-cell';
+                    cell.className = 'snake-cell';
                     cell.setAttribute('data-x', x);
                     cell.setAttribute('data-y', y);
                     cell.addEventListener('click', () => revealMinesweeperCell(x, y));
@@ -2536,10 +2811,8 @@
                             for (let dx = -1; dx <= 1; dx++) {
                                 const nx = x + dx;
                                 const ny = y + dy;
-                                if (nx >= 0 && nx < 10 && ny >= 0 && ny < 10) {
-                                    if (minesweeperBoard[ny][nx].isMine) {
-                                        count++;
-                                    }
+                                if (nx >= 0 && nx < 10 && ny >= 0 && ny < 10 && minesweeperBoard[ny][nx].isMine) {
+                                    count++;
                                 }
                             }
                         }
@@ -2547,29 +2820,30 @@
                     }
                 }
             }
+            
+            updateMinesweeperInfo();
         }
 
         function revealMinesweeperCell(x, y) {
-            if (!minesweeperGameActive) return;
-            if (minesweeperBoard[y][x].isRevealed || minesweeperBoard[y][x].isFlagged) return;
+            if (!minesweeperGameActive || minesweeperBoard[y][x].isFlagged || minesweeperBoard[y][x].isRevealed) return;
             
             minesweeperBoard[y][x].isRevealed = true;
             const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
-            cell.classList.add('revealed');
             
             if (minesweeperBoard[y][x].isMine) {
-                // Мина взорвалась
-                cell.textContent = '💣';
+                cell.innerHTML = '💣';
+                cell.style.background = 'rgba(255, 0, 0, 0.5)';
                 minesweeperGameActive = false;
-                alert('Вы взорвались! Игра окончена.');
+                alert('Вы проиграли!');
                 return;
             }
             
             if (minesweeperBoard[y][x].neighborMines > 0) {
-                cell.textContent = minesweeperBoard[y][x].neighborMines;
-                cell.style.color = getMinesweeperColor(minesweeperBoard[y][x].neighborMines);
+                cell.innerHTML = minesweeperBoard[y][x].neighborMines;
+                cell.style.color = getNumberColor(minesweeperBoard[y][x].neighborMines);
             } else {
-                // Рекурсивное открытие соседних ячеек
+                cell.style.background = 'rgba(100, 100, 100, 0.3)';
+                // Рекурсивное открытие соседних клеток
                 for (let dy = -1; dy <= 1; dy++) {
                     for (let dx = -1; dx <= 1; dx++) {
                         const nx = x + dx;
@@ -2581,7 +2855,33 @@
                 }
             }
             
-            // Проверка победы
+            checkMinesweeperWin();
+        }
+
+        function toggleMinesweeperFlag(x, y) {
+            if (!minesweeperGameActive || minesweeperBoard[y][x].isRevealed) return;
+            
+            const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+            
+            if (minesweeperBoard[y][x].isFlagged) {
+                minesweeperBoard[y][x].isFlagged = false;
+                cell.innerHTML = '';
+                minesweeperFlags--;
+            } else {
+                minesweeperBoard[y][x].isFlagged = true;
+                cell.innerHTML = '🚩';
+                minesweeperFlags++;
+            }
+            
+            updateMinesweeperInfo();
+        }
+
+        function getNumberColor(num) {
+            const colors = ['#0000ff', '#008000', '#ff0000', '#000080', '#800000', '#008080', '#000000', '#808080'];
+            return colors[num - 1] || '#000000';
+        }
+
+        function checkMinesweeperWin() {
             let revealedCount = 0;
             for (let y = 0; y < 10; y++) {
                 for (let x = 0; x < 10; x++) {
@@ -2597,201 +2897,147 @@
             }
         }
 
-        function getMinesweeperColor(count) {
-            const colors = ['#0000ff', '#008000', '#ff0000', '#000080', '#800000', '#008080', '#000000', '#808080'];
-            return colors[count - 1] || '#000000';
-        }
-
-        function toggleMinesweeperFlag(x, y) {
-            if (!minesweeperGameActive) return;
-            if (minesweeperBoard[y][x].isRevealed) return;
-            
-            minesweeperBoard[y][x].isFlagged = !minesweeperBoard[y][x].isFlagged;
-            const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
-            
-            if (minesweeperBoard[y][x].isFlagged) {
-                cell.textContent = '🚩';
-                minesweeperFlags++;
-            } else {
-                cell.textContent = '';
-                minesweeperFlags--;
-            }
-            
-            updateMinesweeperInfo();
-        }
-
         function updateMinesweeperInfo() {
-            document.getElementById('minesweeperInfo').textContent = `Мины: ${minesweeperMines}| Флаги: ${minesweeperFlags}`;
+            document.getElementById('minesweeperInfo').textContent = `Мины: ${minesweeperMines} | Флаги: ${minesweeperFlags}`;
         }
 
         function resetMinesweeper() {
             initMinesweeper();
         }
 
-        // Космические захватчики
+        // Новая игра - Космические захватчики
         let spaceInvadersCanvas, spaceInvadersCtx;
-        let spaceInvadersPlayer = {x: 0, y: 0, width: 40, height: 20};
-        let spaceInvadersBullets = [];
-        let spaceInvadersEnemies = [];
-        let spaceInvadersEnemyBullets = [];
+        let spaceInvadersPlayer, spaceInvadersEnemies = [], spaceInvadersBullets = [];
         let spaceInvadersScore = 0;
         let spaceInvadersLives = 3;
-        let spaceInvadersKeys = {};
         let spaceInvadersGameInterval;
+        let spaceInvadersKeys = {};
 
         function initSpaceInvaders() {
             spaceInvadersCanvas = document.getElementById('spaceInvadersCanvas');
             spaceInvadersCtx = spaceInvadersCanvas.getContext('2d');
             
-            spaceInvadersPlayer.x = spaceInvadersCanvas.width / 2 - 20;
-            spaceInvadersPlayer.y = spaceInvadersCanvas.height - 40;
-            spaceInvadersBullets = [];
-            spaceInvadersEnemyBullets = [];
-            spaceInvadersScore = 0;
-            spaceInvadersLives = 3;
+            // Игрок
+            spaceInvadersPlayer = {
+                x: spaceInvadersCanvas.width / 2 - 15,
+                y: spaceInvadersCanvas.height - 30,
+                width: 30,
+                height: 20,
+                speed: 6
+            };
             
-            // Создание врагов
+            // Враги
             spaceInvadersEnemies = [];
             for (let row = 0; row < 5; row++) {
                 for (let col = 0; col < 10; col++) {
                     spaceInvadersEnemies.push({
                         x: col * 50 + 50,
                         y: row * 40 + 50,
-                        width: 40,
-                        height: 30,
+                        width: 30,
+                        height: 20,
                         alive: true
                     });
                 }
             }
             
+            spaceInvadersBullets = [];
+            spaceInvadersScore = 0;
+            spaceInvadersLives = 3;
+            spaceInvadersKeys = {};
+            
             updateSpaceInvadersInfo();
         }
 
-        function updateSpaceInvaders() {
+        function drawSpaceInvaders() {
             spaceInvadersCtx.clearRect(0, 0, spaceInvadersCanvas.width, spaceInvadersCanvas.height);
             
             // Рисуем игрока
             spaceInvadersCtx.fillStyle = '#4ecdc4';
-            spaceInvadersCtx.fillRect(spaceInvadersPlayer.x, spaceInvadersPlayer.y, 
-                                     spaceInvadersPlayer.width, spaceInvadersPlayer.height);
-            
-            // Движение игрока
-            if (spaceInvadersKeys['ArrowLeft'] && spaceInvadersPlayer.x > 0) {
-                spaceInvadersPlayer.x -= 5;
-            }
-            if (spaceInvadersKeys['ArrowRight'] && spaceInvadersPlayer.x < spaceInvadersCanvas.width - spaceInvadersPlayer.width) {
-                spaceInvadersPlayer.x += 5;
-            }
-            
-            // Рисуем пули игрока
-            for (let i = 0; i < spaceInvadersBullets.length; i++) {
-                const bullet = spaceInvadersBullets[i];
-                spaceInvadersCtx.fillStyle = '#ff6b6b';
-                spaceInvadersCtx.fillRect(bullet.x, bullet.y, 5, 10);
-            }
+            spaceInvadersCtx.fillRect(spaceInvadersPlayer.x, spaceInvadersPlayer.y, spaceInvadersPlayer.width, spaceInvadersPlayer.height);
             
             // Рисуем врагов
-            for (let i = 0; i < spaceInvadersEnemies.length; i++) {
-                const enemy = spaceInvadersEnemies[i];
+            spaceInvadersCtx.fillStyle = '#ff6b6b';
+            spaceInvadersEnemies.forEach(enemy => {
                 if (enemy.alive) {
-                    spaceInvadersCtx.fillStyle = '#ff6b6b';
                     spaceInvadersCtx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+                }
+            });
+            
+            // Рисуем пули
+            spaceInvadersCtx.fillStyle = '#ffffff';
+            spaceInvadersBullets.forEach(bullet => {
+                spaceInvadersCtx.fillRect(bullet.x, bullet.y, 3, 10);
+            });
+        }
+
+        function updateSpaceInvaders() {
+            drawSpaceInvaders();
+            
+            // Движение игрока
+            if (spaceInvadersKeys['ArrowLeft']) {
+                spaceInvadersPlayer.x -= spaceInvadersPlayer.speed;
+                if (spaceInvadersPlayer.x < 0) spaceInvadersPlayer.x = 0;
+            }
+            if (spaceInvadersKeys['ArrowRight']) {
+                spaceInvadersPlayer.x += spaceInvadersPlayer.speed;
+                if (spaceInvadersPlayer.x > spaceInvadersCanvas.width - spaceInvadersPlayer.width) {
+                    spaceInvadersPlayer.x = spaceInvadersCanvas.width - spaceInvadersPlayer.width;
                 }
             }
             
-            // Рисуем пули врагов
-            for (let i = 0; i < spaceInvadersEnemyBullets.length; i++) {
-                const bullet = spaceInvadersEnemyBullets[i];
-                spaceInvadersCtx.fillStyle = '#00f0f0';
-                spaceInvadersCtx.fillRect(bullet.x, bullet.y, 5, 10);
-            }
-            
-            // Движение пуль игрока
+            // Движение пуль
             for (let i = spaceInvadersBullets.length - 1; i >= 0; i--) {
-                spaceInvadersBullets[i].y -= 7;
+                spaceInvadersBullets[i].y -= 8;
                 if (spaceInvadersBullets[i].y < 0) {
                     spaceInvadersBullets.splice(i, 1);
                 }
             }
             
-            // Движение пуль врагов
-            for (let i = spaceInvadersEnemyBullets.length - 1; i >= 0; i--) {
-                spaceInvadersEnemyBullets[i].y += 5;
-                if (spaceInvadersEnemyBullets[i].y > spaceInvadersCanvas.height) {
-                    spaceInvadersEnemyBullets.splice(i, 1);
-                }
-            }
-            
-            // Проверка попаданий пуль врагов по игроку
-            for (let i = spaceInvadersEnemyBullets.length - 1; i >= 0; i--) {
-                const bullet = spaceInvadersEnemyBullets[i];
-                if (bullet.x > spaceInvadersPlayer.x && 
-                    bullet.x < spaceInvadersPlayer.x + spaceInvadersPlayer.width &&
-                    bullet.y > spaceInvadersPlayer.y && 
-                    bullet.y < spaceInvadersPlayer.y + spaceInvadersPlayer.height) {
-                    spaceInvadersEnemyBullets.splice(i, 1);
-                    spaceInvadersLives--;
-                    updateSpaceInvadersInfo();
-                    if (spaceInvadersLives <= 0) {
-                        alert('Игра окончена! Счет: ' + spaceInvadersScore);
-                        clearInterval(spaceInvadersGameInterval);
-                    }
-                }
-            }
-            
-            // Проверка попаданий пуль игрока по врагам
+            // Проверка столкновений
             for (let i = spaceInvadersBullets.length - 1; i >= 0; i--) {
-                const bullet = spaceInvadersBullets[i];
                 for (let j = 0; j < spaceInvadersEnemies.length; j++) {
-                    const enemy = spaceInvadersEnemies[j];
-                    if (enemy.alive &&
-                        bullet.x > enemy.x && 
-                        bullet.x < enemy.x + enemy.width &&
-                        bullet.y > enemy.y && 
-                        bullet.y < enemy.y + enemy.height) {
+                    if (spaceInvadersEnemies[j].alive &&
+                        spaceInvadersBullets[i].x > spaceInvadersEnemies[j].x &&
+                        spaceInvadersBullets[i].x < spaceInvadersEnemies[j].x + spaceInvadersEnemies[j].width &&
+                        spaceInvadersBullets[i].y > spaceInvadersEnemies[j].y &&
+                        spaceInvadersBullets[i].y < spaceInvadersEnemies[j].y + spaceInvadersEnemies[j].height) {
+                        spaceInvadersEnemies[j].alive = false;
                         spaceInvadersBullets.splice(i, 1);
-                        enemy.alive = false;
-                        spaceInvadersScore += 100;
+                        spaceInvadersScore += 10;
                         updateSpaceInvadersInfo();
                         break;
                     }
                 }
             }
             
-            // Враги стреляют случайно
-            if (Math.random() < 0.02 && spaceInvadersEnemies.some(e => e.alive)) {
-                const aliveEnemies = spaceInvadersEnemies.filter(e => e.alive);
-                if (aliveEnemies.length > 0) {
-                    const shooter = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
-                    spaceInvadersEnemyBullets.push({
-                        x: shooter.x + shooter.width / 2,
-                        y: shooter.y + shooter.height
-                    });
-                }
+            // Проверка победы
+            const aliveEnemies = spaceInvadersEnemies.filter(enemy => enemy.alive);
+            if (aliveEnemies.length === 0) {
+                clearInterval(spaceInvadersGameInterval);
+                alert('Поздравляем! Вы выиграли! Счет: ' + spaceInvadersScore);
             }
         }
 
         function shootSpaceInvaders() {
             spaceInvadersBullets.push({
-                x: spaceInvadersPlayer.x + spaceInvadersPlayer.width / 2,
+                x: spaceInvadersPlayer.x + spaceInvadersPlayer.width / 2 - 1.5,
                 y: spaceInvadersPlayer.y
             });
         }
 
         function updateSpaceInvadersInfo() {
-            document.getElementById('spaceInvadersInfo').textContent = `Счет: ${spaceInvadersScore}| Жизни: ${spaceInvadersLives}`;
+            document.getElementById('spaceInvadersInfo').textContent = `Счет: ${spaceInvadersScore} | Жизни: ${spaceInvadersLives}`;
         }
 
         function startSpaceInvaders() {
             initSpaceInvaders();
             clearInterval(spaceInvadersGameInterval);
-            spaceInvadersGameInterval = setInterval(updateSpaceInvaders, 30);
+            spaceInvadersGameInterval = setInterval(updateSpaceInvaders, 50);
         }
 
         function resetSpaceInvaders() {
             clearInterval(spaceInvadersGameInterval);
             initSpaceInvaders();
-            startSpaceInvaders();
         }
 
         // Управление космическими захватчиками
@@ -2810,6 +3056,103 @@
                 spaceInvadersKeys[e.key] = false;
             }
         });
+
+        // Комментарии
+        let comments = JSON.parse(localStorage.getItem('okComments') || '[]');
+
+        function displayComments() {
+            const commentsList = document.getElementById('commentsList');
+            const noComments = document.getElementById('noComments');
+            
+            if (comments.length === 0) {
+                noComments.style.display = 'block';
+                commentsList.innerHTML = '<div class="no-comments" id="noComments">Пока нет комментариев. Будьте первым!</div>';
+                return;
+            }
+            
+            noComments.style.display = 'none';
+            
+            comments.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            let commentsHTML = '';
+            comments.forEach(comment => {
+                commentsHTML += `
+                    <div class="comment">
+                        <div class="comment-header">
+                            <div class="comment-avatar">${comment.avatar || comment.name.charAt(0).toUpperCase()}</div>
+                            <div class="comment-info">
+                                <span class="comment-author">${comment.name}</span>
+                                <span class="comment-date">${formatDate(comment.date)}</span>
+                            </div>
+                        </div>
+                        <div class="comment-text">
+                            ${comment.text}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            commentsList.innerHTML = commentsHTML;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function addComment(name, text) {
+            const comment = {
+                name: name,
+                text: text,
+                date: new Date().toISOString(),
+                avatar: name.charAt(0).toUpperCase()
+            };
+            
+            comments.push(comment);
+            localStorage.setItem('okComments', JSON.stringify(comments));
+            displayComments();
+        }
+
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('commentName').value.trim();
+            const text = document.getElementById('commentText').value.trim();
+            
+            if (name && text) {
+                addComment(name, text);
+                document.getElementById('commentForm').reset();
+                document.getElementById('commentName').value = name;
+            }
+        });
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            // Применение настроек
+            applySettings();
+            
+            // Отображение комментариев
+            displayComments();
+            
+            // Создание снега
+            createSnow();
+            
+            // Автоматическое создание новых снежинок
+            setInterval(() => {
+                if (userSettings.snow.count > 0) {
+                    createSingleSnow();
+                }
+            }, 3000);
+        });
     </script>
+
+    <!-- Подключение Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </body>
 </html>
