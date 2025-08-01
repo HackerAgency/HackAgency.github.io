@@ -1497,6 +1497,7 @@
         let breakoutScore = 0;
         let breakoutLives = 3;
         let breakoutGameInterval;
+        let breakoutKeys = {}; // Для плавного движения
 
         function initBreakout() {
             breakoutCanvas = document.getElementById('breakoutCanvas');
@@ -1507,7 +1508,7 @@
                 y: breakoutCanvas.height - 20,
                 width: 100,
                 height: 10,
-                dx: 8
+                speed: 8
             };
             
             breakoutBall = {
@@ -1531,6 +1532,7 @@
             
             breakoutScore = 0;
             breakoutLives = 3;
+            breakoutKeys = {};
             updateBreakoutInfo();
         }
 
@@ -1592,6 +1594,18 @@
 
         function updateBreakout() {
             drawBreakout();
+            
+            // Плавное движение платформы
+            if (breakoutKeys['ArrowLeft']) {
+                breakoutPaddle.x -= breakoutPaddle.speed;
+                if (breakoutPaddle.x < 0) breakoutPaddle.x = 0;
+            }
+            if (breakoutKeys['ArrowRight']) {
+                breakoutPaddle.x += breakoutPaddle.speed;
+                if (breakoutPaddle.x + breakoutPaddle.width > breakoutCanvas.width) {
+                    breakoutPaddle.x = breakoutCanvas.width - breakoutPaddle.width;
+                }
+            }
             
             // Движение мяча
             breakoutBall.x += breakoutBall.dx;
@@ -1679,18 +1693,16 @@
             breakoutGameInterval = setInterval(updateBreakout, 16);
         }
 
-        // Управление арканоидом
+        // Управление арканоидом (плавное движение)
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') {
-                breakoutPaddle.x += breakoutPaddle.dx;
-                if (breakoutPaddle.x + breakoutPaddle.width > breakoutCanvas.width) {
-                    breakoutPaddle.x = breakoutCanvas.width - breakoutPaddle.width;
-                }
-            } else if (e.key === 'ArrowLeft') {
-                breakoutPaddle.x -= breakoutPaddle.dx;
-                if (breakoutPaddle.x < 0) {
-                    breakoutPaddle.x = 0;
-                }
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                breakoutKeys[e.key] = true;
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                breakoutKeys[e.key] = false;
             }
         });
 
@@ -1699,6 +1711,7 @@
         let pongLeftPaddle, pongRightPaddle, pongBall;
         let pongLeftScore = 0, pongRightScore = 0;
         let pongGameInterval;
+        let pongKeys = {}; // Для плавного движения
 
         function initPong() {
             pongCanvas = document.getElementById('pongCanvas');
@@ -1709,7 +1722,7 @@
                 y: pongCanvas.height / 2 - 40,
                 width: 10,
                 height: 80,
-                dy: 8
+                speed: 8
             };
             
             pongRightPaddle = {
@@ -1717,7 +1730,7 @@
                 y: pongCanvas.height / 2 - 40,
                 width: 10,
                 height: 80,
-                dy: 8
+                speed: 8
             };
             
             pongBall = {
@@ -1730,6 +1743,7 @@
             
             pongLeftScore = 0;
             pongRightScore = 0;
+            pongKeys = {};
             updatePongInfo();
         }
 
@@ -1778,6 +1792,46 @@
         function updatePong() {
             drawPong();
             
+            // Плавное движение платформ
+            // Левая платформа (игрок 1)
+            if (pongKeys['w'] || pongKeys['W']) {
+                pongLeftPaddle.y -= pongLeftPaddle.speed;
+                if (pongLeftPaddle.y < 0) pongLeftPaddle.y = 0;
+            }
+            if (pongKeys['s'] || pongKeys['S']) {
+                pongLeftPaddle.y += pongLeftPaddle.speed;
+                if (pongLeftPaddle.y + pongLeftPaddle.height > pongCanvas.height) {
+                    pongLeftPaddle.y = pongCanvas.height - pongLeftPaddle.height;
+                }
+            }
+            
+            // Правая платформа (игрок 2 или ИИ)
+            if (pongMode === 'pvp') {
+                if (pongKeys['ArrowUp']) {
+                    pongRightPaddle.y -= pongRightPaddle.speed;
+                    if (pongRightPaddle.y < 0) pongRightPaddle.y = 0;
+                }
+                if (pongKeys['ArrowDown']) {
+                    pongRightPaddle.y += pongRightPaddle.speed;
+                    if (pongRightPaddle.y + pongRightPaddle.height > pongCanvas.height) {
+                        pongRightPaddle.y = pongCanvas.height - pongRightPaddle.height;
+                    }
+                }
+            } else {
+                // ИИ для правой платформы
+                if (pongRightPaddle.y + pongRightPaddle.height/2 < pongBall.y - 35) {
+                    pongRightPaddle.y += pongRightPaddle.speed * 0.7; // Слегка замедленный ИИ
+                } else if (pongRightPaddle.y + pongRightPaddle.height/2 > pongBall.y + 35) {
+                    pongRightPaddle.y -= pongRightPaddle.speed * 0.7;
+                }
+                
+                // Ограничиваем движение ИИ
+                if (pongRightPaddle.y < 0) pongRightPaddle.y = 0;
+                if (pongRightPaddle.y + pongRightPaddle.height > pongCanvas.height) {
+                    pongRightPaddle.y = pongCanvas.height - pongRightPaddle.height;
+                }
+            }
+            
             // Движение мяча
             pongBall.x += pongBall.dx;
             pongBall.y += pongBall.dy;
@@ -1818,22 +1872,6 @@
                 resetPongBall();
                 updatePongInfo();
             }
-            
-            // Управление ИИ для правой платформы
-            if (pongMode === 'ai') {
-                // Простой ИИ - следуем за мячом
-                if (pongRightPaddle.y + pongRightPaddle.height/2 < pongBall.y - 35) {
-                    pongRightPaddle.y += pongRightPaddle.dy * 0.7; // Слегка замедленный ИИ
-                } else if (pongRightPaddle.y + pongRightPaddle.height/2 > pongBall.y + 35) {
-                    pongRightPaddle.y -= pongRightPaddle.dy * 0.7;
-                }
-                
-                // Ограничиваем движение ИИ
-                if (pongRightPaddle.y < 0) pongRightPaddle.y = 0;
-                if (pongRightPaddle.y + pongRightPaddle.height > pongCanvas.height) {
-                    pongRightPaddle.y = pongCanvas.height - pongRightPaddle.height;
-                }
-            }
         }
 
         function resetPongBall() {
@@ -1853,30 +1891,18 @@
             pongGameInterval = setInterval(updatePong, 16);
         }
 
-        // Управление понгом
+        // Управление понгом (плавное движение)
         document.addEventListener('keydown', (e) => {
-            // Игрок 1 (W/S)
-            if (e.key === 'w' || e.key === 'W') {
-                pongLeftPaddle.y -= pongLeftPaddle.dy;
-                if (pongLeftPaddle.y < 0) pongLeftPaddle.y = 0;
-            } else if (e.key === 's' || e.key === 'S') {
-                pongLeftPaddle.y += pongLeftPaddle.dy;
-                if (pongLeftPaddle.y + pongLeftPaddle.height > pongCanvas.height) {
-                    pongLeftPaddle.y = pongCanvas.height - pongLeftPaddle.height;
-                }
+            if (e.key === 'w' || e.key === 'W' || e.key === 's' || e.key === 'S' || 
+                e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                pongKeys[e.key] = true;
             }
-            
-            // Игрок 2 (стрелки) - только в режиме два игрока
-            if (pongMode === 'pvp') {
-                if (e.key === 'ArrowUp') {
-                    pongRightPaddle.y -= pongRightPaddle.dy;
-                    if (pongRightPaddle.y < 0) pongRightPaddle.y = 0;
-                } else if (e.key === 'ArrowDown') {
-                    pongRightPaddle.y += pongRightPaddle.dy;
-                    if (pongRightPaddle.y + pongRightPaddle.height > pongCanvas.height) {
-                        pongRightPaddle.y = pongCanvas.height - pongRightPaddle.height;
-                    }
-                }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'w' || e.key === 'W' || e.key === 's' || e.key === 'S' || 
+                e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                pongKeys[e.key] = false;
             }
         });
 
