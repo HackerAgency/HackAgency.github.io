@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Клан ОкЪ - с комментариями</title>
+    <title>Клан ОкЪ - Легенда Хакеров</title>
     <style>
         * {
             margin: 0;
@@ -17,244 +17,1588 @@
             color: #e6e6e6;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Снег */
+        .snowflake {
+            position: absolute;
+            top: -20px;
+            color: #fff;
+            font-size: 1.2rem;
+            animation: fall linear forwards;
+            user-select: none;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) translateX(20px);
+            }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 2;
         }
 
-        .comments-section {
-            background: rgba(0, 0, 0, 0.4);
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
-            padding: 30px;
-            margin: 30px 0;
+            margin-bottom: 30px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .comments-title {
-            font-size: 2rem;
-            color: #4ecdc4;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .comment-form {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .form-group {
+        h1 {
+            font-size: 3.5rem;
             margin-bottom: 15px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 5px;
-            color: #a0a0c0;
-        }
-
-        .form-input, .form-textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            background: rgba(0, 0, 0, 0.3);
-            color: #fff;
-            font-size: 1rem;
-        }
-
-        .form-textarea {
-            height: 100px;
-            resize: vertical;
-        }
-
-        .submit-btn {
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
         }
 
-        .submit-btn:hover {
+        .subtitle {
+            font-size: 1.5rem;
+            color: #a0a0c0;
+            margin-bottom: 20px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tab-btn:hover {
+            background: rgba(78, 205, 196, 0.3);
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
         }
 
-        .comments-list {
-            margin-top: 30px;
+        .tab-content {
+            display: none;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .comment {
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .member-card {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
-            padding: 20px;
+            padding: 25px;
             margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .comment-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
+        .member-card:hover {
+            transform: translateY(-5px);
+            background: rgba(78, 205, 196, 0.1);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.3);
         }
 
-        .comment-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .member-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+
+        .member-content {
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            background: rgba(255, 107, 107, 0.15);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+        }
+
+        .game-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .game-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .game-desc {
+            font-size: 0.95rem;
+            color: #a0a0c0;
+            line-height: 1.5;
+        }
+
+        .quote {
+            font-style: italic;
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            border-left: 4px solid #4ecdc4;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 0 15px 15px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0a0c0;
+        }
+
+        .theme-switcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 3;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px 18px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .theme-switcher:hover {
+            background: rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+        }
+
+        .theme-switcher i {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .light-theme {
+            background: linear-gradient(135deg, #f0f0f0 0%, #dcdcdc 50%, #ffffff 100%) !important;
+        }
+
+        .light-theme .container,
+        .light-theme header,
+        .light-theme .tab-content,
+        .light-theme .member-card,
+        .light-theme .game-card {
+            background: rgba(255, 255, 255, 0.8) !important;
+            color: #333;
+        }
+
+        .light-theme .snowflake {
+            color: #666;
+        }
+
+        .light-theme .quote {
+            border-left-color: #4ecdc4;
+            background: rgba(255, 255, 255, 0.6);
+            color: #333;
+        }
+
+        .light-theme .tab-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        }
+
+        .light-theme .member-title {
+            color: #4ecdc4;
+        }
+
+        .light-theme .game-title {
+            color: #ff6b6b;
+        }
+
+        .light-theme .game-desc {
+            color: #666;
+        }
+
+        .light-theme .footer {
+            color: #333;
+        }
+
+        /* Модальное окно игры */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: rgba(26, 26, 46, 0.95);
+            margin: 3% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            backdrop-filter: blur(15px);
+            animation: modalSlideIn 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            z-index: 1001;
+        }
+
+        .close:hover {
+            color: #ff6b6b;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: #4ecdc4;
+            margin: 0;
+            padding-right: 40px;
+        }
+
+        .modal-body {
+            padding: 20px 0;
+        }
+
+        .game-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 10px;
+            margin: 25px auto;
+            justify-content: center;
+            justify-items: center;
+        }
+
+        .game-cell {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
+            font-size: 3rem;
             font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .comment-author {
+        .game-cell:hover {
+            background: rgba(78, 205, 196, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+        }
+
+        .game-info {
+            text-align: center;
+            margin: 25px 0;
+            font-size: 1.4rem;
             font-weight: bold;
             color: #4ecdc4;
-            margin-right: 10px;
+            text-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
         }
 
-        .comment-date {
-            color: #a0a0c0;
-            font-size: 0.9rem;
-        }
-
-        .comment-text {
-            line-height: 1.6;
-        }
-
-        .no-comments {
+        .game-controls {
             text-align: center;
-            color: #a0a0c0;
-            font-style: italic;
-            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .game-btn {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.5);
+        }
+
+        .snake-board {
+            display: grid;
+            grid-template-columns: repeat(20, 15px);
+            grid-template-rows: repeat(20, 15px);
+            gap: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            margin: 25px auto;
+            padding: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 320px;
+        }
+
+        .snake-cell {
+            width: 15px;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .snake-head {
+            background: linear-gradient(45deg, #4ecdc4, #45b7aa);
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+
+        .snake-body {
+            background: linear-gradient(45deg, #45b7aa, #3da59a);
+            box-shadow: 0 0 5px rgba(69, 183, 170, 0.3);
+        }
+
+        .snake-food {
+            background: linear-gradient(45deg, #ff6b6b, #ff5252);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+            max-width: 400px;
+            margin: 25px auto;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(78, 205, 196, 0.4);
+        }
+
+        .memory-card.flipped {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.3), rgba(69, 183, 170, 0.2));
+            transform: rotateY(180deg);
+        }
+
+        .memory-card.matched {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.6), rgba(69, 183, 170, 0.4));
+            transform: scale(0.95);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        }
+
+        .breakout-canvas {
+            background: rgba(0, 0, 0, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            margin: 25px auto;
+            display: block;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            max-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .game-cell {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 20px 15px;
+                margin: 2% auto;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+            }
+            
+            .game-board {
+                grid-template-columns: repeat(3, 80px);
+                grid-template-rows: repeat(3, 80px);
+            }
+            
+            .snake-board {
+                grid-template-columns: repeat(20, 12px);
+                grid-template-rows: repeat(20, 12px);
+                max-width: 260px;
+            }
+            
+            .snake-cell {
+                width: 12px;
+                height: 12px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Снег -->
+    <div id="snow-container"></div>
+
     <div class="container">
-        <div class="comments-section">
-            <h2 class="comments-title">Комментарии Клана ОкЪ</h2>
+        <header>
+            <h1>Клан ОкЪ</h1>
+            <p class="subtitle">Легенда хакеров, которую мы всегда будем помнить</p>
+        </header>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('story')">История</button>
+            <button class="tab-btn" onclick="showTab('members')">Члены Клана</button>
+            <button class="tab-btn" onclick="showTab('games')">Игры</button>
+            <button class="tab-btn" onclick="showTab('memories')">Воспоминания</button>
+        </div>
+
+        <div id="story" class="tab-content active">
+            <div class="member-card">
+                <h2 class="member-title">Начало Великого Пути</h2>
+                <p class="member-content">
+                    Группа юных заряженных пацанов, мечтавших стать настоящими хакерами. 
+                    Их цель была проста - покорить цифровой мир и оставить свой след в истории.
+                </p>
+            </div>
             
-            <!-- Форма комментариев -->
-            <div class="comment-form">
-                <h3 style="margin-bottom: 20px; color: #ff6b6b;">Оставить комментарий</h3>
-                <form id="commentForm">
-                    <div class="form-group">
-                        <label class="form-label">Ваш ник:</label>
-                        <input type="text" id="commentName" class="form-input" placeholder="Введите ваш ник" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Комментарий:</label>
-                        <textarea id="commentText" class="form-textarea" placeholder="Напишите ваш комментарий..." required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Отправить</button>
-                </form>
+            <div class="quote">
+                "Мы больше не увидимся, но я не хочу уходить... 
+                Мы будем помнить друг друга всегда..."
+            </div>
+        </div>
+
+        <div id="members" class="tab-content">
+            <div class="member-card">
+                <h2 class="member-title">ОкЪ 1.0 - Самый крутой</h2>
+                <p class="member-content">
+                    Первый участник клана. Его навыки и харизма сделали его самым крутым из всех.
+                </p>
             </div>
 
-            <!-- Список комментариев -->
-            <div class="comments-list" id="commentsList">
-                <div class="no-comments" id="noComments">Пока нет комментариев. Будьте первым!</div>
-                <!-- Комментарии будут добавляться сюда -->
+            <div class="member-card">
+                <h2 class="member-title">ОкЪ 2.0 - Продолжение Легенды</h2>
+                <p class="member-content">
+                    Второй участник, который продолжил дело первого. 
+                    Принес новые идеи и подходы в развитие клана.
+                </p>
+            </div>
+
+            <div class="member-card">
+                <h2 class="member-title">ОкЪ 3.0 - Нейронный Эксперт</h2>
+                <p class="member-content">
+                    Специалист по нейросетям и искусственному интеллекту. 
+                    Его знания и опыт в этой области были бесценны для всего клана.
+                </p>
+            </div>
+
+            <div class="member-card">
+                <h2 class="member-title">ОкЪ 4.0 - Наш Танк</h2>
+                <p class="member-content">
+                    Мощный участник, который держал удар и защищал слабых. 
+                    Его прочность и надежность были примером для всех остальных.
+                </p>
+            </div>
+
+            <div class="member-card">
+                <h2 class="member-title">ОкЪ 5.0 - Судья Тринадцати</h2>
+                <p class="member-content">
+                    Самый крутой из всех. За свои подвиги по блокировке 13 скамеров получил заслуженное звание. 
+                    Его действия защитили не только клан, но и всех пользователей сети.
+                </p>
+            </div>
+
+            <div class="member-card">
+                <h2 class="member-title">ОкЪ 8.0 - Движение Вперед</h2>
+                <p class="member-content">
+                    Последний участник, символизирующий наше движение вперед. 
+                    Мы помним всех, кто был с нами на этом пути. 
+                    Клан ОкЪ живет в наших сердцах и продолжает вдохновлять новое поколение.
+                </p>
+            </div>
+        </div>
+
+        <div id="games" class="tab-content">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #4ecdc4;">Игры Клана</h2>
+            
+            <div class="games-grid">
+                <div class="game-card" onclick="openGameModal('ticTacToe')">
+                    <div class="game-icon">⭕</div>
+                    <h3 class="game-title">Крестики-Нолики</h3>
+                    <p class="game-desc">Классическая игра против ИИ с красивой анимацией</p>
+                </div>
+                
+                <div class="game-card" onclick="openGameModal('snake')">
+                    <div class="game-icon">🐍</div>
+                    <h3 class="game-title">Змейка</h3>
+                    <p class="game-desc">Классическая змейка с современным дизайном и эффектами</p>
+                </div>
+                
+                <div class="game-card" onclick="openGameModal('memory')">
+                    <div class="game-icon">🧠</div>
+                    <h3 class="game-title">Память</h3>
+                    <p class="game-desc">Найди пары карточек за минимальное время с анимацией</p>
+                </div>
+                
+                <div class="game-card" onclick="openGameModal('breakout')">
+                    <div class="game-icon">🧱</div>
+                    <h3 class="game-title">Арканоид</h3>
+                    <p class="game-desc">Разбей все блоки ракеткой с эффектами взрыва</p>
+                </div>
+                
+                <div class="game-card" onclick="openGameModal('pong')">
+                    <div class="game-icon">🏓</div>
+                    <h3 class="game-title">Понг</h3>
+                    <p class="game-desc">Классический теннис для двух игроков с частицами</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="memories" class="tab-content">
+            <div class="member-card">
+                <h2 class="member-title">Вечная Память</h2>
+                <p class="member-content">
+                    Мы двигаемся вперед, но никогда не забудем тех, кто был с нами в самом начале. 
+                    Группа юных заряженных пацанов, которые мечтали стать хакерами - 
+                    это наше прошлое, наше настоящее и наше будущее.
+                </p>
+            </div>
+            
+            <div class="quote">
+                "Мы будем помнить друг друга всегда... 
+                Я не хочу уходить, но путь продолжается. 
+                Клан ОкЪ жив!"
+            </div>
+        </div>
+
+        <footer>
+            <p>Клан ОкЪ © 2025 - Легенда, которую мы всегда вспомним</p>
+        </footer>
+    </div>
+
+    <!-- Модальные окна игр -->
+    <!-- Крестики-Нолики -->
+    <div id="ticTacToeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('ticTacToe')">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title">Крестики-Нолики</h2>
+            </div>
+            <div class="modal-body">
+                <div class="game-container">
+                    <div class="game-info" id="ticTacToeInfo">Ваш ход: X</div>
+                    <div class="game-board" id="ticTacToeBoard"></div>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="resetTicTacToe()">Новая игра</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Хранилище комментариев (в реальной системе это будет база данных)
-        let comments = JSON.parse(localStorage.getItem('okComments') || '[]');
+    <!-- Змейка -->
+    <div id="snakeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('snake')">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title">Змейка</h2>
+            </div>
+            <div class="modal-body">
+                <div class="game-container">
+                    <div class="game-info" id="snakeInfo">Счет: 0</div>
+                    <div class="snake-board" id="snakeBoard"></div>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startSnake()">Старт</button>
+                        <button class="game-btn" onclick="resetSnake()">Сброс</button>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px; color: #a0a0c0; font-size: 0.9rem;">
+                        Управление: стрелки клавиатуры
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        // Отображение комментариев
-        function displayComments() {
-            const commentsList = document.getElementById('commentsList');
-            const noComments = document.getElementById('noComments');
+    <!-- Память -->
+    <div id="memoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('memory')">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title">Игра Памяти</h2>
+            </div>
+            <div class="modal-body">
+                <div class="game-container">
+                    <div class="game-info" id="memoryInfo">Найдено пар: 0/8</div>
+                    <div class="memory-grid" id="memoryGrid"></div>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="resetMemory()">Новая игра</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Арканоид -->
+    <div id="breakoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('breakout')">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title">Арканоид</h2>
+            </div>
+            <div class="modal-body">
+                <div class="game-container">
+                    <div class="game-info" id="breakoutInfo">Счет: 0 | Жизни: 3</div>
+                    <canvas id="breakoutCanvas" width="600" height="400" class="breakout-canvas"></canvas>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startBreakout()">Старт</button>
+                        <button class="game-btn" onclick="resetBreakout()">Сброс</button>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px; color: #a0a0c0; font-size: 0.9rem;">
+                        Управление: стрелки влево/вправо
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Понг -->
+    <div id="pongModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('pong')">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title">Понг</h2>
+            </div>
+            <div class="modal-body">
+                <div class="game-container">
+                    <div class="game-info" id="pongInfo">Игрок 1: 0 | Игрок 2: 0</div>
+                    <canvas id="pongCanvas" width="600" height="400" class="breakout-canvas"></canvas>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startPong()">Старт</button>
+                        <button class="game-btn" onclick="resetPong()">Сброс</button>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px; color: #a0a0c0; font-size: 0.9rem;">
+                        Игрок 1: W/S | Игрок 2: ↑/↓
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Переключатель тем -->
+    <div class="theme-switcher" onclick="toggleTheme()">
+        <i class="fas fa-sun"></i>
+    </div>
+
+    <script>
+        // Создание снега
+        function createSnow() {
+            const snowContainer = document.getElementById('snow-container');
+            const snowflakesCount = 2; // Минимальное количество снежинок
             
-            if (comments.length === 0) {
-                noComments.style.display = 'block';
-                commentsList.innerHTML = '<div class="no-comments" id="noComments">Пока нет комментариев. Будьте первым!</div>';
+            for (let i = 0; i < snowflakesCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.innerHTML = '❄';
+                snowflake.classList.add('snowflake');
+                
+                // Случайные параметры
+                const startLeft = Math.random() * 100;
+                const animationDuration = 8 + Math.random() * 12;
+                const animationDelay = Math.random() * 5;
+                const opacity = 0.4 + Math.random() * 0.6;
+                
+                snowflake.style.left = startLeft + 'vw';
+                snowflake.style.animationDuration = animationDuration + 's';
+                snowflake.style.animationDelay = animationDelay + 's';
+                snowflake.style.opacity = opacity;
+                
+                snowContainer.appendChild(snowflake);
+                
+                // Удаление снежинки после завершения анимации
+                setTimeout(() => {
+                    snowflake.remove();
+                    createSingleSnow(); // Создать новую снежинку
+                }, animationDuration * 1000);
+            }
+        }
+        
+        // Создание одной снежинки
+        function createSingleSnow() {
+            const snowContainer = document.getElementById('snow-container');
+            const snowflake = document.createElement('div');
+            snowflake.innerHTML = '❄';
+            snowflake.classList.add('snowflake');
+            
+            const startLeft = Math.random() * 100;
+            const animationDuration = 8 + Math.random() * 12;
+            const opacity = 0.4 + Math.random() * 0.6;
+            
+            snowflake.style.left = startLeft + 'vw';
+            snowflake.style.animationDuration = animationDuration + 's';
+            snowflake.style.opacity = opacity;
+            
+            snowContainer.appendChild(snowflake);
+            
+            setTimeout(() => {
+                snowflake.remove();
+                createSingleSnow();
+            }, animationDuration * 1000);
+        }
+        
+        // Переключение вкладок
+        function showTab(tabId) {
+            // Скрыть все вкладки
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Убрать активный класс у кнопок
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Показать выбранную вкладку
+            document.getElementById(tabId).classList.add('active');
+            
+            // Добавить активный класс кнопке
+            event.target.classList.add('active');
+        }
+        
+        // Открытие модального окна игры
+        function openGameModal(gameId) {
+            // Скрыть все вкладки
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Показать вкладку игр
+            document.getElementById('games').classList.add('active');
+            
+            // Открыть модальное окно
+            document.getElementById(gameId + 'Modal').style.display = 'block';
+            
+            // Инициализировать игру
+            switch(gameId) {
+                case 'ticTacToe':
+                    initTicTacToe();
+                    break;
+                case 'snake':
+                    initSnake();
+                    break;
+                case 'memory':
+                    initMemory();
+                    break;
+                case 'breakout':
+                    initBreakout();
+                    break;
+                case 'pong':
+                    initPong();
+                    break;
+            }
+        }
+        
+        // Закрытие модального окна
+        function closeModal(gameId) {
+            document.getElementById(gameId + 'Modal').style.display = 'none';
+        }
+        
+        // Закрытие модального окна при клике вне его
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+        
+        // Переключение тем
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+        }
+        
+        // Игра Крестики-Нолики
+        let currentPlayer = 'X';
+        let gameBoard = ['', '', '', '', '', '', '', '', ''];
+        let gameActive = true;
+
+        function initTicTacToe() {
+            const board = document.getElementById('ticTacToeBoard');
+            board.innerHTML = '';
+            gameBoard = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            gameActive = true;
+            document.getElementById('ticTacToeInfo').textContent = 'Ваш ход: ' + currentPlayer;
+            
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'game-cell';
+                cell.setAttribute('data-index', i);
+                cell.addEventListener('click', () => makeMove(i));
+                board.appendChild(cell);
+            }
+        }
+
+        function makeMove(index) {
+            if (gameBoard[index] !== '' || !gameActive) return;
+            
+            gameBoard[index] = currentPlayer;
+            const cell = document.querySelector(`[data-index="${index}"]`);
+            cell.textContent = currentPlayer;
+            cell.style.animation = 'pulse 0.3s';
+            
+            if (checkWinner()) {
+                document.getElementById('ticTacToeInfo').textContent = `Победитель: ${currentPlayer}!`;
+                gameActive = false;
                 return;
             }
             
-            noComments.style.display = 'none';
+            if (gameBoard.every(cell => cell !== '')) {
+                document.getElementById('ticTacToeInfo').textContent = 'Ничья!';
+                gameActive = false;
+                return;
+            }
             
-            // Сортировка по дате (новые первыми)
-            comments.sort((a, b) => new Date(b.date) - new Date(a.date));
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            document.getElementById('ticTacToeInfo').textContent = 'Ваш ход: ' + currentPlayer;
             
-            let commentsHTML = '';
-            comments.forEach(comment => {
-                commentsHTML += `
-                    <div class="comment">
-                        <div class="comment-header">
-                            <div class="comment-avatar">${comment.name.charAt(0).toUpperCase()}</div>
-                            <div class="comment-info">
-                                <span class="comment-author">${comment.name}</span>
-                                <span class="comment-date">${formatDate(comment.date)}</span>
-                            </div>
-                        </div>
-                        <div class="comment-text">
-                            ${comment.text}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            commentsList.innerHTML = commentsHTML;
+            // Ход ИИ
+            if (currentPlayer === 'O' && gameActive) {
+                setTimeout(makeAIMove, 800);
+            }
         }
 
-        // Форматирование даты
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleString('ru-RU', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
+        function makeAIMove() {
+            let emptyCells = [];
+            gameBoard.forEach((cell, index) => {
+                if (cell === '') emptyCells.push(index);
+            });
+            
+            if (emptyCells.length > 0) {
+                const randomIndex = Math.floor(Math.random() * emptyCells.length);
+                makeMove(emptyCells[randomIndex]);
+            }
+        }
+
+        function checkWinner() {
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // строки
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // столбцы
+                [0, 4, 8], [2, 4, 6] // диагонали
+            ];
+            
+            for (let pattern of winPatterns) {
+                const [a, b, c] = pattern;
+                if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
+                    // Подсветка выигрышной комбинации
+                    document.querySelector(`[data-index="${a}"]`).style.background = 'rgba(78, 205, 196, 0.5)';
+                    document.querySelector(`[data-index="${b}"]`).style.background = 'rgba(78, 205, 196, 0.5)';
+                    document.querySelector(`[data-index="${c}"]`).style.background = 'rgba(78, 205, 196, 0.5)';
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function resetTicTacToe() {
+            initTicTacToe();
+        }
+
+        // Игра Змейка
+        let snake = [{x: 10, y: 10}];
+        let food = {x: 5, y: 5};
+        let direction = {x: 0, y: 0};
+        let score = 0;
+        let snakeInterval;
+
+        function initSnake() {
+            snake = [{x: 10, y: 10}];
+            food = generateFood();
+            direction = {x: 0, y: 0};
+            score = 0;
+            document.getElementById('snakeInfo').textContent = 'Счет: ' + score;
+            drawSnake();
+        }
+
+        function resetSnake() {
+            clearInterval(snakeInterval);
+            initSnake();
+        }
+
+        function generateFood() {
+            return {
+                x: Math.floor(Math.random() * 20),
+                y: Math.floor(Math.random() * 20)
+            };
+        }
+
+        function drawSnake() {
+            const board = document.getElementById('snakeBoard');
+            board.innerHTML = '';
+            
+            for (let y = 0; y < 20; y++) {
+                for (let x = 0; x < 20; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'snake-cell';
+                    
+                    if (snake[0].x === x && snake[0].y === y) {
+                        cell.classList.add('snake-head');
+                    } else if (snake.some(segment => segment.x === x && segment.y === y)) {
+                        cell.classList.add('snake-body');
+                    } else if (food.x === x && food.y === y) {
+                        cell.classList.add('snake-food');
+                    }
+                    
+                    board.appendChild(cell);
+                }
+            }
+        }
+
+        function moveSnake() {
+            if (direction.x === 0 && direction.y === 0) return;
+            
+            const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
+            
+            // Проверка столкновения со стенами
+            if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20) {
+                clearInterval(snakeInterval);
+                alert('Игра окончена! Счет: ' + score);
+                return;
+            }
+            
+            // Проверка столкновения с собой
+            if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+                clearInterval(snakeInterval);
+                alert('Игра окончена! Счет: ' + score);
+                return;
+            }
+            
+            snake.unshift(head);
+            
+            // Проверка съедания еды
+            if (head.x === food.x && head.y === food.y) {
+                score++;
+                document.getElementById('snakeInfo').textContent = 'Счет: ' + score;
+                food = generateFood();
+            } else {
+                snake.pop();
+            }
+            
+            drawSnake();
+        }
+
+        function startSnake() {
+            clearInterval(snakeInterval);
+            initSnake();
+            snakeInterval = setInterval(moveSnake, 150);
+        }
+
+        // Управление змейкой
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowUp':
+                    if (direction.y === 0) direction = {x: 0, y: -1};
+                    break;
+                case 'ArrowDown':
+                    if (direction.y === 0) direction = {x: 0, y: 1};
+                    break;
+                case 'ArrowLeft':
+                    if (direction.x === 0) direction = {x: -1, y: 0};
+                    break;
+                case 'ArrowRight':
+                    if (direction.x === 0) direction = {x: 1, y: 0};
+                    break;
+            }
+        });
+
+        // Игра Память
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let canFlip = true;
+
+        function initMemory() {
+            const symbols = ['😀', '😂', '🥰', '😎', '🤩', '🥳', '😍', '🤗'];
+            memoryCards = [...symbols, ...symbols];
+            shuffleArray(memoryCards);
+            flippedCards = [];
+            matchedPairs = 0;
+            canFlip = true;
+            document.getElementById('memoryInfo').textContent = 'Найдено пар: 0/8';
+            
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            
+            memoryCards.forEach((symbol, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.setAttribute('data-index', index);
+                card.innerHTML = '?';
+                card.addEventListener('click', () => flipCard(index));
+                grid.appendChild(card);
             });
         }
 
-        // Добавление комментария
-        function addComment(name, text) {
-            const comment = {
-                name: name,
-                text: text,
-                date: new Date().toISOString()
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function flipCard(index) {
+            if (!canFlip || flippedCards.includes(index) || document.querySelector(`[data-index="${index}"]`).classList.contains('matched')) {
+                return;
+            }
+            
+            const card = document.querySelector(`[data-index="${index}"]`);
+            card.innerHTML = memoryCards[index];
+            card.classList.add('flipped');
+            flippedCards.push(index);
+            
+            if (flippedCards.length === 2) {
+                canFlip = false;
+                setTimeout(checkMatch, 1000);
+            }
+        }
+
+        function checkMatch() {
+            const [firstIndex, secondIndex] = flippedCards;
+            const firstCard = document.querySelector(`[data-index="${firstIndex}"]`);
+            const secondCard = document.querySelector(`[data-index="${secondIndex}"]`);
+            
+            if (memoryCards[firstIndex] === memoryCards[secondIndex]) {
+                firstCard.classList.add('matched');
+                secondCard.classList.add('matched');
+                matchedPairs++;
+                document.getElementById('memoryInfo').textContent = `Найдено пар: ${matchedPairs}/8`;
+                
+                if (matchedPairs === 8) {
+                    setTimeout(() => alert('Поздравляем! Вы нашли все пары!'), 500);
+                }
+            } else {
+                firstCard.innerHTML = '?';
+                secondCard.innerHTML = '?';
+                firstCard.classList.remove('flipped');
+                secondCard.classList.remove('flipped');
+            }
+            
+            flippedCards = [];
+            canFlip = true;
+        }
+
+        function resetMemory() {
+            initMemory();
+        }
+
+        // Игра Арканоид
+        let breakoutCanvas, breakoutCtx;
+        let breakoutPaddle, breakoutBall, breakoutBricks;
+        let breakoutScore = 0;
+        let breakoutLives = 3;
+        let breakoutGameInterval;
+
+        function initBreakout() {
+            breakoutCanvas = document.getElementById('breakoutCanvas');
+            breakoutCtx = breakoutCanvas.getContext('2d');
+            
+            breakoutPaddle = {
+                x: breakoutCanvas.width / 2 - 50,
+                y: breakoutCanvas.height - 20,
+                width: 100,
+                height: 10,
+                dx: 8
             };
             
-            comments.push(comment);
-            localStorage.setItem('okComments', JSON.stringify(comments));
-            displayComments();
+            breakoutBall = {
+                x: breakoutCanvas.width / 2,
+                y: breakoutCanvas.height - 30,
+                radius: 10,
+                dx: 4,
+                dy: -4
+            };
+            
+            breakoutBricks = [];
+            const brickRowCount = 5;
+            const brickColumnCount = 10;
+            
+            for (let c = 0; c < brickColumnCount; c++) {
+                breakoutBricks[c] = [];
+                for (let r = 0; r < brickRowCount; r++) {
+                    breakoutBricks[c][r] = { x: 0, y: 0, status: 1 };
+                }
+            }
+            
+            breakoutScore = 0;
+            breakoutLives = 3;
+            updateBreakoutInfo();
         }
 
-        // Обработка формы
-        document.getElementById('commentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        function resetBreakout() {
+            clearInterval(breakoutGameInterval);
+            initBreakout();
+        }
+
+        function drawBreakout() {
+            breakoutCtx.clearRect(0, 0, breakoutCanvas.width, breakoutCanvas.height);
             
-            const name = document.getElementById('commentName').value.trim();
-            const text = document.getElementById('commentText').value.trim();
+            // Рисуем платформу
+            const paddleGradient = breakoutCtx.createLinearGradient(breakoutPaddle.x, breakoutPaddle.y, breakoutPaddle.x + breakoutPaddle.width, breakoutPaddle.y + breakoutPaddle.height);
+            paddleGradient.addColorStop(0, '#4ecdc4');
+            paddleGradient.addColorStop(1, '#45b7aa');
+            breakoutCtx.fillStyle = paddleGradient;
+            breakoutCtx.fillRect(breakoutPaddle.x, breakoutPaddle.y, breakoutPaddle.width, breakoutPaddle.height);
             
-            if (name && text) {
-                addComment(name, text);
-                document.getElementById('commentForm').reset();
+            // Рисуем мяч
+            const ballGradient = breakoutCtx.createRadialGradient(breakoutBall.x, breakoutBall.y, 0, breakoutBall.x, breakoutBall.y, breakoutBall.radius);
+            ballGradient.addColorStop(0, '#ff9999');
+            ballGradient.addColorStop(1, '#ff6b6b');
+            breakoutCtx.beginPath();
+            breakoutCtx.arc(breakoutBall.x, breakoutBall.y, breakoutBall.radius, 0, Math.PI * 2);
+            breakoutCtx.fillStyle = ballGradient;
+            breakoutCtx.fill();
+            breakoutCtx.closePath();
+            
+            // Рисуем кирпичи
+            const brickWidth = 55;
+            const brickHeight = 20;
+            const brickPadding = 5;
+            const brickOffsetTop = 30;
+            const brickOffsetLeft = 30;
+            
+            for (let c = 0; c < 10; c++) {
+                for (let r = 0; r < 5; r++) {
+                    const brick = breakoutBricks[c][r];
+                    if (brick.status === 1) {
+                        const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+                        const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+                        brick.x = brickX;
+                        brick.y = brickY;
+                        
+                        const brickGradient = breakoutCtx.createLinearGradient(brickX, brickY, brickX, brickY + brickHeight);
+                        brickGradient.addColorStop(0, '#45b7aa');
+                        brickGradient.addColorStop(1, '#3da59a');
+                        breakoutCtx.fillStyle = brickGradient;
+                        breakoutCtx.fillRect(brickX, brickY, brickWidth, brickHeight);
+                        
+                        // Добавляем рамку
+                        breakoutCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                        breakoutCtx.lineWidth = 1;
+                        breakoutCtx.strokeRect(brickX, brickY, brickWidth, brickHeight);
+                    }
+                }
+            }
+        }
+
+        function updateBreakout() {
+            drawBreakout();
+            
+            // Движение мяча
+            breakoutBall.x += breakoutBall.dx;
+            breakoutBall.y += breakoutBall.dy;
+            
+            // Отскок от стен
+            if (breakoutBall.x + breakoutBall.dx > breakoutCanvas.width - breakoutBall.radius || breakoutBall.x + breakoutBall.dx < breakoutBall.radius) {
+                breakoutBall.dx = -breakoutBall.dx;
+            }
+            
+            if (breakoutBall.y + breakoutBall.dy < breakoutBall.radius) {
+                breakoutBall.dy = -breakoutBall.dy;
+            } else if (breakoutBall.y + breakoutBall.dy > breakoutCanvas.height - breakoutBall.radius) {
+                if (breakoutBall.x > breakoutPaddle.x && breakoutBall.x < breakoutPaddle.x + breakoutPaddle.width) {
+                    breakoutBall.dy = -breakoutBall.dy;
+                } else {
+                    breakoutLives--;
+                    updateBreakoutInfo();
+                    if (breakoutLives <= 0) {
+                        clearInterval(breakoutGameInterval);
+                        alert('Игра окончена! Счет: ' + breakoutScore);
+                        return;
+                    } else {
+                        breakoutBall.x = breakoutCanvas.width / 2;
+                        breakoutBall.y = breakoutCanvas.height - 30;
+                        breakoutBall.dx = 4;
+                        breakoutBall.dy = -4;
+                        breakoutPaddle.x = breakoutCanvas.width / 2 - 50;
+                    }
+                }
+            }
+            
+            // Отскок от платформы
+            if (breakoutBall.y + breakoutBall.dy > breakoutCanvas.height - breakoutBall.radius - breakoutPaddle.height) {
+                if (breakoutBall.x > breakoutPaddle.x && breakoutBall.x < breakoutPaddle.x + breakoutPaddle.width) {
+                    breakoutBall.dy = -breakoutBall.dy;
+                }
+            }
+            
+            // Проверка столкновения с кирпичами
+            const brickWidth = 55;
+            const brickHeight = 20;
+            const brickPadding = 5;
+            const brickOffsetTop = 30;
+            const brickOffsetLeft = 30;
+            
+            for (let c = 0; c < 10; c++) {
+                for (let r = 0; r < 5; r++) {
+                    const brick = breakoutBricks[c][r];
+                    if (brick.status === 1) {
+                        if (breakoutBall.x > brick.x && breakoutBall.x < brick.x + brickWidth && 
+                            breakoutBall.y > brick.y && breakoutBall.y < brick.y + brickHeight) {
+                            breakoutBall.dy = -breakoutBall.dy;
+                            brick.status = 0;
+                            breakoutScore += 10;
+                            updateBreakoutInfo();
+                            
+                            // Проверка победы
+                            let bricksLeft = 0;
+                            for (let i = 0; i < 10; i++) {
+                                for (let j = 0; j < 5; j++) {
+                                    if (breakoutBricks[i][j].status === 1) bricksLeft++;
+                                }
+                            }
+                            if (bricksLeft === 0) {
+                                clearInterval(breakoutGameInterval);
+                                alert('Поздравляем! Вы выиграли! Счет: ' + breakoutScore);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function updateBreakoutInfo() {
+            document.getElementById('breakoutInfo').textContent = `Счет: ${breakoutScore} | Жизни: ${breakoutLives}`;
+        }
+
+        function startBreakout() {
+            initBreakout();
+            clearInterval(breakoutGameInterval);
+            breakoutGameInterval = setInterval(updateBreakout, 16);
+        }
+
+        // Игра Понг
+        let pongCanvas, pongCtx;
+        let pongLeftPaddle, pongRightPaddle, pongBall;
+        let pongLeftScore = 0, pongRightScore = 0;
+        let pongGameInterval;
+
+        function initPong() {
+            pongCanvas = document.getElementById('pongCanvas');
+            pongCtx = pongCanvas.getContext('2d');
+            
+            pongLeftPaddle = {
+                x: 10,
+                y: pongCanvas.height / 2 - 40,
+                width: 10,
+                height: 80,
+                dy: 8
+            };
+            
+            pongRightPaddle = {
+                x: pongCanvas.width - 20,
+                y: pongCanvas.height / 2 - 40,
+                width: 10,
+                height: 80,
+                dy: 8
+            };
+            
+            pongBall = {
+                x: pongCanvas.width / 2,
+                y: pongCanvas.height / 2,
+                radius: 10,
+                dx: 5,
+                dy: 5
+            };
+            
+            pongLeftScore = 0;
+            pongRightScore = 0;
+            updatePongInfo();
+        }
+
+        function resetPong() {
+            clearInterval(pongGameInterval);
+            initPong();
+        }
+
+        function drawPong() {
+            pongCtx.clearRect(0, 0, pongCanvas.width, pongCanvas.height);
+            
+            // Рисуем платформы
+            const leftPaddleGradient = pongCtx.createLinearGradient(pongLeftPaddle.x, pongLeftPaddle.y, pongLeftPaddle.x + pongLeftPaddle.width, pongLeftPaddle.y + pongLeftPaddle.height);
+            leftPaddleGradient.addColorStop(0, '#4ecdc4');
+            leftPaddleGradient.addColorStop(1, '#45b7aa');
+            pongCtx.fillStyle = leftPaddleGradient;
+            pongCtx.fillRect(pongLeftPaddle.x, pongLeftPaddle.y, pongLeftPaddle.width, pongLeftPaddle.height);
+            
+            const rightPaddleGradient = pongCtx.createLinearGradient(pongRightPaddle.x, pongRightPaddle.y, pongRightPaddle.x + pongRightPaddle.width, pongRightPaddle.y + pongRightPaddle.height);
+            rightPaddleGradient.addColorStop(0, '#4ecdc4');
+            rightPaddleGradient.addColorStop(1, '#45b7aa');
+            pongCtx.fillStyle = rightPaddleGradient;
+            pongCtx.fillRect(pongRightPaddle.x, pongRightPaddle.y, pongRightPaddle.width, pongRightPaddle.height);
+            
+            // Рисуем мяч
+            const ballGradient = pongCtx.createRadialGradient(pongBall.x, pongBall.y, 0, pongBall.x, pongBall.y, pongBall.radius);
+            ballGradient.addColorStop(0, '#ff9999');
+            ballGradient.addColorStop(1, '#ff6b6b');
+            pongCtx.beginPath();
+            pongCtx.arc(pongBall.x, pongBall.y, pongBall.radius, 0, Math.PI * 2);
+            pongCtx.fillStyle = ballGradient;
+            pongCtx.fill();
+            pongCtx.closePath();
+            
+            // Рисуем центральную линию
+            pongCtx.setLineDash([5, 15]);
+            pongCtx.beginPath();
+            pongCtx.moveTo(pongCanvas.width / 2, 0);
+            pongCtx.lineTo(pongCanvas.width / 2, pongCanvas.height);
+            pongCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            pongCtx.lineWidth = 2;
+            pongCtx.stroke();
+            pongCtx.setLineDash([]);
+        }
+
+        function updatePong() {
+            drawPong();
+            
+            // Движение мяча
+            pongBall.x += pongBall.dx;
+            pongBall.y += pongBall.dy;
+            
+            // Отскок от верхней и нижней стен
+            if (pongBall.y + pongBall.dy < pongBall.radius || pongBall.y + pongBall.dy > pongCanvas.height - pongBall.radius) {
+                pongBall.dy = -pongBall.dy;
+            }
+            
+            // Отскок от платформ
+            if (pongBall.x - pongBall.radius < pongLeftPaddle.x + pongLeftPaddle.width) {
+                if (pongBall.y > pongLeftPaddle.y && pongBall.y < pongLeftPaddle.y + pongLeftPaddle.height) {
+                    pongBall.dx = -pongBall.dx;
+                }
+            }
+            
+            if (pongBall.x + pongBall.radius > pongRightPaddle.x) {
+                if (pongBall.y > pongRightPaddle.y && pongBall.y < pongRightPaddle.y + pongRightPaddle.height) {
+                    pongBall.dx = -pongBall.dx;
+                }
+            }
+            
+            // Проверка забитых голов
+            if (pongBall.x < 0) {
+                pongRightScore++;
+                resetPongBall();
+                updatePongInfo();
+            } else if (pongBall.x > pongCanvas.width) {
+                pongLeftScore++;
+                resetPongBall();
+                updatePongInfo();
+            }
+        }
+
+        function resetPongBall() {
+            pongBall.x = pongCanvas.width / 2;
+            pongBall.y = pongCanvas.height / 2;
+            pongBall.dx = -pongBall.dx;
+            pongBall.dy = Math.random() * 10 - 5;
+        }
+
+        function updatePongInfo() {
+            document.getElementById('pongInfo').textContent = `Игрок 1: ${pongLeftScore} | Игрок 2: ${pongRightScore}`;
+        }
+
+        function startPong() {
+            initPong();
+            clearInterval(pongGameInterval);
+            pongGameInterval = setInterval(updatePong, 16);
+        }
+
+        // Управление понгом
+        document.addEventListener('keydown', (e) => {
+            // Игрок 1 (W/S)
+            if (e.key === 'w' || e.key === 'W') {
+                pongLeftPaddle.y -= pongLeftPaddle.dy;
+                if (pongLeftPaddle.y < 0) pongLeftPaddle.y = 0;
+            } else if (e.key === 's' || e.key === 'S') {
+                pongLeftPaddle.y += pongLeftPaddle.dy;
+                if (pongLeftPaddle.y + pongLeftPaddle.height > pongCanvas.height) {
+                    pongLeftPaddle.y = pongCanvas.height - pongLeftPaddle.height;
+                }
+            }
+            
+            // Игрок 2 (стрелки)
+            if (e.key === 'ArrowUp') {
+                pongRightPaddle.y -= pongRightPaddle.dy;
+                if (pongRightPaddle.y < 0) pongRightPaddle.y = 0;
+            } else if (e.key === 'ArrowDown') {
+                pongRightPaddle.y += pongRightPaddle.dy;
+                if (pongRightPaddle.y + pongRightPaddle.height > pongCanvas.height) {
+                    pongRightPaddle.y = pongCanvas.height - pongRightPaddle.height;
+                }
             }
         });
 
         // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
-            displayComments();
+            createSnow();
+            
+            // Автоматическое создание новых снежинок
+            setInterval(createSingleSnow, 2000);
         });
     </script>
+
+    <!-- Подключение Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </body>
 </html>
