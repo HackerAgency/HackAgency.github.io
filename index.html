@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -749,6 +750,7 @@
             margin-right: 15px;
             font-weight: bold;
             color: white;
+            cursor: pointer;
         }
 
         .comment-author {
@@ -808,60 +810,101 @@
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
         }
 
-        /* Настройки профиля */
-        .profile-settings {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* Профиль в левом нижнем углу */
+        .profile-corner {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 3;
+            cursor: pointer;
         }
 
-        .light-theme .profile-settings {
-            background: rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .profile-settings h3 {
-            margin-bottom: 20px;
-            color: #ff6b6b;
-            text-align: center;
-        }
-
-        .light-theme .profile-settings h3 {
-            color: #ff6b6b;
-        }
-
-        .avatar-preview {
-            width: 80px;
-            height: 80px;
+        .profile-avatar {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 15px;
             font-weight: bold;
             color: white;
-            font-size: 2rem;
-        }
-
-        .save-profile-btn {
-            background: linear-gradient(45deg, #4ecdc4, #45b7aa);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
-            display: block;
-            margin: 15px auto 0;
         }
 
-        .save-profile-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
+        .profile-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.5);
+        }
+
+        /* Модальное окно профиля */
+        .profile-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-modal-content {
+            background: rgba(26, 26, 46, 0.95);
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            backdrop-filter: blur(15px);
+        }
+
+        .light-theme .profile-modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .light-theme .profile-modal-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-modal-title {
+            font-size: 1.5rem;
+            color: #4ecdc4;
+            margin: 0;
+        }
+
+        .avatar-preview-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-weight: bold;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        /* Новые игры */
+        .new-game-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
         }
 
         @media (max-width: 768px) {
@@ -918,6 +961,11 @@
 <body>
     <!-- Снег -->
     <div id="snow-container"></div>
+
+    <!-- Профиль в левом нижнем углу -->
+    <div class="profile-corner" onclick="openProfileModal()">
+        <div class="profile-avatar" id="cornerAvatar">U</div>
+    </div>
 
     <div class="container">
         <header>
@@ -1031,6 +1079,25 @@
                     <h3 class="game-title">Понг</h3>
                     <p class="game-desc">Классический теннис для двух игроков с частицами</p>
                 </div>
+                
+                <!-- Новые игры -->
+                <div class="game-card" onclick="openGameModal('tetris')">
+                    <div class="new-game-icon">🧩</div>
+                    <h3 class="game-title">Тетрис</h3>
+                    <p class="game-desc">Собирайте линии и получайте очки</p>
+                </div>
+                
+                <div class="game-card" onclick="openGameModal('minesweeper')">
+                    <div class="new-game-icon">💣</div>
+                    <h3 class="game-title">Сапер</h3>
+                    <p class="game-desc">Найдите все мины, не взорвавшись</p>
+                </div>
+                
+                <div class="game-card" onclick="openGameModal('spaceInvaders')">
+                    <div class="new-game-icon">👾</div>
+                    <h3 class="game-title">Космические захватчики</h3>
+                    <p class="game-desc">Уничтожьте вражеские корабли</p>
+                </div>
             </div>
         </div>
 
@@ -1055,21 +1122,6 @@
         <div id="comments" class="tab-content">
             <div class="comments-section">
                 <h2 class="comments-title">Комментарии Клана ОкЪ</h2>
-                
-                <!-- Настройки профиля -->
-                <div class="profile-settings">
-                    <h3>Настройки профиля</h3>
-                    <div class="avatar-preview" id="avatarPreview">U</div>
-                    <div class="form-group">
-                        <label class="form-label">Ваш ник:</label>
-                        <input type="text" id="profileName" class="form-input" placeholder="Введите ваш ник">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Аватар (первая буква):</label>
-                        <input type="text" id="profileAvatar" class="form-input" placeholder="Введите первую букву ника" maxlength="1">
-                    </div>
-                    <button class="save-profile-btn" onclick="saveProfile()">Сохранить профиль</button>
-                </div>
                 
                 <!-- Форма комментариев -->
                 <div class="comment-form">
@@ -1098,6 +1150,28 @@
         <footer>
             <p>Клан ОкЪ © 2025 - Легенда, которую мы всегда вспомним</p>
         </footer>
+    </div>
+
+    <!-- Модальное окно профиля -->
+    <div id="profileModal" class="profile-modal">
+        <div class="profile-modal-content">
+            <div class="profile-modal-header">
+                <h2 class="profile-modal-title">Настройки профиля</h2>
+                <span class="close" onclick="closeProfileModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="avatar-preview-large" id="largeAvatarPreview">U</div>
+                <div class="form-group">
+                    <label class="form-label">Ваш ник:</label>
+                    <input type="text" id="profileName" class="form-input" placeholder="Введите ваш ник">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Аватар (первая буква):</label>
+                    <input type="text" id="profileAvatar" class="form-input" placeholder="Введите первую букву ника" maxlength="1">
+                </div>
+                <button class="submit-btn" onclick="saveProfile()" style="width: 100%;">Сохранить</button>
+            </div>
+        </div>
     </div>
 
     <!-- Модальные окна игр -->
@@ -1216,6 +1290,74 @@
         </div>
     </div>
 
+    <!-- Тетрис -->
+    <div id="tetrisModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('tetris')">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title">Тетрис</h2>
+            </div>
+            <div class="modal-body">
+                <div class="game-container">
+                    <div class="game-info" id="tetrisInfo">Счет: 0 | Уровень: 1</div>
+                    <canvas id="tetrisCanvas" width="300" height="600" class="breakout-canvas"></canvas>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startTetris()">Старт</button>
+                        <button class="game-btn" onclick="resetTetris()">Сброс</button>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px; color: #a0a0c0; font-size: 0.9rem;">
+                        Управление: A/D - движение, S - ускорение, Q/E - поворот
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Сапер -->
+    <div id="minesweeperModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('minesweeper')">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title">Сапер</h2>
+            </div>
+            <div class="modal-body">
+                <div class="game-container">
+                    <div class="game-info" id="minesweeperInfo">Мины: 10 | Флаги: 0</div>
+                    <div class="snake-board" id="minesweeperBoard" style="max-width: 400px; grid-template-columns: repeat(10, 30px); grid-template-rows: repeat(10, 30px);"></div>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="resetMinesweeper()">Новая игра</button>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px; color: #a0a0c0; font-size: 0.9rem;">
+                        ЛКМ - открыть, ПКМ - флаг
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Космические захватчики -->
+    <div id="spaceInvadersModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('spaceInvaders')">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title">Космические захватчики</h2>
+            </div>
+            <div class="modal-body">
+                <div class="game-container">
+                    <div class="game-info" id="spaceInvadersInfo">Счет: 0 | Жизни: 3</div>
+                    <canvas id="spaceInvadersCanvas" width="600" height="400" class="breakout-canvas"></canvas>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startSpaceInvaders()">Старт</button>
+                        <button class="game-btn" onclick="resetSpaceInvaders()">Сброс</button>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px; color: #a0a0c0; font-size: 0.9rem;">
+                        Управление: стрелки влево/вправо, пробел - выстрел
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Переключатель тем -->
     <div class="theme-switcher" onclick="toggleTheme()">
         <i class="fas fa-sun"></i>
@@ -1322,6 +1464,15 @@
                 case 'pong':
                     initPong();
                     break;
+                case 'tetris':
+                    initTetris();
+                    break;
+                case 'minesweeper':
+                    initMinesweeper();
+                    break;
+                case 'spaceInvaders':
+                    initSpaceInvaders();
+                    break;
             }
         }
         
@@ -1332,7 +1483,7 @@
         
         // Закрытие модального окна при клике вне его
         window.onclick = function(event) {
-            const modals = document.querySelectorAll('.modal');
+            const modals = document.querySelectorAll('.modal, .profile-modal');
             modals.forEach(modal => {
                 if (event.target === modal) {
                     modal.style.display = 'none';
@@ -1346,26 +1497,35 @@
         }
         
         // Профиль пользователя
-        let userProfile = JSON.parse(localStorage.getItem('okUserProfile') || '{"name":"","avatar":"U"}');
+        let userProfile = JSON.parse(localStorage.getItem('okUserProfile') || '{"name":"Гость","avatar":"Г"}');
+        
+        function openProfileModal() {
+            document.getElementById('profileModal').style.display = 'block';
+            updateProfileModal();
+        }
+        
+        function closeProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+        
+        function updateProfileModal() {
+            document.getElementById('largeAvatarPreview').innerHTML = userProfile.avatar;
+            document.getElementById('profileName').value = userProfile.name;
+            document.getElementById('profileAvatar').value = userProfile.avatar;
+        }
         
         function saveProfile() {
             const name = document.getElementById('profileName').value.trim();
-            const avatar = document.getElementById('profileAvatar').value.trim() || 'U';
+            const avatar = document.getElementById('profileAvatar').value.trim() || 'Г';
             
             if (name) {
                 userProfile = { name: name, avatar: avatar };
                 localStorage.setItem('okUserProfile', JSON.stringify(userProfile));
                 document.getElementById('commentName').value = name;
-                updateAvatarPreview();
+                document.getElementById('cornerAvatar').innerHTML = avatar;
+                closeProfileModal();
                 alert('Профиль сохранен!');
             }
-        }
-        
-        function updateAvatarPreview() {
-            document.getElementById('avatarPreview').innerHTML = userProfile.avatar;
-            document.getElementById('profileName').value = userProfile.name;
-            document.getElementById('profileAvatar').value = userProfile.avatar;
-            document.getElementById('commentName').value = userProfile.name;
         }
         
         // Режимы игр
@@ -2009,12 +2169,12 @@
             drawPong();
             
             // Плавное движение платформ
-            // Левая платформа (игрок 1)
-            if (pongKeys['w'] || pongKeys['W']) {
+            // Левая платформа (игрок 1) - поддержка разных раскладок
+            if (pongKeys['w'] || pongKeys['W'] || pongKeys['ц'] || pongKeys['Ц']) {
                 pongLeftPaddle.y -= pongLeftPaddle.speed;
                 if (pongLeftPaddle.y < 0) pongLeftPaddle.y = 0;
             }
-            if (pongKeys['s'] || pongKeys['S']) {
+            if (pongKeys['s'] || pongKeys['S'] || pongKeys['ы'] || pongKeys['Ы']) {
                 pongLeftPaddle.y += pongLeftPaddle.speed;
                 if (pongLeftPaddle.y + pongLeftPaddle.height > pongCanvas.height) {
                     pongLeftPaddle.y = pongCanvas.height - pongLeftPaddle.height;
@@ -2107,18 +2267,425 @@
             pongGameInterval = setInterval(updatePong, 16);
         }
 
-        // Управление понгом (плавное движение)
+        // Управление понгом (плавное движение) - поддержка разных раскладок
         document.addEventListener('keydown', (e) => {
+            // Игрок 1 (W/S и Ц/Ы)
             if (e.key === 'w' || e.key === 'W' || e.key === 's' || e.key === 'S' || 
+                e.key === 'ц' || e.key === 'Ц' || e.key === 'ы' || e.key === 'Ы' || 
                 e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 pongKeys[e.key] = true;
             }
         });
 
         document.addEventListener('keyup', (e) => {
+            // Игрок 1 (W/S и Ц/Ы)
             if (e.key === 'w' || e.key === 'W' || e.key === 's' || e.key === 'S' || 
+                e.key === 'ц' || e.key === 'Ц' || e.key === 'ы' || e.key === 'Ы' || 
                 e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 pongKeys[e.key] = false;
+            }
+        });
+
+        // Новая игра - Тетрис
+        let tetrisCanvas, tetrisCtx;
+        let tetrisBoard = [];
+        let tetrisCurrentPiece, tetrisNextPiece;
+        let tetrisScore = 0;
+        let tetrisLevel = 1;
+        let tetrisLines = 0;
+        let tetrisGameInterval;
+        let tetrisKeys = {};
+
+        const TETRIS_COLS = 10;
+        const TETRIS_ROWS = 20;
+        const TETRIS_BLOCK_SIZE = 30;
+
+        const TETRIS_PIECES = [
+            { shape: [[1,1,1,1]], color: '#00f0f0' }, // I
+            { shape: [[1,1,1],[0,1,0]], color: '#0000f0' }, // T
+            { shape: [[1,1,1],[1,0,0]], color: '#f0a000' }, // L
+            { shape: [[1,1,1],[0,0,1]], color: '#00f000' }, // J
+            { shape: [[1,1],[1,1]], color: '#f00000' }, // O
+            { shape: [[0,1,1],[1,1,0]], color: '#f000f0' }, // S
+            { shape: [[1,1,0],[0,1,1]], color: '#00f000' }  // Z
+        ];
+
+        function initTetris() {
+            tetrisCanvas = document.getElementById('tetrisCanvas');
+            tetrisCtx = tetrisCanvas.getContext('2d');
+            
+            // Инициализация игрового поля
+            tetrisBoard = Array(TETRIS_ROWS).fill().map(() => Array(TETRIS_COLS).fill(0));
+            
+            tetrisScore = 0;
+            tetrisLevel = 1;
+            tetrisLines = 0;
+            tetrisKeys = {};
+            
+            // Создание первой фигуры
+            tetrisCurrentPiece = createRandomPiece();
+            tetrisNextPiece = createRandomPiece();
+            
+            updateTetrisInfo();
+        }
+
+        function createRandomPiece() {
+            const piece = JSON.parse(JSON.stringify(TETRIS_PIECES[Math.floor(Math.random() * TETRIS_PIECES.length)]));
+            piece.x = Math.floor(TETRIS_COLS / 2) - Math.floor(piece.shape[0].length / 2);
+            piece.y = 0;
+            return piece;
+        }
+
+        function drawTetris() {
+            tetrisCtx.clearRect(0, 0, tetrisCanvas.width, tetrisCanvas.height);
+            
+            // Рисуем игровое поле
+            for (let y = 0; y < TETRIS_ROWS; y++) {
+                for (let x = 0; x < TETRIS_COLS; x++) {
+                    if (tetrisBoard[y][x]) {
+                        tetrisCtx.fillStyle = tetrisBoard[y][x];
+                        tetrisCtx.fillRect(x * TETRIS_BLOCK_SIZE, y * TETRIS_BLOCK_SIZE, TETRIS_BLOCK_SIZE - 1, TETRIS_BLOCK_SIZE - 1);
+                    }
+                }
+            }
+            
+            // Рисуем текущую фигуру
+            if (tetrisCurrentPiece) {
+                tetrisCtx.fillStyle = tetrisCurrentPiece.color;
+                for (let y = 0; y < tetrisCurrentPiece.shape.length; y++) {
+                    for (let x = 0; x < tetrisCurrentPiece.shape[y].length; x++) {
+                        if (tetrisCurrentPiece.shape[y][x]) {
+                            tetrisCtx.fillRect(
+                                (tetrisCurrentPiece.x + x) * TETRIS_BLOCK_SIZE,
+                                (tetrisCurrentPiece.y + y) * TETRIS_BLOCK_SIZE,
+                                TETRIS_BLOCK_SIZE - 1,
+                                TETRIS_BLOCK_SIZE - 1
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        function updateTetris() {
+            drawTetris();
+        }
+
+        function updateTetrisInfo() {
+            document.getElementById('tetrisInfo').textContent = `Счет: ${tetrisScore} | Уровень: ${tetrisLevel}`;
+        }
+
+        function startTetris() {
+            initTetris();
+            clearInterval(tetrisGameInterval);
+            tetrisGameInterval = setInterval(updateTetris, 500);
+        }
+
+        function resetTetris() {
+            clearInterval(tetrisGameInterval);
+            initTetris();
+        }
+
+        // Новая игра - Сапер
+        let minesweeperBoard = [];
+        let minesweeperMines = 10;
+        let minesweeperFlags = 0;
+        let minesweeperGameActive = true;
+
+        function initMinesweeper() {
+            const board = document.getElementById('minesweeperBoard');
+            board.innerHTML = '';
+            minesweeperBoard = [];
+            minesweeperFlags = 0;
+            minesweeperGameActive = true;
+            
+            // Создание игрового поля 10x10
+            for (let y = 0; y < 10; y++) {
+                minesweeperBoard[y] = [];
+                for (let x = 0; x < 10; x++) {
+                    minesweeperBoard[y][x] = {
+                        isMine: false,
+                        isRevealed: false,
+                        isFlagged: false,
+                        neighborMines: 0
+                    };
+                    
+                    const cell = document.createElement('div');
+                    cell.className = 'snake-cell';
+                    cell.setAttribute('data-x', x);
+                    cell.setAttribute('data-y', y);
+                    cell.addEventListener('click', () => revealMinesweeperCell(x, y));
+                    cell.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        toggleMinesweeperFlag(x, y);
+                    });
+                    board.appendChild(cell);
+                }
+            }
+            
+            // Расстановка мин
+            let minesPlaced = 0;
+            while (minesPlaced < minesweeperMines) {
+                const x = Math.floor(Math.random() * 10);
+                const y = Math.floor(Math.random() * 10);
+                if (!minesweeperBoard[y][x].isMine) {
+                    minesweeperBoard[y][x].isMine = true;
+                    minesPlaced++;
+                }
+            }
+            
+            // Подсчет соседних мин
+            for (let y = 0; y < 10; y++) {
+                for (let x = 0; x < 10; x++) {
+                    if (!minesweeperBoard[y][x].isMine) {
+                        let count = 0;
+                        for (let dy = -1; dy <= 1; dy++) {
+                            for (let dx = -1; dx <= 1; dx++) {
+                                const nx = x + dx;
+                                const ny = y + dy;
+                                if (nx >= 0 && nx < 10 && ny >= 0 && ny < 10 && minesweeperBoard[ny][nx].isMine) {
+                                    count++;
+                                }
+                            }
+                        }
+                        minesweeperBoard[y][x].neighborMines = count;
+                    }
+                }
+            }
+            
+            updateMinesweeperInfo();
+        }
+
+        function revealMinesweeperCell(x, y) {
+            if (!minesweeperGameActive || minesweeperBoard[y][x].isFlagged || minesweeperBoard[y][x].isRevealed) return;
+            
+            minesweeperBoard[y][x].isRevealed = true;
+            const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+            
+            if (minesweeperBoard[y][x].isMine) {
+                cell.innerHTML = '💣';
+                cell.style.background = 'rgba(255, 0, 0, 0.5)';
+                minesweeperGameActive = false;
+                alert('Вы проиграли!');
+                return;
+            }
+            
+            if (minesweeperBoard[y][x].neighborMines > 0) {
+                cell.innerHTML = minesweeperBoard[y][x].neighborMines;
+                cell.style.color = getNumberColor(minesweeperBoard[y][x].neighborMines);
+            } else {
+                cell.style.background = 'rgba(100, 100, 100, 0.3)';
+                // Рекурсивное открытие соседних клеток
+                for (let dy = -1; dy <= 1; dy++) {
+                    for (let dx = -1; dx <= 1; dx++) {
+                        const nx = x + dx;
+                        const ny = y + dy;
+                        if (nx >= 0 && nx < 10 && ny >= 0 && ny < 10) {
+                            revealMinesweeperCell(nx, ny);
+                        }
+                    }
+                }
+            }
+            
+            checkMinesweeperWin();
+        }
+
+        function toggleMinesweeperFlag(x, y) {
+            if (!minesweeperGameActive || minesweeperBoard[y][x].isRevealed) return;
+            
+            const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+            
+            if (minesweeperBoard[y][x].isFlagged) {
+                minesweeperBoard[y][x].isFlagged = false;
+                cell.innerHTML = '';
+                minesweeperFlags--;
+            } else {
+                minesweeperBoard[y][x].isFlagged = true;
+                cell.innerHTML = '🚩';
+                minesweeperFlags++;
+            }
+            
+            updateMinesweeperInfo();
+        }
+
+        function getNumberColor(num) {
+            const colors = ['#0000ff', '#008000', '#ff0000', '#000080', '#800000', '#008080', '#000000', '#808080'];
+            return colors[num - 1] || '#000000';
+        }
+
+        function checkMinesweeperWin() {
+            let revealedCount = 0;
+            for (let y = 0; y < 10; y++) {
+                for (let x = 0; x < 10; x++) {
+                    if (minesweeperBoard[y][x].isRevealed && !minesweeperBoard[y][x].isMine) {
+                        revealedCount++;
+                    }
+                }
+            }
+            
+            if (revealedCount === 100 - minesweeperMines) {
+                minesweeperGameActive = false;
+                alert('Поздравляем! Вы выиграли!');
+            }
+        }
+
+        function updateMinesweeperInfo() {
+            document.getElementById('minesweeperInfo').textContent = `Мины: ${minesweeperMines} | Флаги: ${minesweeperFlags}`;
+        }
+
+        function resetMinesweeper() {
+            initMinesweeper();
+        }
+
+        // Новая игра - Космические захватчики
+        let spaceInvadersCanvas, spaceInvadersCtx;
+        let spaceInvadersPlayer, spaceInvadersEnemies = [], spaceInvadersBullets = [];
+        let spaceInvadersScore = 0;
+        let spaceInvadersLives = 3;
+        let spaceInvadersGameInterval;
+        let spaceInvadersKeys = {};
+
+        function initSpaceInvaders() {
+            spaceInvadersCanvas = document.getElementById('spaceInvadersCanvas');
+            spaceInvadersCtx = spaceInvadersCanvas.getContext('2d');
+            
+            // Игрок
+            spaceInvadersPlayer = {
+                x: spaceInvadersCanvas.width / 2 - 15,
+                y: spaceInvadersCanvas.height - 30,
+                width: 30,
+                height: 20,
+                speed: 6
+            };
+            
+            // Враги
+            spaceInvadersEnemies = [];
+            for (let row = 0; row < 5; row++) {
+                for (let col = 0; col < 10; col++) {
+                    spaceInvadersEnemies.push({
+                        x: col * 50 + 50,
+                        y: row * 40 + 50,
+                        width: 30,
+                        height: 20,
+                        alive: true
+                    });
+                }
+            }
+            
+            spaceInvadersBullets = [];
+            spaceInvadersScore = 0;
+            spaceInvadersLives = 3;
+            spaceInvadersKeys = {};
+            
+            updateSpaceInvadersInfo();
+        }
+
+        function drawSpaceInvaders() {
+            spaceInvadersCtx.clearRect(0, 0, spaceInvadersCanvas.width, spaceInvadersCanvas.height);
+            
+            // Рисуем игрока
+            spaceInvadersCtx.fillStyle = '#4ecdc4';
+            spaceInvadersCtx.fillRect(spaceInvadersPlayer.x, spaceInvadersPlayer.y, spaceInvadersPlayer.width, spaceInvadersPlayer.height);
+            
+            // Рисуем врагов
+            spaceInvadersCtx.fillStyle = '#ff6b6b';
+            spaceInvadersEnemies.forEach(enemy => {
+                if (enemy.alive) {
+                    spaceInvadersCtx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+                }
+            });
+            
+            // Рисуем пули
+            spaceInvadersCtx.fillStyle = '#ffffff';
+            spaceInvadersBullets.forEach(bullet => {
+                spaceInvadersCtx.fillRect(bullet.x, bullet.y, 3, 10);
+            });
+        }
+
+        function updateSpaceInvaders() {
+            drawSpaceInvaders();
+            
+            // Движение игрока
+            if (spaceInvadersKeys['ArrowLeft']) {
+                spaceInvadersPlayer.x -= spaceInvadersPlayer.speed;
+                if (spaceInvadersPlayer.x < 0) spaceInvadersPlayer.x = 0;
+            }
+            if (spaceInvadersKeys['ArrowRight']) {
+                spaceInvadersPlayer.x += spaceInvadersPlayer.speed;
+                if (spaceInvadersPlayer.x > spaceInvadersCanvas.width - spaceInvadersPlayer.width) {
+                    spaceInvadersPlayer.x = spaceInvadersCanvas.width - spaceInvadersPlayer.width;
+                }
+            }
+            
+            // Движение пуль
+            for (let i = spaceInvadersBullets.length - 1; i >= 0; i--) {
+                spaceInvadersBullets[i].y -= 8;
+                if (spaceInvadersBullets[i].y < 0) {
+                    spaceInvadersBullets.splice(i, 1);
+                }
+            }
+            
+            // Проверка столкновений
+            for (let i = spaceInvadersBullets.length - 1; i >= 0; i--) {
+                for (let j = 0; j < spaceInvadersEnemies.length; j++) {
+                    if (spaceInvadersEnemies[j].alive &&
+                        spaceInvadersBullets[i].x > spaceInvadersEnemies[j].x &&
+                        spaceInvadersBullets[i].x < spaceInvadersEnemies[j].x + spaceInvadersEnemies[j].width &&
+                        spaceInvadersBullets[i].y > spaceInvadersEnemies[j].y &&
+                        spaceInvadersBullets[i].y < spaceInvadersEnemies[j].y + spaceInvadersEnemies[j].height) {
+                        spaceInvadersEnemies[j].alive = false;
+                        spaceInvadersBullets.splice(i, 1);
+                        spaceInvadersScore += 10;
+                        updateSpaceInvadersInfo();
+                        break;
+                    }
+                }
+            }
+            
+            // Проверка победы
+            const aliveEnemies = spaceInvadersEnemies.filter(enemy => enemy.alive);
+            if (aliveEnemies.length === 0) {
+                clearInterval(spaceInvadersGameInterval);
+                alert('Поздравляем! Вы выиграли! Счет: ' + spaceInvadersScore);
+            }
+        }
+
+        function shootSpaceInvaders() {
+            spaceInvadersBullets.push({
+                x: spaceInvadersPlayer.x + spaceInvadersPlayer.width / 2 - 1.5,
+                y: spaceInvadersPlayer.y
+            });
+        }
+
+        function updateSpaceInvadersInfo() {
+            document.getElementById('spaceInvadersInfo').textContent = `Счет: ${spaceInvadersScore} | Жизни: ${spaceInvadersLives}`;
+        }
+
+        function startSpaceInvaders() {
+            initSpaceInvaders();
+            clearInterval(spaceInvadersGameInterval);
+            spaceInvadersGameInterval = setInterval(updateSpaceInvaders, 50);
+        }
+
+        function resetSpaceInvaders() {
+            clearInterval(spaceInvadersGameInterval);
+            initSpaceInvaders();
+        }
+
+        // Управление космическими захватчиками
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                spaceInvadersKeys[e.key] = true;
+            }
+            if (e.key === ' ') {
+                e.preventDefault();
+                shootSpaceInvaders();
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                spaceInvadersKeys[e.key] = false;
             }
         });
 
@@ -2214,7 +2781,8 @@
             displayComments();
             
             // Загрузка профиля
-            updateAvatarPreview();
+            document.getElementById('cornerAvatar').innerHTML = userProfile.avatar;
+            document.getElementById('commentName').value = userProfile.name;
         });
     </script>
 
