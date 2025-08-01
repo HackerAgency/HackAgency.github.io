@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -19,6 +18,7 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            transition: background-color 0.3s ease;
         }
 
         /* Снег */
@@ -161,6 +161,7 @@
             text-align: center;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
         }
 
         .game-card:hover {
@@ -202,6 +203,208 @@
             color: #a0a0c0;
         }
 
+        .theme-switcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 3;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .theme-switcher:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-switcher i {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .light-theme {
+            background: linear-gradient(135deg, #f0f0f0 0%, #dcdcdc 50%, #ffffff 100%) !important;
+        }
+
+        .light-theme .container,
+        .light-theme header,
+        .light-theme .tab-content,
+        .light-theme .member-card,
+        .light-theme .game-card {
+            background: rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .light-theme .snowflake {
+            color: #000;
+        }
+
+        .light-theme .quote {
+            border-left-color: #4ecdc4;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .light-theme .tab-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        }
+
+        .light-theme .member-title {
+            color: #4ecdc4;
+        }
+
+        .light-theme .game-title {
+            color: #ff6b6b;
+        }
+
+        .light-theme .game-desc {
+            color: #a0a0c0;
+        }
+
+        .light-theme .quote {
+            color: #000;
+        }
+
+        .light-theme .footer {
+            color: #000;
+        }
+
+        /* Игровые стили */
+        .game-container {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .game-cell {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .game-cell:hover {
+            background: rgba(78, 205, 196, 0.2);
+        }
+
+        .game-info {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.2rem;
+        }
+
+        .game-controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .game-btn {
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .game-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
+        }
+
+        .snake-board {
+            display: grid;
+            grid-template-columns: repeat(20, 20px);
+            grid-template-rows: repeat(20, 20px);
+            gap: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            margin: 20px auto;
+            padding: 5px;
+        }
+
+        .snake-cell {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .snake-head {
+            background: #4ecdc4;
+            border-radius: 4px;
+        }
+
+        .snake-body {
+            background: #45b7aa;
+        }
+
+        .snake-food {
+            background: #ff6b6b;
+            border-radius: 50%;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .memory-card.flipped {
+            background: rgba(78, 205, 196, 0.3);
+        }
+
+        .memory-card.matched {
+            background: rgba(78, 205, 196, 0.6);
+            transform: scale(0.95);
+        }
+
+        .breakout-canvas {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
@@ -217,6 +420,12 @@
             
             .tab-content {
                 padding: 20px;
+            }
+            
+            .game-cell {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -305,35 +514,94 @@
 
         <div id="games" class="tab-content">
             <h2 style="text-align: center; margin-bottom: 30px; color: #4ecdc4;">Игры Клана</h2>
+            
             <div class="games-grid">
-                <div class="game-card">
-                    <div class="game-icon">👾</div>
-                    <h3 class="game-title">Хакерский Бой</h3>
-                    <p class="game-desc">Сражайтесь с вирусами и защищайте сеть</p>
+                <div class="game-card" onclick="showGame('ticTacToe')">
+                    <div class="game-icon">⭕</div>
+                    <h3 class="game-title">Крестики-Нолики</h3>
+                    <p class="game-desc">Классическая игра против ИИ</p>
                 </div>
                 
-                <div class="game-card">
-                    <div class="game-icon">🔐</div>
-                    <h3 class="game-title">Кодовая Головоломка</h3>
-                    <p class="game-desc">Решайте сложные задачи по программированию</p>
+                <div class="game-card" onclick="showGame('snake')">
+                    <div class="game-icon">🐍</div>
+                    <h3 class="game-title">Змейка</h3>
+                    <p class="game-desc">Классическая змейка с современным дизайном</p>
                 </div>
                 
-                <div class="game-card">
-                    <div class="game-icon">🕵️</div>
-                    <h3 class="game-title">Цифровое Расследование</h3>
-                    <p class="game-desc">Расследуйте киберпреступления</p>
+                <div class="game-card" onclick="showGame('memory')">
+                    <div class="game-icon">🧠</div>
+                    <h3 class="game-title">Память</h3>
+                    <p class="game-desc">Найди пары карточек за минимальное время</p>
                 </div>
                 
-                <div class="game-card">
-                    <div class="game-icon">🚀</div>
-                    <h3 class="game-title">Космический Хакинг</h3>
-                    <p class="game-desc">Проникайте в инопланетные системы</p>
+                <div class="game-card" onclick="showGame('breakout')">
+                    <div class="game-icon">🧱</div>
+                    <h3 class="game-title">Арканоид</h3>
+                    <p class="game-desc">Разбей все блоки ракеткой</p>
                 </div>
                 
-                <div class="game-card">
-                    <div class="game-icon">⚔️</div>
-                    <h3 class="game-title">Битва Хакеров</h3>
-                    <p class="game-desc">Соревнуйтесь с другими кланами</p>
+                <div class="game-card" onclick="showGame('pong')">
+                    <div class="game-icon">🏓</div>
+                    <h3 class="game-title">Понг</h3>
+                    <p class="game-desc">Классический теннис для двух игроков</p>
+                </div>
+            </div>
+
+            <!-- Игра Крестики-Нолики -->
+            <div id="ticTacToeGame" class="game-container" style="display: none;">
+                <h3 style="text-align: center; color: #4ecdc4; margin-bottom: 20px;">Крестики-Нолики</h3>
+                <div class="game-info" id="ticTacToeInfo">Ваш ход: X</div>
+                <div class="game-board" id="ticTacToeBoard"></div>
+                <div class="game-controls">
+                    <button class="game-btn" onclick="resetTicTacToe()">Новая игра</button>
+                    <button class="game-btn" onclick="hideGame()">Назад</button>
+                </div>
+            </div>
+
+            <!-- Игра Змейка -->
+            <div id="snakeGame" class="game-container" style="display: none;">
+                <h3 style="text-align: center; color: #4ecdc4; margin-bottom: 20px;">Змейка</h3>
+                <div class="game-info" id="snakeInfo">Счет: 0</div>
+                <div class="snake-board" id="snakeBoard"></div>
+                <div class="game-controls">
+                    <button class="game-btn" onclick="startSnake()">Старт</button>
+                    <button class="game-btn" onclick="hideGame()">Назад</button>
+                </div>
+            </div>
+
+            <!-- Игра Память -->
+            <div id="memoryGame" class="game-container" style="display: none;">
+                <h3 style="text-align: center; color: #4ecdc4; margin-bottom: 20px;">Игра Памяти</h3>
+                <div class="game-info" id="memoryInfo">Найдено пар: 0/8</div>
+                <div class="memory-grid" id="memoryGrid"></div>
+                <div class="game-controls">
+                    <button class="game-btn" onclick="resetMemory()">Новая игра</button>
+                    <button class="game-btn" onclick="hideGame()">Назад</button>
+                </div>
+            </div>
+
+            <!-- Игра Арканоид -->
+            <div id="breakoutGame" class="game-container" style="display: none;">
+                <h3 style="text-align: center; color: #4ecdc4; margin-bottom: 20px;">Арканоид</h3>
+                <div class="game-info" id="breakoutInfo">Счет: 0 | Жизни: 3</div>
+                <canvas id="breakoutCanvas" width="600" height="400" class="breakout-canvas"></canvas>
+                <div class="game-controls">
+                    <button class="game-btn" onclick="startBreakout()">Старт</button>
+                    <button class="game-btn" onclick="hideGame()">Назад</button>
+                </div>
+            </div>
+
+            <!-- Игра Понг -->
+            <div id="pongGame" class="game-container" style="display: none;">
+                <h3 style="text-align: center; color: #4ecdc4; margin-bottom: 20px;">Понг</h3>
+                <div class="game-info" id="pongInfo">Игрок 1: 0 | Игрок 2: 0</div>
+                <canvas id="pongCanvas" width="600" height="400" class="breakout-canvas"></canvas>
+                <div class="game-controls">
+                    <button class="game-btn" onclick="startPong()">Старт</button>
+                    <button class="game-btn" onclick="hideGame()">Назад</button>
+                </div>
+                <div style="text-align: center; margin-top: 10px; font-size: 0.9rem; color: #a0a0c0;">
+                    Игрок 1: W/S | Игрок 2: ↑/↓
                 </div>
             </div>
         </div>
@@ -360,11 +628,16 @@
         </footer>
     </div>
 
+    <!-- Переключатель тем -->
+    <div class="theme-switcher" onclick="toggleTheme()">
+        <i class="fas fa-sun"></i>
+    </div>
+
     <script>
         // Создание снега
         function createSnow() {
             const snowContainer = document.getElementById('snow-container');
-            const snowflakesCount = 10;
+            const snowflakesCount = 3; // Минимальное количество снежинок
             
             for (let i = 0; i < snowflakesCount; i++) {
                 const snowflake = document.createElement('div');
@@ -428,18 +701,667 @@
             // Показать выбранную вкладку
             document.getElementById(tabId).classList.add('active');
             
+            // Скрыть все игры
+            hideAllGames();
+            
             // Добавить активный класс кнопке
             event.target.classList.add('active');
         }
         
+        // Показать игру
+        function showGame(gameId) {
+            // Скрыть все вкладки
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Показать вкладку игр
+            document.getElementById('games').classList.add('active');
+            
+            // Скрыть все игры
+            hideAllGames();
+            
+            // Показать выбранную игру
+            document.getElementById(gameId + 'Game').style.display = 'block';
+            
+            // Инициализировать игру
+            switch(gameId) {
+                case 'ticTacToe':
+                    initTicTacToe();
+                    break;
+                case 'snake':
+                    initSnake();
+                    break;
+                case 'memory':
+                    initMemory();
+                    break;
+                case 'breakout':
+                    initBreakout();
+                    break;
+                case 'pong':
+                    initPong();
+                    break;
+            }
+        }
+        
+        // Скрыть все игры
+        function hideAllGames() {
+            const games = ['ticTacToe', 'snake', 'memory', 'breakout', 'pong'];
+            games.forEach(game => {
+                document.getElementById(game + 'Game').style.display = 'none';
+            });
+        }
+        
+        // Скрыть текущую игру
+        function hideGame() {
+            hideAllGames();
+        }
+        
+        // Переключение тем
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+        }
+        
+        // Игра Крестики-Нолики
+        let currentPlayer = 'X';
+        let gameBoard = ['', '', '', '', '', '', '', '', ''];
+        let gameActive = true;
+
+        function initTicTacToe() {
+            const board = document.getElementById('ticTacToeBoard');
+            board.innerHTML = '';
+            gameBoard = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            gameActive = true;
+            document.getElementById('ticTacToeInfo').textContent = 'Ваш ход: ' + currentPlayer;
+            
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'game-cell';
+                cell.setAttribute('data-index', i);
+                cell.addEventListener('click', () => makeMove(i));
+                board.appendChild(cell);
+            }
+        }
+
+        function makeMove(index) {
+            if (gameBoard[index] !== '' || !gameActive) return;
+            
+            gameBoard[index] = currentPlayer;
+            const cell = document.querySelector(`[data-index="${index}"]`);
+            cell.textContent = currentPlayer;
+            
+            if (checkWinner()) {
+                document.getElementById('ticTacToeInfo').textContent = `Победитель: ${currentPlayer}!`;
+                gameActive = false;
+                return;
+            }
+            
+            if (gameBoard.every(cell => cell !== '')) {
+                document.getElementById('ticTacToeInfo').textContent = 'Ничья!';
+                gameActive = false;
+                return;
+            }
+            
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            document.getElementById('ticTacToeInfo').textContent = 'Ваш ход: ' + currentPlayer;
+            
+            // Ход ИИ
+            if (currentPlayer === 'O' && gameActive) {
+                setTimeout(makeAIMove, 500);
+            }
+        }
+
+        function makeAIMove() {
+            let emptyCells = [];
+            gameBoard.forEach((cell, index) => {
+                if (cell === '') emptyCells.push(index);
+            });
+            
+            if (emptyCells.length > 0) {
+                const randomIndex = Math.floor(Math.random() * emptyCells.length);
+                makeMove(emptyCells[randomIndex]);
+            }
+        }
+
+        function checkWinner() {
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // строки
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // столбцы
+                [0, 4, 8], [2, 4, 6] // диагонали
+            ];
+            
+            for (let pattern of winPatterns) {
+                const [a, b, c] = pattern;
+                if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function resetTicTacToe() {
+            initTicTacToe();
+        }
+
+        // Игра Змейка
+        let snake = [{x: 10, y: 10}];
+        let food = {x: 5, y: 5};
+        let direction = {x: 0, y: 0};
+        let score = 0;
+        let snakeInterval;
+
+        function initSnake() {
+            snake = [{x: 10, y: 10}];
+            food = generateFood();
+            direction = {x: 0, y: 0};
+            score = 0;
+            document.getElementById('snakeInfo').textContent = 'Счет: ' + score;
+            drawSnake();
+        }
+
+        function generateFood() {
+            return {
+                x: Math.floor(Math.random() * 20),
+                y: Math.floor(Math.random() * 20)
+            };
+        }
+
+        function drawSnake() {
+            const board = document.getElementById('snakeBoard');
+            board.innerHTML = '';
+            
+            for (let y = 0; y < 20; y++) {
+                for (let x = 0; x < 20; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'snake-cell';
+                    
+                    if (snake[0].x === x && snake[0].y === y) {
+                        cell.classList.add('snake-head');
+                    } else if (snake.some(segment => segment.x === x && segment.y === y)) {
+                        cell.classList.add('snake-body');
+                    } else if (food.x === x && food.y === y) {
+                        cell.classList.add('snake-food');
+                    }
+                    
+                    board.appendChild(cell);
+                }
+            }
+        }
+
+        function moveSnake() {
+            if (direction.x === 0 && direction.y === 0) return;
+            
+            const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
+            
+            // Проверка столкновения со стенами
+            if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20) {
+                clearInterval(snakeInterval);
+                alert('Игра окончена! Счет: ' + score);
+                return;
+            }
+            
+            // Проверка столкновения с собой
+            if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+                clearInterval(snakeInterval);
+                alert('Игра окончена! Счет: ' + score);
+                return;
+            }
+            
+            snake.unshift(head);
+            
+            // Проверка съедания еды
+            if (head.x === food.x && head.y === food.y) {
+                score++;
+                document.getElementById('snakeInfo').textContent = 'Счет: ' + score;
+                food = generateFood();
+            } else {
+                snake.pop();
+            }
+            
+            drawSnake();
+        }
+
+        function startSnake() {
+            clearInterval(snakeInterval);
+            initSnake();
+            snakeInterval = setInterval(moveSnake, 200);
+        }
+
+        // Управление змейкой
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowUp':
+                    if (direction.y === 0) direction = {x: 0, y: -1};
+                    break;
+                case 'ArrowDown':
+                    if (direction.y === 0) direction = {x: 0, y: 1};
+                    break;
+                case 'ArrowLeft':
+                    if (direction.x === 0) direction = {x: -1, y: 0};
+                    break;
+                case 'ArrowRight':
+                    if (direction.x === 0) direction = {x: 1, y: 0};
+                    break;
+            }
+        });
+
+        // Игра Память
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let canFlip = true;
+
+        function initMemory() {
+            const symbols = ['😀', '😂', '🥰', '😎', '🤩', '🥳', '😍', '🤗'];
+            memoryCards = [...symbols, ...symbols];
+            shuffleArray(memoryCards);
+            flippedCards = [];
+            matchedPairs = 0;
+            canFlip = true;
+            document.getElementById('memoryInfo').textContent = 'Найдено пар: 0/8';
+            
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            
+            memoryCards.forEach((symbol, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.setAttribute('data-index', index);
+                card.innerHTML = '?';
+                card.addEventListener('click', () => flipCard(index));
+                grid.appendChild(card);
+            });
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function flipCard(index) {
+            if (!canFlip || flippedCards.includes(index) || document.querySelector(`[data-index="${index}"]`).classList.contains('matched')) {
+                return;
+            }
+            
+            const card = document.querySelector(`[data-index="${index}"]`);
+            card.innerHTML = memoryCards[index];
+            card.classList.add('flipped');
+            flippedCards.push(index);
+            
+            if (flippedCards.length === 2) {
+                canFlip = false;
+                setTimeout(checkMatch, 1000);
+            }
+        }
+
+        function checkMatch() {
+            const [firstIndex, secondIndex] = flippedCards;
+            const firstCard = document.querySelector(`[data-index="${firstIndex}"]`);
+            const secondCard = document.querySelector(`[data-index="${secondIndex}"]`);
+            
+            if (memoryCards[firstIndex] === memoryCards[secondIndex]) {
+                firstCard.classList.add('matched');
+                secondCard.classList.add('matched');
+                matchedPairs++;
+                document.getElementById('memoryInfo').textContent = `Найдено пар: ${matchedPairs}/8`;
+                
+                if (matchedPairs === 8) {
+                    setTimeout(() => alert('Поздравляем! Вы нашли все пары!'), 500);
+                }
+            } else {
+                firstCard.innerHTML = '?';
+                secondCard.innerHTML = '?';
+                firstCard.classList.remove('flipped');
+                secondCard.classList.remove('flipped');
+            }
+            
+            flippedCards = [];
+            canFlip = true;
+        }
+
+        function resetMemory() {
+            initMemory();
+        }
+
+        // Игра Арканоид
+        let breakoutCanvas, breakoutCtx;
+        let breakoutPaddle, breakoutBall, breakoutBricks;
+        let breakoutScore = 0;
+        let breakoutLives = 3;
+        let breakoutGameInterval;
+
+        function initBreakout() {
+            breakoutCanvas = document.getElementById('breakoutCanvas');
+            breakoutCtx = breakoutCanvas.getContext('2d');
+            
+            breakoutPaddle = {
+                x: breakoutCanvas.width / 2 - 50,
+                y: breakoutCanvas.height - 20,
+                width: 100,
+                height: 10,
+                dx: 8
+            };
+            
+            breakoutBall = {
+                x: breakoutCanvas.width / 2,
+                y: breakoutCanvas.height - 30,
+                radius: 10,
+                dx: 4,
+                dy: -4
+            };
+            
+            breakoutBricks = [];
+            const brickRowCount = 5;
+            const brickColumnCount = 10;
+            const brickWidth = 55;
+            const brickHeight = 20;
+            const brickPadding = 5;
+            const brickOffsetTop = 30;
+            const brickOffsetLeft = 30;
+            
+            for (let c = 0; c < brickColumnCount; c++) {
+                breakoutBricks[c] = [];
+                for (let r = 0; r < brickRowCount; r++) {
+                    breakoutBricks[c][r] = { x: 0, y: 0, status: 1 };
+                }
+            }
+            
+            breakoutScore = 0;
+            breakoutLives = 3;
+            updateBreakoutInfo();
+        }
+
+        function drawBreakout() {
+            breakoutCtx.clearRect(0, 0, breakoutCanvas.width, breakoutCanvas.height);
+            
+            // Рисуем платформу
+            breakoutCtx.fillStyle = '#4ecdc4';
+            breakoutCtx.fillRect(breakoutPaddle.x, breakoutPaddle.y, breakoutPaddle.width, breakoutPaddle.height);
+            
+            // Рисуем мяч
+            breakoutCtx.beginPath();
+            breakoutCtx.arc(breakoutBall.x, breakoutBall.y, breakoutBall.radius, 0, Math.PI * 2);
+            breakoutCtx.fillStyle = '#ff6b6b';
+            breakoutCtx.fill();
+            breakoutCtx.closePath();
+            
+            // Рисуем кирпичи
+            const brickWidth = 55;
+            const brickHeight = 20;
+            const brickPadding = 5;
+            const brickOffsetTop = 30;
+            const brickOffsetLeft = 30;
+            
+            for (let c = 0; c < 10; c++) {
+                for (let r = 0; r < 5; r++) {
+                    if (breakoutBricks[c][r].status === 1) {
+                        const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+                        const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+                        breakoutBricks[c][r].x = brickX;
+                        breakoutBricks[c][r].y = brickY;
+                        breakoutCtx.fillStyle = '#45b7aa';
+                        breakoutCtx.fillRect(brickX, brickY, brickWidth, brickHeight);
+                    }
+                }
+            }
+        }
+
+        function updateBreakout() {
+            drawBreakout();
+            
+            // Движение мяча
+            breakoutBall.x += breakoutBall.dx;
+            breakoutBall.y += breakoutBall.dy;
+            
+            // Отскок от стен
+            if (breakoutBall.x + breakoutBall.dx > breakoutCanvas.width - breakoutBall.radius || breakoutBall.x + breakoutBall.dx < breakoutBall.radius) {
+                breakoutBall.dx = -breakoutBall.dx;
+            }
+            
+            if (breakoutBall.y + breakoutBall.dy < breakoutBall.radius) {
+                breakoutBall.dy = -breakoutBall.dy;
+            } else if (breakoutBall.y + breakoutBall.dy > breakoutCanvas.height - breakoutBall.radius) {
+                if (breakoutBall.x > breakoutPaddle.x && breakoutBall.x < breakoutPaddle.x + breakoutPaddle.width) {
+                    breakoutBall.dy = -breakoutBall.dy;
+                } else {
+                    breakoutLives--;
+                    updateBreakoutInfo();
+                    if (breakoutLives <= 0) {
+                        clearInterval(breakoutGameInterval);
+                        alert('Игра окончена! Счет: ' + breakoutScore);
+                        return;
+                    } else {
+                        breakoutBall.x = breakoutCanvas.width / 2;
+                        breakoutBall.y = breakoutCanvas.height - 30;
+                        breakoutBall.dx = 4;
+                        breakoutBall.dy = -4;
+                        breakoutPaddle.x = breakoutCanvas.width / 2 - 50;
+                    }
+                }
+            }
+            
+            // Отскок от платформы
+            if (breakoutBall.y + breakoutBall.dy > breakoutCanvas.height - breakoutBall.radius - breakoutPaddle.height) {
+                if (breakoutBall.x > breakoutPaddle.x && breakoutBall.x < breakoutPaddle.x + breakoutPaddle.width) {
+                    breakoutBall.dy = -breakoutBall.dy;
+                }
+            }
+            
+            // Проверка столкновения с кирпичами
+            const brickWidth = 55;
+            const brickHeight = 20;
+            const brickPadding = 5;
+            const brickOffsetTop = 30;
+            const brickOffsetLeft = 30;
+            
+            for (let c = 0; c < 10; c++) {
+                for (let r = 0; r < 5; r++) {
+                    const brick = breakoutBricks[c][r];
+                    if (brick.status === 1) {
+                        if (breakoutBall.x > brick.x && breakoutBall.x < brick.x + brickWidth && 
+                            breakoutBall.y > brick.y && breakoutBall.y < brick.y + brickHeight) {
+                            breakoutBall.dy = -breakoutBall.dy;
+                            brick.status = 0;
+                            breakoutScore += 10;
+                            updateBreakoutInfo();
+                            
+                            // Проверка победы
+                            let bricksLeft = 0;
+                            for (let i = 0; i < 10; i++) {
+                                for (let j = 0; j < 5; j++) {
+                                    if (breakoutBricks[i][j].status === 1) bricksLeft++;
+                                }
+                            }
+                            if (bricksLeft === 0) {
+                                clearInterval(breakoutGameInterval);
+                                alert('Поздравляем! Вы выиграли! Счет: ' + breakoutScore);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function updateBreakoutInfo() {
+            document.getElementById('breakoutInfo').textContent = `Счет: ${breakoutScore} | Жизни: ${breakoutLives}`;
+        }
+
+        function startBreakout() {
+            initBreakout();
+            clearInterval(breakoutGameInterval);
+            breakoutGameInterval = setInterval(updateBreakout, 16);
+        }
+
+        // Управление арканоидом
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                breakoutPaddle.x += breakoutPaddle.dx;
+                if (breakoutPaddle.x + breakoutPaddle.width > breakoutCanvas.width) {
+                    breakoutPaddle.x = breakoutCanvas.width - breakoutPaddle.width;
+                }
+            } else if (e.key === 'ArrowLeft') {
+                breakoutPaddle.x -= breakoutPaddle.dx;
+                if (breakoutPaddle.x < 0) {
+                    breakoutPaddle.x = 0;
+                }
+            }
+        });
+
+        // Игра Понг
+        let pongCanvas, pongCtx;
+        let pongLeftPaddle, pongRightPaddle, pongBall;
+        let pongLeftScore = 0, pongRightScore = 0;
+        let pongGameInterval;
+
+        function initPong() {
+            pongCanvas = document.getElementById('pongCanvas');
+            pongCtx = pongCanvas.getContext('2d');
+            
+            pongLeftPaddle = {
+                x: 10,
+                y: pongCanvas.height / 2 - 40,
+                width: 10,
+                height: 80,
+                dy: 8
+            };
+            
+            pongRightPaddle = {
+                x: pongCanvas.width - 20,
+                y: pongCanvas.height / 2 - 40,
+                width: 10,
+                height: 80,
+                dy: 8
+            };
+            
+            pongBall = {
+                x: pongCanvas.width / 2,
+                y: pongCanvas.height / 2,
+                radius: 10,
+                dx: 5,
+                dy: 5
+            };
+            
+            pongLeftScore = 0;
+            pongRightScore = 0;
+            updatePongInfo();
+        }
+
+        function drawPong() {
+            pongCtx.clearRect(0, 0, pongCanvas.width, pongCanvas.height);
+            
+            // Рисуем платформы
+            pongCtx.fillStyle = '#4ecdc4';
+            pongCtx.fillRect(pongLeftPaddle.x, pongLeftPaddle.y, pongLeftPaddle.width, pongLeftPaddle.height);
+            pongCtx.fillRect(pongRightPaddle.x, pongRightPaddle.y, pongRightPaddle.width, pongRightPaddle.height);
+            
+            // Рисуем мяч
+            pongCtx.beginPath();
+            pongCtx.arc(pongBall.x, pongBall.y, pongBall.radius, 0, Math.PI * 2);
+            pongCtx.fillStyle = '#ff6b6b';
+            pongCtx.fill();
+            pongCtx.closePath();
+            
+            // Рисуем центральную линию
+            pongCtx.setLineDash([5, 15]);
+            pongCtx.beginPath();
+            pongCtx.moveTo(pongCanvas.width / 2, 0);
+            pongCtx.lineTo(pongCanvas.width / 2, pongCanvas.height);
+            pongCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            pongCtx.stroke();
+            pongCtx.setLineDash([]);
+        }
+
+        function updatePong() {
+            drawPong();
+            
+            // Движение мяча
+            pongBall.x += pongBall.dx;
+            pongBall.y += pongBall.dy;
+            
+            // Отскок от верхней и нижней стен
+            if (pongBall.y + pongBall.dy < pongBall.radius || pongBall.y + pongBall.dy > pongCanvas.height - pongBall.radius) {
+                pongBall.dy = -pongBall.dy;
+            }
+            
+            // Отскок от платформ
+            if (pongBall.x - pongBall.radius < pongLeftPaddle.x + pongLeftPaddle.width) {
+                if (pongBall.y > pongLeftPaddle.y && pongBall.y < pongLeftPaddle.y + pongLeftPaddle.height) {
+                    pongBall.dx = -pongBall.dx;
+                }
+            }
+            
+            if (pongBall.x + pongBall.radius > pongRightPaddle.x) {
+                if (pongBall.y > pongRightPaddle.y && pongBall.y < pongRightPaddle.y + pongRightPaddle.height) {
+                    pongBall.dx = -pongBall.dx;
+                }
+            }
+            
+            // Проверка забитых голов
+            if (pongBall.x < 0) {
+                pongRightScore++;
+                resetPongBall();
+                updatePongInfo();
+            } else if (pongBall.x > pongCanvas.width) {
+                pongLeftScore++;
+                resetPongBall();
+                updatePongInfo();
+            }
+        }
+
+        function resetPongBall() {
+            pongBall.x = pongCanvas.width / 2;
+            pongBall.y = pongCanvas.height / 2;
+            pongBall.dx = -pongBall.dx;
+            pongBall.dy = Math.random() * 10 - 5;
+        }
+
+        function updatePongInfo() {
+            document.getElementById('pongInfo').textContent = `Игрок 1: ${pongLeftScore} | Игрок 2: ${pongRightScore}`;
+        }
+
+        function startPong() {
+            initPong();
+            clearInterval(pongGameInterval);
+            pongGameInterval = setInterval(updatePong, 16);
+        }
+
+        // Управление понгом
+        document.addEventListener('keydown', (e) => {
+            // Игрок 1 (W/S)
+            if (e.key === 'w' || e.key === 'W') {
+                pongLeftPaddle.y -= pongLeftPaddle.dy;
+                if (pongLeftPaddle.y < 0) pongLeftPaddle.y = 0;
+            } else if (e.key === 's' || e.key === 'S') {
+                pongLeftPaddle.y += pongLeftPaddle.dy;
+                if (pongLeftPaddle.y + pongLeftPaddle.height > pongCanvas.height) {
+                    pongLeftPaddle.y = pongCanvas.height - pongLeftPaddle.height;
+                }
+            }
+            
+            // Игрок 2 (стрелки)
+            if (e.key === 'ArrowUp') {
+                pongRightPaddle.y -= pongRightPaddle.dy;
+                if (pongRightPaddle.y < 0) pongRightPaddle.y = 0;
+            } else if (e.key === 'ArrowDown') {
+                pongRightPaddle.y += pongRightPaddle.dy;
+                if (pongRightPaddle.y + pongRightPaddle.height > pongCanvas.height) {
+                    pongRightPaddle.y = pongCanvas.height - pongRightPaddle.height;
+                }
+            }
+        });
+
         // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
             createSnow();
             
             // Автоматическое создание новых снежинок
-            setInterval(createSingleSnow, 500);
+            setInterval(createSingleSnow, 1000);
         });
     </script>
+
+    <!-- Подключение Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </body>
 </html>
-
