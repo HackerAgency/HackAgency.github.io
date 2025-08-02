@@ -11,31 +11,17 @@
             box-sizing: border-box;
         }
         /* Стили для изображений союзников */
+        /* Общие стили для союзников */
         .ally-card {
-            margin: 20px 0;
             text-align: center;
+            margin: 20px 0;
         }
+        
         .ally-title {
             font-size: 1.8rem;
             margin-bottom: 10px;
         }
-        .ally-photo {
-            width: 300px;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-        }
-        .ally-description {
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
-        .ally-bio {
-            font-size: 1.2rem;
-            text-align: left;
-            margin-top: 20px;
-        }
-        /* Стили для изображений */
+        
         .ally-photo {
             width: 300px;
             height: auto;
@@ -48,45 +34,35 @@
             transform: scale(1.05);
         }
         
-        .user-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 15px auto;
-            font-weight: bold;
-            color: white;
-            font-size: 2rem;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+        .ally-description {
+            font-size: 1rem;
+            margin-bottom: 20px;
         }
         
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+        .ally-bio {
+            font-size: 1.2rem;
+            text-align: left;
+            margin-top: 20px;
         }
-        .gallery-item {
-            text-align: center;
-        }
-        .gallery-photo {
-            width: 200px;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-        .gallery-photo:hover {
-            transform: scale(1.05);
-        }
-        .gallery-caption {
-            font-size: 1rem;
-            margin-top: 10px;
-            color: #a0a0c0;
-        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 768px) {
+            .ally-photo {
+                width: 100%;
+                max-width: 300px;
+            }
+        
+            .gallery-item {
+                width: 100%;
+                max-width: 300px;
+            }
+        
+            .gallery-photo {
+                width: 100%;
+                max-width: 200px;
+            }
+}
+
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
