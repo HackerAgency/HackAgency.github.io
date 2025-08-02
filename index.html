@@ -10,6 +10,31 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* Стили для изображений союзников */
+        .ally-card {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .ally-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .ally-photo {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+        .ally-description {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        .ally-bio {
+            font-size: 1.2rem;
+            text-align: left;
+            margin-top: 20px;
+        }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -1180,12 +1205,16 @@ setInterval(drawStars, 30);
         </header>
 
         <div class="nav-tabs">
-            <button class="tab-btn active" onclick="showTab('story')">История</button>
-            <button class="tab-btn" onclick="showTab('members')">Члены Клана</button>
-            <button class="tab-btn" onclick="showTab('games')">Игры</button>
-            <button class="tab-btn" onclick="showTab('memories')">Воспоминания</button>
-            <button class="tab-btn" onclick="showTab('comments')">Комментарии</button>
-        </div>
+    <button class="tab-btn active" onclick="showTab('story')">История</button>
+    <button class="tab-btn" onclick="showTab('members')">Члены Клана</button>
+    <button class="tab-btn" onclick="showTab('games')">Игры</button>
+    <button class="tab-btn" onclick="showTab('memories')">Воспоминания</button>
+    <button class="tab-btn" onclick="showTab('comments')">Комментарии</button>
+    <button class="tab-btn" onclick="showTab('links')">Ссылки</button>
+    <button class="tab-btn" onclick="showTab('allies')">Союзники</button>
+</div>
+
+
 
         <div id="story" class="tab-content active">
             <div class="member-card">
@@ -1358,6 +1387,39 @@ setInterval(drawStars, 30);
         </footer>
     </div>
 
+    <div id="links" class="tab-content">
+        <h2 style="text-align: center; margin-bottom: 30px; color: #4ecdc4;">Ссылки</h2>
+        <p><strong>Сервер Устаза по информатике Адама Алиева Рустамовича:</strong></p>
+        <ul>
+            <li><strong>IP-адрес:</strong> 135.181.126.185:25622</li>
+            <li><strong>Версия:</strong> 1.21.5</li>
+            <li><strong>Требования для входа:</strong>
+                <ul>
+                    <li>Игрок должен быть мусульманином.</li>
+                    <li>Для доступа нужно написать Устазу в Telegram: <a href="https://t.me/adammaverick">@adammaverick</a>.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div id="allies" class="tab-content">
+        <h2 style="text-align: center; margin-bottom: 30px; color: #4ecdc4;">Союзники</h2>
+        <div class="ally-card">
+            <h2 class="ally-title">Адам Алиев Рустамович</h2>
+            <img src="https://github.com/HackerAgency/HackAgency.github.io/blob/main/photo_2024-03-30_03-52-58.jpg?raw=true" alt="Фото Устаза" class="ally-photo">
+            <p class="ally-description">Устаз Адам Алиев Рустамович — наш главный специалист по информатике. Он помогает нам развивать навыки программирования и обеспечивает безопасность клана.</p>
+            <p class="ally-bio">
+                <strong>ФИО:</strong> Адам Алиев Рустамович<br>
+                <strong>Telegram:</strong> <a href="https://t.me/adammaverick">@adammaverick</a><br>
+                <strong>Профессиональные навыки:</strong> Веб-разработчик, Графический дизайнер, Сварщик<br>
+                <strong>Любимый язык программирования:</strong> JavaScript<br>
+                <strong>Относится к Python:</strong> Противник<br>
+                <strong>Рост:</strong> 190 см<br>
+                <strong>Характеристики:</strong> Доброжелательный, Профессиональный, Творческий
+            </p>
+        </div>
+    </div>
+    
     <!-- Модальное окно настроек -->
     <div id="settingsModal" class="settings-modal">
         <div class="settings-modal-content">
@@ -1637,7 +1699,23 @@ setInterval(drawStars, 30);
             </div>
         </div>
     </div>
+    <script>
+        function showTab(tabId) {
+            // Скрыть все вкладки
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
 
+            // Убрать активный класс у кнопок
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Показать выбранную вкладку
+            document.getElementById(tabId).classList.add('active');
+
+            // Добавить активный класс кнопке
+            document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
+        }
+    </script>
     <script>
         // Настройки по умолчанию
         let userSettings = JSON.parse(localStorage.getItem('okUserSettings')) || {
