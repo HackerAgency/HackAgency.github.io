@@ -1398,33 +1398,27 @@ setInterval(drawStars, 30);
         </div>
 
         <!-- Секция комментариев -->
-        <div id="comments" class="tab-content">
-            <div class="comments-section">
-                <h2 class="comments-title">Комментарии Клана ОкЪ</h2>
-                
-                <!-- Форма комментариев -->
-                <div class="comment-form">
-                    <h3 style="margin-bottom: 20px; color: #ff6b6b;">Оставить комментарий</h3>
-                    <form id="commentForm">
-                        <div class="form-group">
-                            <label class="form-label">Ваш ник:</label>
-                            <input type="text" id="commentName" class="form-input" placeholder="Введите ваш ник" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Комментарий:</label>
-                            <textarea id="commentText" class="form-textarea" placeholder="Напишите ваш комментарий..." required></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">Отправить</button>
-                    </form>
-                </div>
-
-                <!-- Список комментариев -->
-                <div class="comments-list" id="commentsList">
-                    <div class="no-comments" id="noComments">Пока нет комментариев. Будьте первым!</div>
-                    <!-- Комментарии будут добавляться сюда -->
-                </div>
-            </div>
-        </div>
+            <div id="comments" class="tab-content">
+    <h2 style="text-align: center; margin-bottom: 30px; color: #4ecdc4;">Комментарии</h2>
+    <div id="giscus-container"></div>
+    
+    <script src="https://giscus.app/client.js"
+            data-repo="HackerAgency/HackAgency.github.io"
+            data-repo-id="R_kgDOI..."
+            data-category="General"
+            data-category-id="DIC_kwDOI..."
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="dark"
+            data-lang="ru"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
 
         <footer>
             <p>Клан ОкЪ © 2025 - Легенда, которую мы всегда вспомним</p>
