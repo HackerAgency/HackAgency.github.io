@@ -865,7 +865,44 @@
         }
 
         /* Стили для комментариев */
-        
+        .comments-section {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .light-theme .comments-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .comments-title {
+            font-size: 2rem;
+            color: #4ecdc4;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .light-theme .comments-title {
+            color: #4ecdc4;
+        }
+
+        .comment-form {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .light-theme .comment-form {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
 
         .form-group {
             margin-bottom: 15px;
@@ -908,7 +945,63 @@
             box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
         }
 
-        
+        .comments-list {
+            margin-top: 30px;
+        }
+
+        .comment {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: #4ecdc4;
+            margin-right: 10px;
+        }
+
+        .comment-date {
+            color: #a0a0c0;
+            font-size: 0.9rem;
+        }
+
+        .comment-text {
+            line-height: 1.6;
+        }
+
+        .no-comments {
+            text-align: center;
+            color: #a0a0c0;
+            font-style: italic;
+            padding: 30px;
+        }
+
+        .light-theme .no-comments {
+            color: #999;
+        }
 
         /* Стили для выбора режима игры */
         .mode-selection {
@@ -1073,7 +1166,25 @@ button:active, .submit-btn:active, .game-btn:active {
     background: transparent;
     pointer-events: none;
 }
-
+</style>
+<canvas id="starsCanvas"></canvas>
+    <script src="https://giscus.app/client.js"
+        data-repo="HackerAgency/HackAgency.github.io"
+        data-repo-id="R_kgDOI..."
+        data-category="General"
+        data-category-id="DIC_kwDOI..."
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="dark"
+        data-lang="ru"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+<script>
 // Простой фон звезды
 const canvas = document.getElementById('starsCanvas');
 const ctx = canvas.getContext('2d');
@@ -1142,6 +1253,8 @@ setInterval(drawStars, 30);
     <button class="tab-btn" onclick="showTab('members')">Члены Клана</button>
     <button class="tab-btn" onclick="showTab('games')">Игры</button>
     <button class="tab-btn" onclick="showTab('memories')">Воспоминания</button>
+    <button class="tab-btn" onclick="showTab('comments')">Комментарии</button>
+    <button class="tab-btn" onclick="showTab('links')">Ссылки</button>
     <button class="tab-btn" onclick="showTab('allies')">Союзники</button>
 </div>
 
@@ -1282,74 +1395,33 @@ setInterval(drawStars, 30);
                 Я не хочу уходить, но путь продолжается. 
                 Клан ОкЪ жив!"
             </div>
-        
+        </div>
+
+        <!-- Секция комментариев -->
+            <script src="https://giscus.app/client.js"
+            data-repo="HackerAgency/HackAgency.github.io"
+            data-repo-id="R_kgDOI..."
+            data-category="General"
+            data-category-id="DIC_kwDOI..."
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="dark"
+            data-lang="ru"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
 
         <footer>
             <p>Клан ОкЪ © 2025 - Легенда, которую мы всегда вспомним</p>
         </footer>
     </div>
 
-    <div id="links" class="tab-content">
-        <h2 style="text-align: center; margin-bottom: 30px; color: #4ecdc4;">Ссылки</h2>
-        <p><strong>Сервер Устаза по информатике Адама Алиева Рустамовича:</strong></p>
-        <ul>
-            <li><strong>IP-адрес:</strong> 135.181.126.185:25622</li>
-            <li><strong>Версия:</strong> 1.21.5</li>
-            <li><strong>Требования для входа:</strong>
-                <ul>
-                    <li>Игрок должен быть мусульманином.</li>
-                    <li>Для доступа нужно написать Устазу в Telegram: <a href="https://t.me/adammaverick">@adammaverick</a>.</li>
-                </ul>
-            </li>
-        </ul>
     </div>
-
-    <div id="allies" class="tab-content active">
-    <div class="ally-card">
-        <h2 class="ally-title" style="
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            text-shadow: 0 0 20px rgba(78, 205, 196, 0.3);">
-            Наш Учитель Информатики
-        </h2>
-
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-bottom: 20px;">
-            <img src="https://raw.githubusercontent.com/HackerAgency/HackAgency.github.io/refs/heads/main/sticker4.webp" class="ally-photo">
-            <img src="https://raw.githubusercontent.com/HackerAgency/HackAgency.github.io/refs/heads/main/sticker2.webp" class="ally-photo">
-            <img src="https://github.com/HackerAgency/HackAgency.github.io/blob/main/photo_2024-03-30_03-52-58.jpg?raw=true" class="ally-photo">
-            <img src="https://raw.githubusercontent.com/HackerAgency/HackAgency.github.io/refs/heads/main/sticker.webp" class="ally-photo">
-        </div>
-
-        <div style="
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 25px;
-            max-width: 700px;
-            margin: 0 auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);">
-
-            <p style="font-size: 1.2rem; margin-bottom: 15px;">
-                <strong>Имя:</strong> Адам Алиев Рустамович
-            </p>
-            <p style="font-size: 1.2rem; margin-bottom: 15px;">
-                <strong>Возраст:</strong> 25 лет &nbsp;|&nbsp; <strong>Рост:</strong> 190 см
-            </p>
-            <p style="font-size: 1.2rem; margin-bottom: 15px;">
-                <strong>Telegram:</strong> <a href="https://t.me/adammaverick" target="_blank" style="color: #4ecdc4;">@adammaverick</a>
-            </p>
-            <p style="font-size: 1.2rem;">
-                <strong>Сервер Minecraft:</strong><br>
-                ⛏⛏⛏⛏ IP: <code style="color:#ff6b6b;">135.181.126.185:25622</code><br>
-                Версия: <strong>1.21.5 (Forge)</strong> — поддержка чужих скинов
-            </p>
-        </div>
-    </div>
-</div>
-
     
     <!-- Модальное окно настроек -->
     <div id="settingsModal" class="settings-modal">
@@ -1925,7 +1997,7 @@ setInterval(drawStars, 30);
             updateDesignStyles();
             
             // Профиль
-           
+            document.getElementById('commentName').value = userSettings.profile.name;
         }
         
         // Обновление стилей дизайна
@@ -1943,7 +2015,7 @@ setInterval(drawStars, 30);
             const opacity = userSettings.design.opacity / 10;
             
             style.textContent = `
-                .container, .tab-content, .member-card, .game-card,
+                .container, .tab-content, .member-card, .game-card, .comment, .comment-form, .comments-section,
                 .modal-content, .game-container, .game-cell, .snake-board, .memory-card, .breakout-canvas,
                 .settings-section, .settings-modal-content {
                     border-radius: ${borderRadius} !important;
@@ -1954,7 +2026,7 @@ setInterval(drawStars, 30);
                     border-radius: ${Math.max(15, userSettings.design.borderRadius * 2)}px !important;
                 }
                 
-                .tab-content, .member-card, .game-card,
+                .tab-content, .member-card, .game-card, .comment, .comment-form, .comments-section,
                 .game-container, .snake-board, .settings-section {
                     box-shadow: 0 5px 15px rgba(0, 0, 0, ${shadowIntensity}) !important;
                 }
@@ -1963,13 +2035,13 @@ setInterval(drawStars, 30);
                     box-shadow: 0 20px 50px rgba(0, 0, 0, ${Math.min(0.7, shadowIntensity * 2)}) !important;
                 }
                 
-                .tab-content, .member-card, .game-card,
+                .tab-content, .member-card, .game-card, .comment, .comment-form, .comments-section,
                 .game-container, .settings-section {
                     background: rgba(0, 0, 0, ${opacity}) !important;
                 }
                 
                 .light-theme .tab-content, .light-theme .member-card, .light-theme .game-card, 
-                .light-theme,
+                .light-theme .comment, .light-theme .comment-form, .light-theme .comments-section,
                 .light-theme .game-container, .light-theme .settings-section {
                     background: rgba(255, 255, 255, ${Math.min(0.9, opacity + 0.5)}) !important;
                 }
@@ -3159,7 +3231,192 @@ setInterval(drawStars, 30);
             }
         });
 
-      
+        // Комментарии
+        let comments = JSON.parse(localStorage.getItem('okComments') || '[]');
+
+        function displayComments() {
+            const commentsList = document.getElementById('commentsList');
+            const noComments = document.getElementById('noComments');
+            
+            if (comments.length === 0) {
+                noComments.style.display = 'block';
+                commentsList.innerHTML = '<div class="no-comments" id="noComments">Пока нет комментариев. Будьте первым!</div>';
+                return;
+            }
+            
+            noComments.style.display = 'none';
+            
+            comments.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            let commentsHTML = '';
+            comments.forEach(comment => {
+                commentsHTML += `
+                    <div class="comment">
+                        <div class="comment-header">
+                            <div class="comment-avatar">${comment.avatar || comment.name.charAt(0).toUpperCase()}</div>
+                            <div class="comment-info">
+                                <span class="comment-author">${comment.name}</span>
+                                <span class="comment-date">${formatDate(comment.date)}</span>
+                            </div>
+                        </div>
+                        <div class="comment-text">
+                            ${comment.text}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            commentsList.innerHTML = commentsHTML;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function addComment(name, text) {
+            const comment = {
+                name: name,
+                text: text,
+                date: new Date().toISOString(),
+                avatar: name.charAt(0).toUpperCase()
+            };
+            
+            comments.push(comment);
+            localStorage.setItem('okComments', JSON.stringify(comments));
+            displayComments();
+        }
+
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('commentName').value.trim();
+            const text = document.getElementById('commentText').value.trim();
+            
+            if (name && text) {
+                addComment(name, text);
+                document.getElementById('commentForm').reset();
+                document.getElementById('commentName').value = name;
+            }
+        });
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            // Применение настроек
+            applySettings();
+            
+            // Отображение комментариев
+            displayComments();
+            
+            // Создание снега
+            createSnow();
+            
+            // Автоматическое создание новых снежинок
+            setInterval(() => {
+                if (userSettings.snow.count > 0) {
+                    createSingleSnow();
+                }
+            }, 3000);
+        });
+    </script>
+
+    <!-- Подключение Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<script>
+    // Загрузка и отображение комментариев
+    function loadComments() {
+        const comments = JSON.parse(localStorage.getItem('okComments')) || [];
+        const commentsList = document.getElementById('commentsList');
+        const noComments = document.getElementById('noComments');
+
+        commentsList.innerHTML = '';
+        if (comments.length === 0) {
+            noComments.style.display = 'block';
+        } else {
+            noComments.style.display = 'none';
+            comments.forEach(comment => {
+                const commentEl = document.createElement('div');
+                commentEl.className = 'comment';
+                commentEl.innerHTML = `
+                    <div class="comment-header">
+                        <div class="comment-avatar">${comment.avatar}</div>
+                        <div class="comment-author">${comment.name}</div>
+                        <div class="comment-date">${comment.date}</div>
+                    </div>
+                    <div class="comment-text">${comment.text}</div>
+                `;
+                commentsList.appendChild(commentEl);
+            });
+        }
+    }
+
+    // Обработка отправки комментария
+    document.getElementById('commentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('commentName').value.trim();
+        const text = document.getElementById('commentText').value.trim();
+        if (name === '' || text === '') return;
+
+        const avatar = name.charAt(0).toUpperCase();
+        const now = new Date();
+        const date = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+
+        const comment = { name, text, avatar, date };
+        const comments = JSON.parse(localStorage.getItem('okComments')) || [];
+        comments.unshift(comment);
+        localStorage.setItem('okComments', JSON.stringify(comments));
+
+        document.getElementById('commentForm').reset();
+        loadComments();
+    });
+
+    // Загрузка при старте
+    window.addEventListener('DOMContentLoaded', loadComments);
+</script>
+
+<script>
+// Хранилище лидеров
+function updateLeaderboard(game, score, name) {
+    const key = 'okLeaderboard';
+    const data = JSON.parse(localStorage.getItem(key)) || [];
+
+    // если уже есть запись — обновляем
+    const existing = data.find(entry => entry.game === game && entry.name === name);
+    if (existing) {
+        if (score > existing.score) existing.score = score;
+    } else {
+        data.push({ game, name, score });
+    }
+
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+// Показать таблицу лидеров
+function showLeaderboard() {
+    const data = JSON.parse(localStorage.getItem('okLeaderboard')) || [];
+    let html = '<h2 style="color:#4ecdc4;">🏆 Таблица Лидеров</h2><ul style="list-style:none;padding:0">';
+    if (data.length === 0) {
+        html += '<li style="color:#ccc;">Нет записей</li>';
+    } else {
+        data.sort((a, b) => b.score - a.score);
+        data.forEach(entry => {
+            html += `<li style="margin:6px 0;">🎮 <b>${entry.game}</b>: <span style="color:#ff6b6b">${entry.name}</span> — <b>${entry.score}</b></li>`;
+        });
+    }
+    html += '</ul>';
+    alert(html);
+}
+
+// Пример использования:
+// updateLeaderboard('Крестики-Нолики', 1, 'Игрок'); // после победы
+// showLeaderboard(); // вызвать вручную или кнопкой
 </script>
 
 
