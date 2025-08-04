@@ -1253,8 +1253,6 @@ setInterval(drawStars, 30);
     <button class="tab-btn" onclick="showTab('members')">Члены Клана</button>
     <button class="tab-btn" onclick="showTab('games')">Игры</button>
     <button class="tab-btn" onclick="showTab('memories')">Воспоминания</button>
-    <button class="tab-btn" onclick="showTab('comments')">Комментарии</button>
-    <button class="tab-btn" onclick="showTab('links')">Ссылки</button>
     <button class="tab-btn" onclick="showTab('allies')">Союзники</button>
 </div>
 
@@ -1440,23 +1438,52 @@ setInterval(drawStars, 30);
         </ul>
     </div>
 
-    <div id="allies" class="tab-content">
-    <h2 style="text-align: center; margin-bottom: 30px; color: #4ecdc4;">Союзники</h2>
+    <div id="allies" class="tab-content active">
     <div class="ally-card">
-        <h2 class="ally-title">Адам Алиев Рустамович</h2>
-        <img src="https://github.com/HackerAgency/HackAgency.github.io/blob/main/photo_2024-03-30_03-52-58.jpg?raw=true" alt="Фото Устаза" class="ally-photo">
-        <p class="ally-description">Устаз Адам Алиев Рустамович — наш главный специалист по информатике. Он помогает нам развивать навыки программирования и обеспечивает безопасность клана.</p>
-        <p class="ally-bio">
-            <strong>ФИО:</strong> Адам Алиев Рустамович<br>
-            <strong>Telegram:</strong> <a href="https://t.me/adammaverick">@adammaverick</a><br>
-            <strong>Профессиональные навыки:</strong> Веб-разработчик, Графический дизайнер, Сварщик<br>
-            <strong>Любимый язык программирования:</strong> JavaScript<br>
-            <strong>Относится к Python:</strong> Противник<br>
-            <strong>Рост:</strong> 190 см<br>
-            <strong>Характеристики:</strong> Доброжелательный, Профессиональный, Творческий
-        </p>
+        <h2 class="ally-title" style="
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(78, 205, 196, 0.3);">
+            Наш Учитель Информатики
+        </h2>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-bottom: 20px;">
+            <img src="https://raw.githubusercontent.com/HackerAgency/HackAgency.github.io/refs/heads/main/sticker4.webp" class="ally-photo">
+            <img src="https://raw.githubusercontent.com/HackerAgency/HackAgency.github.io/refs/heads/main/sticker2.webp" class="ally-photo">
+            <img src="https://github.com/HackerAgency/HackAgency.github.io/blob/main/photo_2024-03-30_03-52-58.jpg?raw=true" class="ally-photo">
+            <img src="https://raw.githubusercontent.com/HackerAgency/HackAgency.github.io/refs/heads/main/sticker.webp" class="ally-photo">
+        </div>
+
+        <div style="
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);">
+
+            <p style="font-size: 1.2rem; margin-bottom: 15px;">
+                <strong>Имя:</strong> Адам Алиев Рустамович
+            </p>
+            <p style="font-size: 1.2rem; margin-bottom: 15px;">
+                <strong>Возраст:</strong> 25 лет &nbsp;|&nbsp; <strong>Рост:</strong> 190 см
+            </p>
+            <p style="font-size: 1.2rem; margin-bottom: 15px;">
+                <strong>Telegram:</strong> <a href="https://t.me/adammaverick" target="_blank" style="color: #4ecdc4;">@adammaverick</a>
+            </p>
+            <p style="font-size: 1.2rem;">
+                <strong>Сервер Minecraft:</strong><br>
+                ⛏⛏⛏⛏ IP: <code style="color:#ff6b6b;">135.181.126.185:25622</code><br>
+                Версия: <strong>1.21.5 (Forge)</strong> — поддержка чужих скинов
+            </p>
+        </div>
     </div>
 </div>
+
     
     <!-- Модальное окно настроек -->
     <div id="settingsModal" class="settings-modal">
