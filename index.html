@@ -12,42 +12,36 @@
             color: #d1d1d1;
             margin: 0;
             padding: 0;
-            overflow-y: auto; /* Разрешаем вертикальную прокрутку */
+            overflow: hidden;
             min-height: 100vh;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
         }
         
         .header-container {
-            position: relative;
-            margin: 40px auto 20px; /* Отступы сверху и снизу */
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .input-container {
-            position: relative;
-            margin: 20px auto; /* Отступы сверху и снизу */
-            text-align: center;
+            position: absolute;
+            bottom: 48%;
+            left: 50%;
+            transform: translate(-50%, 50%);
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            min-height: 120px; /* Минимальная высота для размещения поля ввода и кнопки */
-            width: fit-content; /* Ширина по содержимому */
         }
         
         /* Стили для активного чата */
         body.chat-active .header-container {
-            /* Заголовок остается видимым, но может быть уменьшен */
-            margin: 20px auto 10px;
+            top: 43.3%;
         }
         
         body.chat-active .input-container {
-            /* Поле ввода остается внизу, но теперь часть потока документа */
-            margin: 20px auto;
-            position: sticky;
-            bottom: 20px;
-            z-index: 10;
-            min-height: 120px; /* Минимальная высота для размещения поля ввода и кнопки */
-            width: fit-content; /* Ширина по содержимому */
+            bottom: 15%;
         }
         
         h1 {
@@ -64,28 +58,19 @@
             width: 40vw;
             height: 100px;
             padding: 15px;
+            margin-top: 2vh;
             background-color: #2a2a2a;
             border: 1px solid #3a3a3a;
             border-radius: 12px;
-            color: #e5e5e5;
-            font-size: 1.2rem;
+            color: #d1d1d1;
+            font-size: 1rem;
             font-family: 'Skqatterpillurz', cursive;
             resize: none;
             outline: none;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            line-height: 1.2;
             display: block;
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            filter: blur(2px);
-        }
-        
-        body.chat-active .input-field {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0px);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transition-delay: 0.4s;
         }
         
         .input-field:focus {
@@ -114,20 +99,11 @@
             color: #d1d1d1;
             font-size: 18px;
             cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-            opacity: 0;
-            transform: scale(0) rotate(180deg);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        body.chat-active .send-button {
-            opacity: 1;
-            transform: scale(1) rotate(0deg);
-            transition-delay: 0.8s;
         }
         
         .send-button:hover {
@@ -143,12 +119,29 @@
         
         /* Активное состояние чата */
         body.chat-active .header-container {
-            /* Заголовок остается видимым, но может быть уменьшен */
-            margin: 20px auto 10px;
+            top: 10vh;
+            left: 50%;
+            transform: translateX(-50%);
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* Дублирующийся стиль удален */
+        body.chat-active .chat-container {
+            display: block;
+            width: 80vw;
+            max-height: 60vh;
+            top: 25vh;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body.chat-active .input-container {
+            bottom: 2vh;
+            top: auto;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
         
         body.chat-active .input-field {
             width: 80vw;
@@ -358,20 +351,20 @@
         /* Анимация появления при загрузке */
         .header-container {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateX(-50%) translateY(20px);
             animation: fadeInUp 0.8s ease-out forwards;
         }
         
         .input-container {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translate(-50%, -50%) translateY(20px);
             animation: fadeInUp 0.8s ease-out 0.2s forwards;
         }
         
         @keyframes fadeInUp {
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(-50%) translateY(0);
             }
         }
         
@@ -394,26 +387,25 @@
         
         /* Стили для чата */
         .chat-container {
-            position: relative;
-            width: 80%; /* Базовая ширина 80% - чат не сжимается */
-            margin-left: calc(10% + 60px); /* 10% слева + отступ от боковой панели */
+            position: absolute;
+            top: 50%;
+            left: 180px; /* Отступ от левой боковой панели */
+            transform: translateY(-50%);
+            width: calc(100vw - 200px); /* Ширина всего экрана минус отступы */
             max-height: 50vh;
             overflow-y: auto;
             display: none;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            box-sizing: border-box;
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            filter: blur(2px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         body.chat-active .chat-container {
             display: block;
-            max-height: none; /* Убираем ограничение высоты для естественной прокрутки страницы */
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0px);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: calc(100vw - 200px); /* Ширина всего экрана минус отступы */
+            max-height: 60vh;
+            top: 25vh;
+            left: 180px; /* Отступ от левой боковой панели */
+            transform: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .chat-container::-webkit-scrollbar {
@@ -440,19 +432,7 @@
             border-radius: 12px;
             max-width: 80%;
             word-wrap: break-word;
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px) scale(0.9);
-            filter: blur(1px);
-            animation: messageSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        
-        @keyframes messageSlideIn {
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                filter: blur(0px);
-            }
+            animation: messageSlide 0.3s ease-out;
         }
         
         @keyframes messageSlide {
@@ -471,15 +451,6 @@
             border: 1px solid #3a3a3a;
             margin-left: auto;
             text-align: right;
-            animation-delay: 0.1s;
-            transform-origin: right center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .message.user:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 4px 16px rgba(42, 42, 42, 0.4);
-            border-color: #4a4a4a;
         }
         
         .message.ai {
@@ -487,15 +458,6 @@
             border: 1px solid #2a2a2a;
             margin-right: auto;
             text-align: left;
-            animation-delay: 0.3s;
-            transform-origin: left center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-        
-        .message.ai:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 4px 16px rgba(26, 26, 26, 0.5);
-            border-color: #3a3a3a;
         }
         
         .message .sender {
@@ -503,33 +465,11 @@
             color: #8a8a8a;
             margin-bottom: 5px;
             font-weight: 500;
-            opacity: 0;
-            transform: translateY(-5px);
-            animation: senderFadeIn 0.4s ease-out forwards;
-            animation-delay: 0.2s;
-        }
-        
-        @keyframes senderFadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         
         .message .text {
             color: #e5e5e5;
             line-height: 1.4;
-            opacity: 0;
-            transform: translateY(5px);
-            animation: textFadeIn 0.5s ease-out forwards;
-            animation-delay: 0.4s;
-        }
-        
-        @keyframes textFadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         
         /* Различные шрифты для ИИ */
@@ -635,29 +575,8 @@
         
         /* Анимация "думает" */
         .message.thinking {
-            opacity: 0;
-            transform: translateY(20px) scale(0.9);
-            filter: blur(1px);
-            animation: thinkingSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, thinkingPulse 1.5s ease-in-out infinite 0.5s;
-        }
-        
-        @keyframes thinkingSlideIn {
-            to {
-                opacity: 0.7;
-                transform: translateY(0) scale(1);
-                filter: blur(0px);
-            }
-        }
-        
-        @keyframes thinkingPulse {
-            0%, 100% {
-                opacity: 0.7;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.9;
-                transform: scale(1.02);
-            }
+            opacity: 0.7;
+            animation: pulse 1.5s ease-in-out infinite;
         }
         
         .thinking-dots {
@@ -746,14 +665,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0);
-            backdrop-filter: blur(0px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .api-settings-modal.active .modal-overlay {
             background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(4px);
         }
         
         .modal-content {
@@ -767,16 +680,14 @@
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             z-index: 10001;
-            transform: scale(0.3) translateY(-50px) rotate(-5deg);
+            transform: scale(0.1) translateY(-100px) rotate(-10deg);
             opacity: 0;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            filter: blur(2px);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
         
         .api-settings-modal.active .modal-content {
             transform: scale(1) translateY(0) rotate(0deg);
             opacity: 1;
-            filter: blur(0px);
         }
         
         .modal-header {
@@ -786,15 +697,6 @@
             padding: 20px;
             border-bottom: 1px solid #3a3a3a;
             background-color: #1a1a1a;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .api-settings-modal.active .modal-header {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.1s;
         }
         
         .modal-header h3 {
@@ -813,58 +715,19 @@
             padding: 5px;
             border-radius: 4px;
             transition: all 0.2s ease;
-            transform: scale(0.8);
-            opacity: 0;
-        }
-        
-        .api-settings-modal.active .modal-close {
-            transform: scale(1);
-            opacity: 1;
-            transition-delay: 0.2s;
         }
         
         .modal-close:hover {
             background-color: #3a3a3a;
             color: #ffffff;
-            transform: scale(1.1) rotate(90deg);
         }
         
         .modal-body {
             padding: 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .api-settings-modal.active .modal-body {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.3s;
         }
         
         .settings-section {
             margin-bottom: 20px;
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .api-settings-modal.active .settings-section:nth-child(1) {
-            opacity: 1;
-            transform: translateX(0);
-            transition-delay: 0.4s;
-        }
-        
-        .api-settings-modal.active .settings-section:nth-child(2) {
-            opacity: 1;
-            transform: translateX(0);
-            transition-delay: 0.5s;
-        }
-        
-        .api-settings-modal.active .settings-section:nth-child(3) {
-            opacity: 1;
-            transform: translateX(0);
-            transition-delay: 0.6s;
         }
         
         .settings-label {
@@ -888,14 +751,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
             cursor: pointer;
-            transform: scale(0.95);
-            opacity: 0.8;
-        }
-        
-        .api-settings-modal.active .api-select {
-            transform: scale(1);
-            opacity: 1;
-            transition-delay: 0.7s;
         }
         
         .api-select:focus {
@@ -1028,40 +883,22 @@
         .add-api-button-container {
             margin-top: 20px;
             text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .api-settings-modal.active .add-api-button-container {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.8s;
         }
         
         .add-api-button {
             background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-family: 'Skqatterpillurz', cursive;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
-            transform: scale(0.9);
-            opacity: 0.8;
-        }
-        
-        .api-settings-modal.active .add-api-button {
-            transform: scale(1);
-            opacity: 1;
-            transition-delay: 0.9s;
         }
         
         .add-api-button:hover {
             background-color: #45a049;
-            transform: translateY(-2px) scale(1.05);
+            transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
         }
         
@@ -1152,15 +989,6 @@
             border-top: 1px solid #3a3a3a;
             background-color: #1a1a1a;
             text-align: right;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .api-settings-modal.active .modal-footer {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 1.0s;
         }
         
         .modal-button {
@@ -1173,25 +1001,16 @@
             font-size: 14px;
             transition: all 0.3s ease;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            transform: scale(0.9);
-            opacity: 0.8;
-        }
-        
-        .api-settings-modal.active .modal-button {
-            transform: scale(1);
-            opacity: 1;
-            transition-delay: 1.1s;
         }
         
         .modal-button:hover {
             background-color: #4a4a4a;
             border-color: #5a5a5a;
             color: #ffffff;
-            transform: translateY(-2px) scale(1.05);
         }
         
         .modal-button:active {
-            transform: scale(0.95);
+            transform: scale(0.98);
         }
         
         /* Адаптивность для разных устройств */
@@ -1239,15 +1058,16 @@
             }
             
             body.chat-active .chat-container {
+                width: calc(100vw - 200px);
                 max-height: 65vh;
             }
             
             .header-container {
-                margin: 30px auto 15px;
+                top: 25%;
             }
             
             body.chat-active .header-container {
-                margin: 15px auto 8px;
+                top: 8vh;
             }
         }
         
@@ -1270,15 +1090,17 @@
             }
             
             body.chat-active .chat-container {
+                width: 85vw;
                 max-height: 70vh;
+                top: 20vh;
             }
             
             .header-container {
-                margin: 25px auto 12px;
+                top: 20%;
             }
             
             body.chat-active .header-container {
-                margin: 12px auto 6px;
+                top: 6vh;
             }
             
             .send-button {
@@ -1326,15 +1148,17 @@
             }
             
             body.chat-active .chat-container {
+                width: 90vw;
                 max-height: 75vh;
+                top: 15vh;
             }
             
             .header-container {
-                margin: 20px auto 10px;
+                top: 15%;
             }
             
             body.chat-active .header-container {
-                margin: 10px auto 5px;
+                top: 5vh;
             }
             
             .send-button {
@@ -1414,15 +1238,17 @@
             }
             
             body.chat-active .chat-container {
+                width: 92vw;
                 max-height: 80vh;
+                top: 12vh;
             }
             
             .header-container {
-                margin: 15px auto 8px;
+                top: 12%;
             }
             
             body.chat-active .header-container {
-                margin: 8px auto 4px;
+                top: 4vh;
             }
             
             .send-button {
@@ -1522,15 +1348,17 @@
             }
             
             body.chat-active .chat-container {
+                width: 95vw;
                 max-height: 85vh;
+                top: 10vh;
             }
             
             .header-container {
-                margin: 12px auto 6px;
+                top: 10%;
             }
             
             body.chat-active .header-container {
-                margin: 6px auto 3px;
+                top: 3vh;
             }
             
             .send-button {
@@ -1556,6 +1384,173 @@
                 font-size: 14px;
             }
         }
+        
+        /* Эффект свечения мышки */
+        .mouse-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle at center, 
+                rgba(100, 149, 237, 0.3) 0%, 
+                rgba(100, 149, 237, 0.2) 15%, 
+                rgba(100, 149, 237, 0.1) 30%, 
+                rgba(100, 149, 237, 0.05) 45%, 
+                transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: none;
+            mix-blend-mode: screen;
+            filter: blur(2px);
+            opacity: 0.8;
+        }
+        
+        /* Эффект при клике мышкой */
+        .mouse-glow.clicked {
+            animation: mouseClickPulse 0.6s ease-out;
+        }
+        
+        @keyframes mouseClickPulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+        }
+        
+        /* Particles.js стиль - современная реализация */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            will-change: transform, opacity;
+            transition: all 0.3s ease;
+        }
+        
+        /* Различные формы частиц */
+        .particle.circle {
+            border-radius: 50%;
+        }
+        
+        .particle.triangle {
+            width: 0 !important;
+            height: 0 !important;
+            border-radius: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 10px solid currentColor;
+        }
+        
+        .particle.square {
+            border-radius: 0;
+        }
+        
+        .particle.star {
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            border-radius: 0;
+        }
+        
+        .particle.polygon {
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            border-radius: 0;
+        }
+        
+        /* Соединения между частицами */
+        .particle-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            transform-origin: left center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .particle-line.active {
+            opacity: 0.6;
+        }
+        
+        /* Интерактивные режимы */
+        .particle.grabbed {
+            transform: scale(1.5);
+            opacity: 1 !important;
+        }
+        
+        .particle.repulsed {
+            transform: scale(0.5);
+            opacity: 0.3;
+        }
+        
+        .particle.bubble {
+            transform: scale(2);
+            opacity: 0.8;
+        }
+        
+        /* Анимации */
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-10px) translateX(5px);
+            }
+            50% {
+                transform: translateY(5px) translateX(-10px);
+            }
+            75% {
+                transform: translateY(-5px) translateX(10px);
+            }
+        }
+        
+        @keyframes particlePulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes particleRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .particle.float {
+            animation: particleFloat 6s ease-in-out infinite;
+        }
+        
+        .particle.pulse {
+            animation: particlePulse 2s ease-in-out infinite;
+        }
+        
+        .particle.rotate {
+            animation: particleRotate 10s linear infinite;
+        }
     </style>
 </head>
 <body>
@@ -1573,6 +1568,12 @@
             <!-- Пустая боковая панель -->
         </div>
     </div>
+    
+    <!-- Эффект свечения мышки -->
+    <div class="mouse-glow"></div>
+            <!-- Частицы в стиле particles.js -->
+            <div class="particles-container" id="particlesContainer"></div>
+    
     <div class="header-container">
         <h1>Okyth - ии без ограничений</h1>
     </div>
@@ -2163,17 +2164,6 @@
         // Функция для активации чата после отправки
         function activateChat() {
             body.classList.add('chat-active');
-            // Обновляем позицию чата при активации
-            setTimeout(updateChatPosition, 50);
-            
-            // Добавляем специальную задержку для первого появления сообщений
-            const messages = chatContainer.querySelectorAll('.message');
-            if (messages.length > 0) {
-                // При первом появлении чата добавляем дополнительную задержку
-                setTimeout(() => {
-                    updateMessageAnimations();
-                }, 300);
-            }
         }
         
         // Функция для форматирования текста с поддержкой кода
@@ -2228,32 +2218,6 @@
                     button.textContent = 'Копировать';
                     button.classList.remove('copied');
                 }, 2000);
-            });
-        }
-        
-        // Счетчик сообщений для динамических задержек анимации
-        let messageCounter = 0;
-        
-        // Функция для обновления анимационных задержек для всех сообщений
-        function updateMessageAnimations() {
-            const messages = chatContainer.querySelectorAll('.message');
-            messages.forEach((message, index) => {
-                const baseDelay = index * 0.1; // Каждое следующее сообщение появляется на 0.1с позже
-                
-                // Обновляем задержку для самого сообщения
-                message.style.animationDelay = `${baseDelay}s`;
-                
-                // Обновляем задержки для внутренних элементов
-                const sender = message.querySelector('.sender');
-                const text = message.querySelector('.text');
-                
-                if (sender) {
-                    sender.style.animationDelay = `${baseDelay + 0.2}s`;
-                }
-                
-                if (text) {
-                    text.style.animationDelay = `${baseDelay + 0.4}s`;
-                }
             });
         }
         
@@ -2322,10 +2286,6 @@
                     // Активируем чат если есть сообщения
                     if (messages.length > 0) {
                         activateChat();
-                        // Дополнительно обновляем позицию чата после загрузки истории
-                        setTimeout(updateChatPosition, 100);
-                        // Обновляем анимации для загруженных сообщений
-                        setTimeout(updateMessageAnimations, 200);
                     }
                     
                     return true;
@@ -2382,13 +2342,10 @@
             const message = createMessage(text, sender);
             chatContainer.appendChild(message);
             
-            // Обновляем анимации для всех сообщений
-            updateMessageAnimations();
-            
             // Плавная прокрутка вниз с задержкой для анимации
             setTimeout(() => {
                 chatContainer.scrollTop = chatContainer.scrollHeight;
-            }, 600); // Увеличиваем задержку для завершения анимации
+            }, 100);
             
             // Сохраняем историю после добавления сообщения
             saveChatHistory();
@@ -2602,39 +2559,19 @@
         // Инициализация
         updateChatState();
         
-        // Инициализация при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            // Загружаем историю чата
-            loadChatHistory();
-            
-            // Обновляем список API и отображение текущего
-            updateApiSelect();
-            
-            // Активируем чат
-            activateChat();
-        });
+        // Обновляем список API и отображение текущего
+        updateApiSelect();
         
-        // Функция для обновления позиции чата в зависимости от состояния боковой панели
-        function updateChatPosition() {
-            const chatContainer = document.getElementById('chatContainer');
-            const sidebar = document.querySelector('.sidebar');
-            
-            if (!chatContainer || !sidebar) return;
-            
-            // Проверяем, открыта ли боковая панель (наведение или закреплена)
-            const isSidebarOpen = sidebar.classList.contains('pinned') || 
-                               (sidebar.matches(':hover') && !sidebar.classList.contains('pinned'));
-            
-            if (isSidebarOpen) {
-                // Боковая панель открыта - чат остается той же ширины, просто сдвигается
-                chatContainer.style.marginLeft = 'calc(10% + 180px)';
-                chatContainer.style.width = '80%'; // Чат не сжимается
-            } else {
-                // Боковая панель закрыта - чат по центру
-                chatContainer.style.marginLeft = 'calc(10% + 60px)';
-                chatContainer.style.width = '80%'; // Чат не сжимается
-            }
-        }
+        // Активируем чат
+        activateChat();
+        
+        // Инициализация всех эффектов при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            initMouseGlow();
+            initParticles();
+            loadChatHistory();
+            updateChatPosition();
+        });
         
         // Функционал для закрепления боковой панели
         const sidebar = document.querySelector('.sidebar');
@@ -2652,9 +2589,6 @@
                     // Возвращаем масштаб
                     pinTab.style.transform = '';
                     
-                    // Обновляем позицию чата
-                    updateChatPosition();
-                    
                     // Анимация при закреплении/откреплении
                     if (sidebar.classList.contains('pinned')) {
                         // Панель закреплена
@@ -2665,27 +2599,661 @@
                     }
                 }, 100);
             });
-            
-            // Добавляем обработчики для отслеживания наведения на боковую панель
-            sidebar.addEventListener('mouseenter', updateChatPosition);
-            sidebar.addEventListener('mouseleave', updateChatPosition);
         }
-        
-        // Инициализация позиции чата при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            // Обновляем позицию чата после небольшой задержки, чтобы убедиться, что все элементы загружены
-            setTimeout(updateChatPosition, 100);
-            // Дополнительное обновление после полной отрисовки
-            setTimeout(updateChatPosition, 500);
-        });
-        
-        // Обновляем позицию чата при изменении размера окна
-        window.addEventListener('resize', function() {
-            setTimeout(updateChatPosition, 100);
-        });
         
         // Инициализация списка API при загрузке страницы
         updateApiSelect();
+        
+        // Функция инициализации эффекта свечения мышки
+        function initMouseGlow() {
+            const mouseGlow = document.querySelector('.mouse-glow');
+            
+            if (!mouseGlow) return;
+            
+            // Отслеживание движения мышки
+            document.addEventListener('mousemove', (e) => {
+                mouseGlow.style.left = e.clientX + 'px';
+                mouseGlow.style.top = e.clientY + 'px';
+            });
+            
+            // Эффект при клике мышкой
+            document.addEventListener('click', (e) => {
+                mouseGlow.classList.add('clicked');
+                
+                // Убираем класс после завершения анимации
+                setTimeout(() => {
+                    mouseGlow.classList.remove('clicked');
+                }, 600);
+            });
+            
+            // Скрываем эффект при уходе мышки с окна
+            document.addEventListener('mouseleave', () => {
+                mouseGlow.style.opacity = '0';
+            });
+            
+            // Показываем эффект при входе мышки в окно
+            document.addEventListener('mouseenter', () => {
+                mouseGlow.style.opacity = '0.8';
+            });
+        }
+        
+        // Particles.js - оптимизированная реализация
+        class ParticlesJS {
+            constructor(containerId, config = {}) {
+                this.container = document.getElementById(containerId);
+                if (!this.container) return;
+                
+                this.config = {
+                    particles: {
+                        number: {
+                            value: config.particles?.number?.value || 60, // Уменьшено количество
+                            density: {
+                                enable: config.particles?.number?.density?.enable ?? true,
+                                value_area: config.particles?.number?.density?.value_area || 800
+                            }
+                        },
+                        color: {
+                            value: config.particles?.color?.value || '#ffffff'
+                        },
+                        shape: {
+                            type: config.particles?.shape?.type || 'circle',
+                            stroke: {
+                                width: config.particles?.shape?.stroke?.width || 0,
+                                color: config.particles?.shape?.stroke?.color || '#000000'
+                            },
+                            polygon: {
+                                nb_sides: config.particles?.shape?.polygon?.nb_sides || 5
+                            }
+                        },
+                        opacity: {
+                            value: config.particles?.opacity?.value || 0.6,
+                            random: config.particles?.opacity?.random || false,
+                            anim: {
+                                enable: config.particles?.opacity?.anim?.enable || false,
+                                speed: config.particles?.opacity?.anim?.speed || 1,
+                                opacity_min: config.particles?.opacity?.anim?.opacity_min || 0.1,
+                                sync: config.particles?.opacity?.anim?.sync || false
+                            }
+                        },
+                        size: {
+                            value: config.particles?.size?.value || 3,
+                            random: config.particles?.size?.random || true,
+                            anim: {
+                                enable: config.particles?.size?.anim?.enable || false,
+                                speed: config.particles?.size?.anim?.speed || 80,
+                                size_min: config.particles?.size?.anim?.size_min || 0.1,
+                                sync: config.particles?.size?.anim?.sync || false
+                            }
+                        },
+                        line_linked: {
+                            enable: config.particles?.line_linked?.enable ?? true,
+                            distance: config.particles?.line_linked?.distance || 120, // Уменьшено расстояние
+                            color: config.particles?.line_linked?.color || '#ffffff',
+                            opacity: config.particles?.line_linked?.opacity || 0.3,
+                            width: config.particles?.line_linked?.width || 1
+                        },
+                        move: {
+                            enable: config.particles?.move?.enable ?? true,
+                            speed: config.particles?.move?.speed || 1.5, // Уменьшена скорость
+                            direction: config.particles?.move?.direction || 'none',
+                            random: config.particles?.move?.random || true,
+                            straight: config.particles?.move?.straight || false,
+                            out_mode: config.particles?.move?.out_mode || 'out',
+                            bounce: config.particles?.move?.bounce || false,
+                            attract: {
+                                enable: false, // ОТКЛЮЧЕНО притяжение к центру
+                                rotateX: config.particles?.move?.attract?.rotateX || 600,
+                                rotateY: config.particles?.move?.attract?.rotateY || 1200
+                            }
+                        }
+                    },
+                    interactivity: {
+                        detect_on: config.interactivity?.detect_on || 'canvas',
+                        events: {
+                            onhover: {
+                                enable: config.interactivity?.events?.onhover?.enable ?? true,
+                                mode: config.interactivity?.events?.onhover?.mode || 'grab'
+                            },
+                            onclick: {
+                                enable: config.interactivity?.events?.onclick?.enable ?? true,
+                                mode: config.interactivity?.events?.onclick?.mode || 'push'
+                            },
+                            resize: config.interactivity?.events?.resize ?? true
+                        },
+                        modes: {
+                            grab: {
+                                distance: config.interactivity?.modes?.grab?.distance || 100,
+                                line_linked: {
+                                    opacity: config.interactivity?.modes?.grab?.line_linked?.opacity || 0.75
+                                }
+                            },
+                            bubble: {
+                                distance: config.interactivity?.modes?.bubble?.distance || 100,
+                                size: config.interactivity?.modes?.bubble?.size || 40,
+                                duration: config.interactivity?.modes?.bubble?.duration || 0.4,
+                                opacity: config.interactivity?.modes?.bubble?.opacity || 0.8,
+                                speed: config.interactivity?.modes?.bubble?.speed || 3
+                            },
+                            repulse: {
+                                distance: config.interactivity?.modes?.repulse?.distance || 200,
+                                duration: config.interactivity?.modes?.repulse?.duration || 1.2
+                            },
+                            push: {
+                                particles_nb: config.interactivity?.modes?.push?.particles_nb || 4
+                            },
+                            remove: {
+                                particles_nb: config.interactivity?.modes?.remove?.particles_nb || 2
+                            }
+                        }
+                    },
+                    retina_detect: config.retina_detect ?? true
+                };
+                
+                this.particles = [];
+                this.lines = [];
+                this.mouse = { x: 0, y: 0 };
+                this.animationId = null;
+                
+                this.init();
+            }
+            
+            init() {
+                this.createParticles();
+                this.bindEvents();
+                this.animate();
+            }
+            
+            createParticles() {
+                const particleCount = this.config.particles.number.value;
+                const colors = this.getColors();
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = this.createParticle(i, colors);
+                    this.particles.push(particle);
+                }
+                
+                this.createLines();
+            }
+            
+            getColors() {
+                const colorValue = this.config.particles.color.value;
+                if (Array.isArray(colorValue)) {
+                    return colorValue;
+                } else if (colorValue === 'random') {
+                    return ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+                } else {
+                    return [colorValue];
+                }
+            }
+            
+            createParticle(index, colors) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Позиция
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                
+                // Размер
+                let size = this.config.particles.size.value;
+                if (this.config.particles.size.random) {
+                    size = Math.random() * size + 1;
+                }
+                
+                // Цвет
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Форма
+                const shapeType = Array.isArray(this.config.particles.shape.type) 
+                    ? this.config.particles.shape.type[Math.floor(Math.random() * this.config.particles.shape.type.length)]
+                    : this.config.particles.shape.type;
+                
+                particle.classList.add(shapeType);
+                
+                // Упрощенная стилизация без лишних анимаций
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.backgroundColor = shapeType === 'circle' || shapeType === 'square' ? color : 'transparent';
+                particle.style.opacity = this.config.particles.opacity.value;
+                
+                // Только базовые анимации для производительности
+                if (Math.random() < 0.1) { // Только 10% частиц имеют анимации
+                    particle.classList.add('pulse');
+                }
+                
+                // Данные частицы
+                particle.particleData = {
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * this.config.particles.move.speed,
+                    vy: (Math.random() - 0.5) * this.config.particles.move.speed,
+                    size: size,
+                    color: color,
+                    shape: shapeType,
+                    originalOpacity: this.config.particles.opacity.value,
+                    originalSize: size
+                };
+                
+                this.container.appendChild(particle);
+                return particle;
+            }
+            
+            createLines() {
+                // Оптимизация: создаем линии только для ближайших соседей
+                this.lines = [];
+                const maxConnections = 3; // Максимальное соединений на частицу
+                
+                for (let i = 0; i < this.particles.length; i++) {
+                    const particle1 = this.particles[i];
+                    const connections = [];
+                    
+                    // Находим ближайших соседей
+                    for (let j = 0; j < this.particles.length; j++) {
+                        if (i !== j) {
+                            const particle2 = this.particles[j];
+                            const dx = particle1.particleData.x - particle2.particleData.x;
+                            const dy = particle1.particleData.y - particle2.particleData.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            connections.push({
+                                particle: particle2,
+                                distance: distance,
+                                index: j
+                            });
+                        }
+                    }
+                    
+                    // Сортируем по расстоянию и берем только ближайших
+                    connections.sort((a, b) => a.distance - b.distance);
+                    const nearestConnections = connections.slice(0, maxConnections);
+                    
+                    // Создаем линии для ближайших соседей
+                    nearestConnections.forEach(connection => {
+                        if (connection.index > i) { // Избегаем дублирования
+                            const line = document.createElement('div');
+                            line.className = 'particle-line';
+                            this.container.appendChild(line);
+                            
+                            this.lines.push({
+                                element: line,
+                                particle1: particle1,
+                                particle2: connection.particle
+                            });
+                        }
+                    });
+                }
+            }
+            
+            bindEvents() {
+                // Движение мышки
+                document.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                    
+                    if (this.config.interactivity.events.onhover.enable) {
+                        this.handleHover();
+                    }
+                });
+                
+                // Клик
+                document.addEventListener('click', (e) => {
+                    if (this.config.interactivity.events.onclick.enable) {
+                        this.handleClick(e.clientX, e.clientY);
+                    }
+                });
+                
+                // Изменение размера окна
+                window.addEventListener('resize', () => {
+                    this.handleResize();
+                });
+            }
+            
+            handleHover() {
+                const mode = this.config.interactivity.events.onhover.mode;
+                const distance = this.config.interactivity.modes[mode].distance;
+                
+                this.particles.forEach(particle => {
+                    const dx = this.mouse.x - particle.particleData.x;
+                    const dy = this.mouse.y - particle.particleData.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < distance) {
+                        switch (mode) {
+                            case 'grab':
+                                particle.classList.add('grabbed');
+                                break;
+                            case 'repulse':
+                                particle.classList.add('repulsed');
+                                const force = (distance - dist) / distance;
+                                particle.particleData.vx -= (dx / dist) * force * 2;
+                                particle.particleData.vy -= (dy / dist) * force * 2;
+                                break;
+                            case 'bubble':
+                                particle.classList.add('bubble');
+                                break;
+                        }
+                    } else {
+                        particle.classList.remove('grabbed', 'repulsed', 'bubble');
+                    }
+                });
+            }
+            
+            handleClick(x, y) {
+                const mode = this.config.interactivity.events.onclick.mode;
+                
+                switch (mode) {
+                    case 'push':
+                        this.addParticles(this.config.interactivity.modes.push.particles_nb);
+                        break;
+                    case 'remove':
+                        this.removeParticles(this.config.interactivity.modes.remove.particles_nb);
+                        break;
+                    case 'bubble':
+                        this.createBubbleEffect(x, y);
+                        break;
+                    case 'repulse':
+                        this.createRepulseEffect(x, y);
+                        break;
+                }
+            }
+            
+            addParticles(count) {
+                const colors = this.getColors();
+                for (let i = 0; i < count; i++) {
+                    const particle = this.createParticle(this.particles.length + i, colors);
+                    this.particles.push(particle);
+                    
+                    // Добавляем новые линии
+                    this.particles.forEach(existingParticle => {
+                        if (existingParticle !== particle) {
+                            const line = document.createElement('div');
+                            line.className = 'particle-line';
+                            this.container.appendChild(line);
+                            
+                            this.lines.push({
+                                element: line,
+                                particle1: existingParticle,
+                                particle2: particle
+                            });
+                        }
+                    });
+                }
+            }
+            
+            removeParticles(count) {
+                for (let i = 0; i < count && this.particles.length > 0; i++) {
+                    const particle = this.particles.pop();
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                    
+                    // Удаляем связанные линии
+                    this.lines = this.lines.filter(line => {
+                        if (line.particle1 === particle || line.particle2 === particle) {
+                            if (line.element.parentNode) {
+                                line.element.parentNode.removeChild(line.element);
+                            }
+                            return false;
+                        }
+                        return true;
+                    });
+                }
+            }
+            
+            createBubbleEffect(x, y) {
+                const distance = this.config.interactivity.modes.bubble.distance;
+                const size = this.config.interactivity.modes.bubble.size;
+                
+                this.particles.forEach(particle => {
+                    const dx = x - particle.particleData.x;
+                    const dy = y - particle.particleData.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < distance) {
+                        particle.classList.add('bubble');
+                        setTimeout(() => {
+                            particle.classList.remove('bubble');
+                        }, this.config.interactivity.modes.bubble.duration * 1000);
+                    }
+                });
+            }
+            
+            createRepulseEffect(x, y) {
+                const distance = this.config.interactivity.modes.repulse.distance;
+                
+                this.particles.forEach(particle => {
+                    const dx = x - particle.particleData.x;
+                    const dy = y - particle.particleData.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < distance) {
+                        const force = (distance - dist) / distance;
+                        particle.particleData.vx -= (dx / dist) * force * 5;
+                        particle.particleData.vy -= (dy / dist) * force * 5;
+                        particle.classList.add('repulsed');
+                        
+                        setTimeout(() => {
+                            particle.classList.remove('repulsed');
+                        }, this.config.interactivity.modes.repulse.duration * 1000);
+                    }
+                });
+            }
+            
+            handleResize() {
+                this.particles.forEach(particle => {
+                    if (particle.particleData.x > window.innerWidth) {
+                        particle.particleData.x = window.innerWidth - 10;
+                    }
+                    if (particle.particleData.y > window.innerHeight) {
+                        particle.particleData.y = window.innerHeight - 10;
+                    }
+                });
+            }
+            
+            updateParticles() {
+                this.particles.forEach(particle => {
+                    const data = particle.particleData;
+                    
+                    // Движение
+                    if (this.config.particles.move.enable) {
+                        data.x += data.vx;
+                        data.y += data.vy;
+                        
+                        // Границы
+                        if (this.config.particles.move.out_mode === 'out') {
+                            if (data.x < 0 || data.x > window.innerWidth) {
+                                data.x = Math.random() * window.innerWidth;
+                            }
+                            if (data.y < 0 || data.y > window.innerHeight) {
+                                data.y = Math.random() * window.innerHeight;
+                            }
+                        } else if (this.config.particles.move.out_mode === 'bounce') {
+                            if (data.x < 0 || data.x > window.innerWidth) {
+                                data.vx *= -1;
+                            }
+                            if (data.y < 0 || data.y > window.innerHeight) {
+                                data.vy *= -1;
+                            }
+                        }
+                        
+                        // Притяжение
+                        if (this.config.particles.move.attract.enable) {
+                            const centerX = window.innerWidth / 2;
+                            const centerY = window.innerHeight / 2;
+                            const dx = centerX - data.x;
+                            const dy = centerY - data.y;
+                            
+                            data.vx += dx / this.config.particles.move.attract.rotateX;
+                            data.vy += dy / this.config.particles.move.attract.rotateY;
+                        }
+                        
+                        // Обновление позиции
+                        particle.style.left = data.x + 'px';
+                        particle.style.top = data.y + 'px';
+                    }
+                });
+            }
+            
+            updateLines() {
+                if (!this.config.particles.line_linked.enable) return;
+                
+                const distance = this.config.particles.line_linked.distance;
+                
+                this.lines.forEach(line => {
+                    const data1 = line.particle1.particleData;
+                    const data2 = line.particle2.particleData;
+                    
+                    const dx = data2.x - data1.x;
+                    const dy = data2.y - data1.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < distance) {
+                        const angle = Math.atan2(dy, dx);
+                        const opacity = (1 - dist / distance) * this.config.particles.line_linked.opacity;
+                        
+                        line.element.style.left = data1.x + 'px';
+                        line.element.style.top = data1.y + 'px';
+                        line.element.style.width = dist + 'px';
+                        line.element.style.transform = `rotate(${angle}rad)`;
+                        line.element.style.opacity = opacity;
+                        line.element.style.display = 'block';
+                    } else {
+                        line.element.style.display = 'none';
+                    }
+                });
+            }
+            
+            animate() {
+                this.updateParticles();
+                this.updateLines();
+                
+                this.animationId = requestAnimationFrame(() => this.animate());
+            }
+            
+            destroy() {
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                }
+                
+                this.container.innerHTML = '';
+                this.particles = [];
+                this.lines = [];
+            }
+        }
+        
+        // Оптимизированная конфигурация для particles.js
+        const particlesConfig = {
+            particles: {
+                number: {
+                    value: 60, // Уменьшено количество частиц
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: ['#ffffff', '#f0f0f0', '#e0e0e0', '#ffffff', '#ffffff']
+                },
+                shape: {
+                    type: 'circle', // Упрощено до одной формы
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    },
+                    polygon: {
+                        nb_sides: 5
+                    }
+                },
+                opacity: {
+                    value: 0.9,
+                    random: true,
+                    anim: {
+                        enable: false, // Отключены анимации прозрачности
+                        speed: 1,
+                        opacity_min: 0.7,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 5,
+                    random: true,
+                    anim: {
+                        enable: false, // Отключены анимации размера
+                        speed: 2,
+                        size_min: 3,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 120, // Уменьшено расстояние
+                    color: '#ffffff',
+                    opacity: 0.8,
+                    width: 2
+                },
+                move: {
+                    enable: true,
+                    speed: 1.5, // Уменьшена скорость
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false, // ОТКЛЮЧЕНО притяжение к центру
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 100,
+                        line_linked: {
+                            opacity: 0.75
+                        }
+                    },
+                    bubble: {
+                        distance: 100,
+                        size: 30,
+                        duration: 0.2,
+                        opacity: 0.6,
+                        speed: 2
+                    },
+                    repulse: {
+                        distance: 150,
+                        duration: 0.3
+                    },
+                    push: {
+                        particles_nb: 2 // Уменьшено количество добавляемых частиц
+                    },
+                    remove: {
+                        particles_nb: 1
+                    }
+                }
+            },
+            retina_detect: true
+        };
+        
+        // Функция инициализации particles
+        function initParticles() {
+            return new ParticlesJS('particlesContainer', particlesConfig);
+        }
     </script>
 </body>
 </html>
